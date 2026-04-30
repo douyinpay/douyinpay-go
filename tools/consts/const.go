@@ -26,7 +26,7 @@ const (
 	QuerySplitFundPath           = "/v1/trade/profitsharing/orders/{out_order_no}"
 	NativePrepayPath             = "/v1/trade/transactions/native"
 	CreditContractPrepayPath     = "/v1/trade/transactions/payscorecontractorder"
-	PartnerJsapiPrepayPath       = "/v1/trade/partner/transactions/jsapi"
+	PartnerJsapiPrepayPath       = "/v1/trade/partner/transactions/jsapi"                             //服务商jsapi下单
 	PartnerNativePrepayPath      = "/v1/trade/partner/transactions/native"                            //服务商native下单
 	PartnerClosePath             = "/v1/trade/partner/transactions/out-trade-no/{out_trade_no}/close" //服务商交易关单
 	PartnerQueryByIdPath         = "/v1/trade/partner/transactions/id/{transaction_id}"
