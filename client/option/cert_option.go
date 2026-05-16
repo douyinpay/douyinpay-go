@@ -6,6 +6,8 @@ import (
 	"github.com/douyinpay/douyinpay-go/client"
 	"github.com/douyinpay/douyinpay-go/tools/auth/signers"
 	"github.com/douyinpay/douyinpay-go/tools/auth/verifiers"
+	"github.com/douyinpay/douyinpay-go/tools/crypto/decryptors"
+	"github.com/douyinpay/douyinpay-go/tools/crypto/encryptors"
 	"github.com/douyinpay/douyinpay-go/utils"
 	"github.com/tjfoc/gmsm/sm2"
 	"github.com/tjfoc/gmsm/x509"
@@ -35,6 +37,13 @@ func OptionSignAndVerifyWithRSA(mchID string, mchCertificateSerialNo string, pri
 				PublicKey:    platCertificate.PublicKey.(*rsa.PublicKey),
 				SerialNumber: utils.ConvertSerailNo(platCertificate.SerialNumber),
 			},
+			Encryptor: &encryptors.RSAEncryptor{
+				PlatformPublicKey: platCertificate.PublicKey.(*rsa.PublicKey),
+				PlatformSerial:    utils.ConvertSerailNo(platCertificate.SerialNumber),
+			},
+			Decryptor: &decryptors.RSADecryptor{
+				MerchantPrivateKey: privateKey,
+			},
 		},
 	}
 }
@@ -50,6 +59,13 @@ func OptionSignAndVerifyWithSM2(mchID string, mchCertificateSerialNo string, pri
 			Verifier: &verifiers.Sm2Verifier{
 				PublicKey:    utils.CovertToSm2PublicKey(platCertificate),
 				SerialNumber: utils.ConvertSerailNo(platCertificate.SerialNumber),
+			},
+			Encryptor: &encryptors.SM2Encryptor{
+				PlatformPublicKey: utils.CovertToSm2PublicKey(platCertificate),
+				PlatformSerial:    utils.ConvertSerailNo(platCertificate.SerialNumber),
+			},
+			Decryptor: &decryptors.SM2Decryptor{
+				MerchantPrivateKey: privateKey,
 			},
 		},
 	}

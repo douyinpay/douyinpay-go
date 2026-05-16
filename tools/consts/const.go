@@ -23,7 +23,13 @@ const (
 	DeleteContractPath           = "/v1/member/deletecontract" // 代扣协议解约
 	JsapiPrepayPath              = "/v1/trade/transactions/jsapi"
 	SplitFundPath                = "/v1/trade/profitsharing/orders"
-	QuerySplitFundPath           = "/v1/trade/profitsharing/orders/{out_order_no}"
+	QuerySplitFundPath           = "/v1/trade/profitsharing/orders/{out_trade_no}"
+	ReturnSplitFundPath          = "/v1/trade/profitsharing/return-orders"
+	QueryReturnSplitFundPath     = "/v1/trade/profitsharing/return-orders/{out_return_no}"
+	FinishSplitFundPath          = "/v1/trade/profitsharing/finish-orders"
+	QueryUnsplitFundPath         = "/v1/trade/profitsharing/order/{transaction_id}/amounts"
+	AddSplitReceiverPath         = "/v1/trade/profitsharing/receivers/add"
+	DeleteSplitReceiverPath      = "/v1/trade/profitsharing/receivers/delete"
 	NativePrepayPath             = "/v1/trade/transactions/native"
 	CreditContractPrepayPath     = "/v1/trade/transactions/payscorecontractorder"
 	PartnerJsapiPrepayPath       = "/v1/trade/partner/transactions/jsapi"                             //服务商jsapi下单

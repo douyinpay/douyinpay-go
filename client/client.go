@@ -15,6 +15,7 @@ import (
 
 	"github.com/douyinpay/douyinpay-go/tools/auth"
 	"github.com/douyinpay/douyinpay-go/tools/consts"
+	"github.com/douyinpay/douyinpay-go/tools/crypto"
 )
 
 var (
@@ -37,8 +38,10 @@ func (w ErrorOption) Apply(*DialSettings) error {
 type DialSettings struct {
 	AgentName  string
 	HTTPClient *http.Client  // HTTPClient 实例
-	Signer     auth.Signer   // 加签
-	Verifier   auth.Verifier // 验签
+	Signer     auth.Signer     // 加签
+	Verifier   auth.Verifier   // 验签
+	Encryptor  crypto.Encryptor // 敏感字段加密
+	Decryptor  crypto.Decryptor // 敏感字段解密
 }
 
 // Validate 校验请求配置是否有效
@@ -63,6 +66,24 @@ type Client struct {
 	httpClient *http.Client
 	signer     auth.Signer
 	verifier   auth.Verifier
+	encryptor  crypto.Encryptor
+	decryptor  crypto.Decryptor
+}
+
+func (client *Client) Signer() auth.Signer {
+	return client.signer
+}
+
+func (client *Client) Verifier() auth.Verifier {
+	return client.verifier
+}
+
+func (client *Client) Encryptor() crypto.Encryptor {
+	return client.encryptor
+}
+
+func (client *Client) Decryptor() crypto.Decryptor {
+	return client.decryptor
 }
 
 func NewClient(ctx context.Context, opts ...ClientOption) (*Client, error) {
@@ -76,6 +97,8 @@ func NewClient(ctx context.Context, opts ...ClientOption) (*Client, error) {
 		signer:     settings.Signer,
 		httpClient: settings.HTTPClient,
 		verifier:   settings.Verifier,
+		encryptor:  settings.Encryptor,
+		decryptor:  settings.Decryptor,
 	}
 
 	if client.httpClient == nil {
@@ -100,6 +123,8 @@ func NewClientWithVerifier(client *Client, verifier auth.Verifier) *Client {
 		signer:     client.signer,
 		httpClient: client.httpClient,
 		verifier:   verifier,
+		encryptor:  client.encryptor,
+		decryptor:  client.decryptor,
 	}
 }
 
@@ -109,6 +134,8 @@ func initClientWithSettings(_ context.Context, settings *DialSettings) *Client {
 		signer:     settings.Signer,
 		httpClient: settings.HTTPClient,
 		verifier:   settings.Verifier,
+		encryptor:  settings.Encryptor,
+		decryptor:  settings.Decryptor,
 	}
 	if client.httpClient == nil {
 		client.httpClient = &http.Client{

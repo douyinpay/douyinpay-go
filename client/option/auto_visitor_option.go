@@ -7,6 +7,8 @@ import (
 	"github.com/douyinpay/douyinpay-go/client"
 	"github.com/douyinpay/douyinpay-go/tools/auth/signers"
 	"github.com/douyinpay/douyinpay-go/tools/auth/verifiers"
+	"github.com/douyinpay/douyinpay-go/tools/crypto/decryptors"
+	"github.com/douyinpay/douyinpay-go/tools/crypto/encryptors"
 	"github.com/douyinpay/douyinpay-go/tools/downloader"
 
 	"github.com/tjfoc/gmsm/sm2"
@@ -47,6 +49,12 @@ func NewRSAClientOptionAuthVisitorUsingDownloaderMgr(
 			Verifier: &verifiers.SHA256WithRSAVerifierWithGetter{
 				CertGetter: mgr.GetCertificateVisitor(mchID),
 			},
+			Encryptor: &encryptors.RSAEncryptorWithGetter{
+				CertGetter: mgr.GetCertificateVisitor(mchID),
+			},
+			Decryptor: &decryptors.RSADecryptor{
+				MerchantPrivateKey: privateKey,
+			},
 		},
 	}
 }
@@ -85,6 +93,12 @@ func NewSm2ClientOptionAuthVisitorUsingDownloaderMgr(
 			},
 			Verifier: &verifiers.Sm2VerifierWithGetter{
 				CertGetter: mgr.GetCertificateVisitor(mchID),
+			},
+			Encryptor: &encryptors.SM2EncryptorWithGetter{
+				CertGetter: mgr.GetCertificateVisitor(mchID),
+			},
+			Decryptor: &decryptors.SM2Decryptor{
+				MerchantPrivateKey: privateKey,
 			},
 		},
 	}
