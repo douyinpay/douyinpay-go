@@ -65,8 +65,8 @@ func (a *ApiPartnerContractService) PartnerPayApply(ctx context.Context, req par
 	if req.NotifyUrl == "" {
 		return nil, nil, fmt.Errorf("field `NotifyUrl` is required and must be specified in PartnerPayApplyRequest")
 	}
-	if req.Amount.Total < 0 {
-		return nil, nil, fmt.Errorf("field `Amount#Total` is required and must be specified in PartnerPayApplyRequest")
+	if req.Amount == nil || req.Amount.Total < 0 {
+		return nil, nil, fmt.Errorf("field `Amount or Amount#Total` is required and must be specified in PartnerPayApplyRequest")
 	}
 	r := &client.RequestEntity{
 		Method:      nethttp.MethodPost,
@@ -112,8 +112,8 @@ func ValidParam(req partnerpay.PartnerContractOrderRequest) error {
 	if req.NotifyUrl == "" {
 		return fmt.Errorf("field `NotifyUrl` is required and must be specified in PartnerContractOrderRequest")
 	}
-	if req.Amount.Total < 0 {
-		return fmt.Errorf("field `Amount#Total` is required and must be specified in PartnerContractOrderRequest")
+	if req.Amount == nil || req.Amount.Total < 0 {
+		return fmt.Errorf("field `Amount or Amount#Total` is required and must be specified in PartnerContractOrderRequest")
 	}
 	if req.ContractInfo.ContractMchId == "" {
 		return fmt.Errorf("field `ContractInfo#ContractMchId` is required and must be specified in PartnerContractOrderRequest")

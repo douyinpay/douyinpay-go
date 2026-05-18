@@ -54,6 +54,11 @@ const (
 	PartnerTerminateContractPath     = "/v1/agreementauth/partner/contracts/plan-id/{plan_id}/out-contract-code/{out_contract_code}/terminate" // 协议解约
 	PartnerContractSchedulePath      = "/v1/agreementauth/partner/schedules/contract-id/{contract_id}/schedule"                                // 预约扣费
 	PartnerContractScheduleQueryPath = "/v1/agreementauth/partner/schedules/contract-id/{contract_id}"                                         // 预约扣费结果查询
+	// 服务商 App
+	PartnerAppPrepayPath = "/v1/trade/partner/transactions/app" // app下单
+
+	// 服务商 H5
+	PartnerH5PrepayPath = "/v1/trade/partner/transactions/h5" // H5下单
 
 	// 下载平台证书列表
 	DownloadCertificatesPath = "/v1/merchant/certificates/getPlatformCertificates"
