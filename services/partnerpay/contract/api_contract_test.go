@@ -67,7 +67,8 @@ func PartnerContractOrderTest(ctx context.Context, signType string, t *testing.T
 		Description: "CS",
 		NotifyUrl:   "https://www.mock.com",
 		OutTradeNo:  outTradeNo,
-		Amount: partnerpay.Amount{
+		//TradeType:   "JSAPI",
+		Amount: &partnerpay.Amount{
 			Currency: "CNY",
 			Total:    100,
 		},
@@ -203,7 +204,7 @@ func PartnerPayApplyTest(ctx context.Context, signType string, t *testing.T) {
 			GoodsDetail: goodsArr,
 			InvoiceId:   "dy123",
 		},
-		Amount: partnerpay.Amount{
+		Amount: &partnerpay.Amount{
 			Currency: "CNY",
 			Total:    10,
 		},

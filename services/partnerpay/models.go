@@ -14,11 +14,11 @@ type PromotionDetail struct {
 	Amount int64 `json:"amount,omitempty"`
 	// 活动ID，批次ID
 	StockId string `json:"stock_id,omitempty"`
-	// 单位为分
+	// 抖音出资，单位为分
 	DouyinpayContribute int64 `json:"douyinpay_contribute,omitempty"`
-	// 单位为分
+	// 商户出资，单位为分
 	MerchantContribute int64 `json:"merchant_contribute,omitempty"`
-	// 单位为分
+	// 其他出资金额，单位为分
 	OtherContribute int64 `json:"other_contribute,omitempty"`
 	// CNY：人民币，境内商户号仅支持人民币。
 	Currency    string                 `json:"currency,omitempty"`
@@ -99,7 +99,7 @@ type PartnerContractOrderRequest struct {
 	// 电子发票入口开放标识
 	SupportFapiao bool `json:"support_fapiao,omitempty"`
 	// 订单金额
-	Amount Amount `json:"amount"`
+	Amount *Amount `json:"amount"`
 	// 支付者
 	Payer *Payer `json:"payer"`
 	//优惠信息
@@ -246,7 +246,7 @@ type PartnerPayApplyRequest struct {
 	// 结算信息
 	SettleInfo *SettleInfo `json:"settle_info,omitempty"`
 	// 订单金额
-	Amount Amount `json:"amount"`
+	Amount *Amount `json:"amount"`
 }
 
 type PartnerPayApplyResponse struct {

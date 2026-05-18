@@ -197,8 +197,8 @@ func (a *ApiDeductService) PayApply(ctx context.Context, req PayApplyRequest) (r
 	if req.NotifyUrl == "" {
 		return nil, nil, fmt.Errorf("PayApplyRequest required field `NotifyUrl` is empty")
 	}
-	if req.Amount != nil && req.Amount.Total < 0 {
-		return nil, nil, fmt.Errorf("PayApplyRequest required field `Amount#Total` is empty")
+	if req.Amount == nil || req.Amount.Total < 0 {
+		return nil, nil, fmt.Errorf("PayApplyRequest required field `Amount or Amount#Total` is empty")
 	}
 
 	r := &client.RequestEntity{
