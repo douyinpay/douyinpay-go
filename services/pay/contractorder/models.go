@@ -99,6 +99,7 @@ type SceneInfo struct {
 	// 用户终端设备号
 	PayerDeviceId string     `json:"payer_device_id,omitempty"`
 	StoreInfo     *StoreInfo `json:"store_info,omitempty"`
+	H5Info        *H5Info    `json:"h5_info,omitempty"`
 }
 
 // SettleInfo
@@ -117,6 +118,20 @@ type StoreInfo struct {
 	AreaCode string `json:"area_code,omitempty"`
 	// 详细的商户门店地址
 	Address string `json:"address,omitempty"`
+}
+
+// H5Info H5场景信息
+type H5Info struct {
+	// 场景类型 示例值：iOS, Android, Wap
+	Type string `json:"type"`
+	// 应用名称
+	AppName string `json:"app_name,omitempty"`
+	// 网站URL
+	AppUrl string `json:"app_url,omitempty"`
+	// iOS平台BundleID
+	BundleID string `json:"bundle_id,omitempty"`
+	// Android平台PackageName
+	PackageName string `json:"package_name,omitempty"`
 }
 
 type ContractInfo struct {

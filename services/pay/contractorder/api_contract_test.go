@@ -297,6 +297,11 @@ func PrepayTestH5(ctx context.Context, signType string, t *testing.T) {
 					Id:       "0001",
 					Name:     "测试店铺",
 				},
+				H5Info: &H5Info{
+					Type:    "Wap",
+					AppName: "测试应用",
+					AppUrl:  "https://www.mock.douyinpay.com",
+				},
 			},
 			SettleInfo: &SettleInfo{
 				ProfitSharing: false,

@@ -34,6 +34,8 @@ type PrepayRequest struct {
 type PrepayResponse struct {
 	// 预支付交易会话标识
 	PrepayId string `json:"prepay_id"`
+	// H5支付场景下的跳转链接
+	H5Url string `json:"h5_url,omitempty"`
 }
 
 // CloseOrderRequest
@@ -95,19 +97,21 @@ type SceneInfo struct {
 	// 商户端设备号（预留字段）
 	DeviceId string `json:"device_id,omitempty"`
 	// 用户终端设备号
-	PayerDeviceId string `json:"payer_device_id,omitempty"`
+	PayerDeviceId string     `json:"payer_device_id,omitempty"`
+	StoreInfo     *StoreInfo `json:"store_info,omitempty"`
+	H5Info        *H5Info    `json:"h5_info,omitempty"`
 }
 type H5Info struct {
 	// 场景类型 示例值：iOS, Android, Wap
 	Type string `json:"type"`
 	// 应用名称
-	AppName string `json:"app_name"`
+	AppName string `json:"app_name,omitempty"`
 	// 网站URL
-	AppUrl string `json:"app_url"`
+	AppUrl string `json:"app_url,omitempty"`
 	// iOS平台BundleID
-	BundleID string `json:"bundle_id"`
+	BundleID string `json:"bundle_id,omitempty"`
 	// Android平台PackageName
-	PackageName string `json:"package_name"`
+	PackageName string `json:"package_name,omitempty"`
 }
 
 // SettleInfo
