@@ -53,7 +53,7 @@ type StoreInfo struct {
 }
 
 type H5Info struct {
-	Type        string `json:"type,omitempty"`         // 场景类型
+	Type        string `json:"type"`                   // 场景类型
 	AppName     string `json:"app_name,omitempty"`     //  门店名称
 	AppUrl      string `json:"app_url,omitempty"`      // 网站url
 	BundleID    string `json:"bundle_id,omitempty"`    // iOS 平台 BundleID
