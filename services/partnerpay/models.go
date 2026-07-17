@@ -109,7 +109,7 @@ type PartnerContractOrderRequest struct {
 	// 场景信息
 	SceneInfo *SceneInfo `json:"scene_info,omitempty"`
 	// 商户门店信息（预留字段）
-	StoreInfo *StoreInfo `json:"store_info"`
+	//StoreInfo *StoreInfo `json:"store_info"`
 	// 结算信息
 	SettleInfo *SettleInfo `json:"settle_info,omitempty"`
 	//
@@ -165,7 +165,8 @@ type SceneInfo struct {
 	// 商户端设备号（预留字段）
 	DeviceId string `json:"device_id,omitempty"`
 	// 用户终端设备号
-	PayerDeviceId string `json:"payer_device_id,omitempty"`
+	PayerDeviceId string     `json:"payer_device_id,omitempty"`
+	StoreInfo     *StoreInfo `json:"store_info,omitempty"`
 }
 
 // SettleInfo
