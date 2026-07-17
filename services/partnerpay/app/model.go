@@ -7,7 +7,7 @@ type PrePayRequest struct {
 	SubAppid      string      `json:"sub_appid,omitempty"`      // 子商户Appid
 	Description   string      `json:"description,omitempty"`    // 商品描述
 	OutTradeNo    string      `json:"out_trade_no,omitempty"`   // 商户订单号
-	TimeExpire    int64       `json:"time_expire,omitempty"`    // 交易结束时间
+	TimeExpire    string      `json:"time_expire,omitempty"`    // 交易结束时间
 	Attach        string      `json:"attach,omitempty"`         // 附加数据
 	NotifyUrl     string      `json:"notify_url,omitempty"`     // 通知地址
 	GoodsTag      string      `json:"goods_tag,omitempty"`      // 优惠标记

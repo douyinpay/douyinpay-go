@@ -7,7 +7,7 @@ type PrepayRequest struct {
 	SubAppid      string      `json:"sub_appid,omitempty"`      // 子商户Appid
 	Description   string      `json:"description,omitempty"`    // 商品描述
 	OutTradeNo    string      `json:"out_trade_no,omitempty"`   // 商户订单号
-	TimeExpire    int64       `json:"time_expire,omitempty"`    // 交易结束时间
+	TimeExpire    string      `json:"time_expire,omitempty"`    // 交易结束时间
 	Attach        string      `json:"attach,omitempty"`         // 附加数据
 	NotifyUrl     string      `json:"notify_url,omitempty"`     // 通知地址
 	GoodsTag      string      `json:"goods_tag,omitempty"`      // 优惠标记
@@ -53,7 +53,7 @@ type StoreInfo struct {
 }
 
 type H5Info struct {
-	Type        string `json:"type,omitempty"`         // 场景类型
+	Type        string `json:"type"`                   // 场景类型
 	AppName     string `json:"app_name,omitempty"`     //  门店名称
 	AppUrl      string `json:"app_url,omitempty"`      // 网站url
 	BundleID    string `json:"bundle_id,omitempty"`    // iOS 平台 BundleID
