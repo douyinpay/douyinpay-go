@@ -7,7 +7,6 @@ import (
 
 	"github.com/douyinpay/douyinpay-go/client"
 	"github.com/douyinpay/douyinpay-go/services"
-	contractorder "github.com/douyinpay/douyinpay-go/services/deduct"
 	"github.com/douyinpay/douyinpay-go/tools/consts"
 )
 
@@ -25,7 +24,7 @@ func (a *ApiPartnerContractService) PartnerContractOrder(ctx context.Context, re
 		PostBody:    req,
 		Header:      nethttp.Header{},
 	}
-	r.RequestPath = contractorder.GetServerAddress() + consts.PartnerContractOrderPath
+	r.RequestPath = consts.DouyinPayServer + consts.PartnerContractOrderPath
 	result, err = a.Client.Request(ctx, r)
 	if err != nil {
 		return nil, result, err
@@ -73,7 +72,7 @@ func (a *ApiPartnerContractService) PartnerPayApply(ctx context.Context, req Par
 		PostBody:    req,
 		Header:      nethttp.Header{},
 	}
-	r.RequestPath = contractorder.GetServerAddress() + consts.PartnerPayApplyPath
+	r.RequestPath = consts.DouyinPayServer + consts.PartnerPayApplyPath
 	result, err = a.Client.Request(ctx, r)
 	if err != nil {
 		return nil, result, err

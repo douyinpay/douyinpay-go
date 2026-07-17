@@ -9,7 +9,6 @@ import (
 
 	"github.com/douyinpay/douyinpay-go/client"
 	"github.com/douyinpay/douyinpay-go/services"
-	contractorder "github.com/douyinpay/douyinpay-go/services/deduct"
 	"github.com/douyinpay/douyinpay-go/services/partnerpay"
 	"github.com/douyinpay/douyinpay-go/tools/consts"
 )
@@ -24,7 +23,7 @@ func (a *H5ApiService) Prepay(ctx context.Context, req PrepayRequest) (resp *Pre
 		PostBody:    req,
 		Header:      nethttp.Header{},
 	}
-	r.RequestPath = contractorder.GetServerAddress() + consts.PartnerH5PrepayPath
+	r.RequestPath = consts.DouyinPayServer + consts.PartnerH5PrepayPath
 	result, err = a.Client.Request(ctx, r)
 	if err != nil {
 		return nil, result, err
@@ -55,7 +54,7 @@ func (a *H5ApiService) CloseOrder(ctx context.Context, req CloseOrderRequest) (r
 		Header:      nethttp.Header{},
 	}
 
-	rawUrl := contractorder.GetServerAddress() + consts.PartnerClosePath
+	rawUrl := consts.DouyinPayServer + consts.PartnerClosePath
 	r.RequestPath = strings.Replace(rawUrl, "{out_trade_no}", neturl.PathEscape(req.OutTradeNo), -1)
 
 	// Perform Http Request
@@ -91,7 +90,7 @@ func (a *H5ApiService) QueryOrderById(ctx context.Context, req QueryOrderByIdReq
 		QueryParams: localVarQueryParams,
 	}
 
-	rawUrl := contractorder.GetServerAddress() + consts.PartnerQueryByIdPath
+	rawUrl := consts.DouyinPayServer + consts.PartnerQueryByIdPath
 	r.RequestPath = strings.Replace(rawUrl, "{transaction_id}", neturl.PathEscape(req.TransactionId), -1)
 
 	result, err = a.Client.Request(ctx, r)
@@ -132,7 +131,7 @@ func (a *H5ApiService) QueryOrderByOutTradeNo(ctx context.Context, req QueryOrde
 		QueryParams: localVarQueryParams,
 	}
 
-	rawUrl := contractorder.GetServerAddress() + consts.PartnerQueryByOutTradeNoPath
+	rawUrl := consts.DouyinPayServer + consts.PartnerQueryByOutTradeNoPath
 	r.RequestPath = strings.Replace(rawUrl, "{out_trade_no}", neturl.PathEscape(req.OutTradeNo), -1)
 
 	result, err = a.Client.Request(ctx, r)

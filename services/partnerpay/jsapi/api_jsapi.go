@@ -11,7 +11,6 @@ import (
 	"github.com/douyinpay/douyinpay-go/services/partnerpay"
 
 	"github.com/douyinpay/douyinpay-go/services"
-	contractorder "github.com/douyinpay/douyinpay-go/services/deduct"
 	"github.com/douyinpay/douyinpay-go/tools/consts"
 )
 
@@ -26,7 +25,7 @@ func (a *JsapiApiService) Prepay(ctx context.Context, req PrepayRequest) (resp *
 		Header:      nethttp.Header{},
 	}
 
-	r.RequestPath = contractorder.GetServerAddress() + consts.PartnerJsapiPrepayPath
+	r.RequestPath = consts.DouyinPayServer + consts.PartnerJsapiPrepayPath
 
 	result, err = a.Client.Request(ctx, r)
 	if err != nil {
@@ -59,7 +58,7 @@ func (a *JsapiApiService) CloseOrder(ctx context.Context, req CloseOrderRequest)
 		Header:      nethttp.Header{},
 	}
 
-	rawUrl := contractorder.GetServerAddress() + consts.PartnerClosePath
+	rawUrl := consts.DouyinPayServer + consts.PartnerClosePath
 	r.RequestPath = strings.Replace(rawUrl, "{out_trade_no}", neturl.PathEscape(req.OutTradeNo), -1)
 
 	// Perform Http Request
@@ -95,7 +94,7 @@ func (a *JsapiApiService) QueryOrderById(ctx context.Context, req QueryOrderById
 		QueryParams: localVarQueryParams,
 	}
 
-	rawUrl := contractorder.GetServerAddress() + consts.PartnerQueryByIdPath
+	rawUrl := consts.DouyinPayServer + consts.PartnerQueryByIdPath
 	r.RequestPath = strings.Replace(rawUrl, "{transaction_id}", neturl.PathEscape(req.TransactionId), -1)
 
 	result, err = a.Client.Request(ctx, r)
@@ -136,7 +135,7 @@ func (a *JsapiApiService) QueryOrderByOutTradeNo(ctx context.Context, req QueryO
 		QueryParams: localVarQueryParams,
 	}
 
-	rawUrl := contractorder.GetServerAddress() + consts.PartnerQueryByOutTradeNoPath
+	rawUrl := consts.DouyinPayServer + consts.PartnerQueryByOutTradeNoPath
 	r.RequestPath = strings.Replace(rawUrl, "{out_trade_no}", neturl.PathEscape(req.OutTradeNo), -1)
 
 	result, err = a.Client.Request(ctx, r)

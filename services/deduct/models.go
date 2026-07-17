@@ -1,7 +1,5 @@
 package contractorder
 
-import "github.com/douyinpay/douyinpay-go/services/partnerpay"
-
 // ApiDeductRequest 申请扣款请求参数
 type ApiDeductRequest struct {
 	// 公众号ID
@@ -255,7 +253,7 @@ type PartnerContractScheduleResponse struct {
 	// 可扣费结束日期
 	DeductEndDate string `json:"deduct_end_date,omitempty"`
 	// 预约扣费金额
-	ScheduleAmount partnerpay.Amount `json:"schedule_amount,omitempty"`
+	ScheduleAmount Amount `json:"schedule_amount,omitempty"`
 }
 
 // 预约扣费结果查询
@@ -274,11 +272,11 @@ type PartnerContractScheduleQueryResponse struct {
 	// 可扣费结束日期
 	DeductEndDate string `json:"deduct_end_date"`
 	// 预约扣费金额
-	ScheduleAmount partnerpay.Amount `json:"schedule_amount"`
+	ScheduleAmount Amount `json:"schedule_amount"`
 	// 预扣费通知状态
 	ScheduleState string `json:"schedule_state"`
 	// 实际扣费金额
-	DeductAmount partnerpay.Amount `json:"deduct_amount"`
+	DeductAmount Amount `json:"deduct_amount"`
 	// 实际扣费日期
 	DeductDate string `json:"deduct_date"`
 }
