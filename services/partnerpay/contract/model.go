@@ -71,7 +71,7 @@ type PartnerContractOrderRequest struct {
 	//优惠信息
 	Detail *Detail `json:"detail,omitempty"`
 	// 商品列表
-	GoodsDetail []GoodsDetail `json:"goods_detail"`
+	//GoodsDetail []GoodsDetail `json:"goods_detail"`
 	// 场景信息
 	SceneInfo *SceneInfo `json:"scene_info,omitempty"`
 	// 商户门店信息（预留字段）
@@ -100,8 +100,9 @@ type Amount struct {
 
 // Detail 优惠功能
 type Detail struct {
-	CostPrice int64  `json:"cost_price"`
-	InvoiceId string `json:"invoice_id,omitempty"`
+	CostPrice   int64         `json:"cost_price"`
+	InvoiceId   string        `json:"invoice_id,omitempty"`
+	GoodsDetail []GoodsDetail `json:"goods_detail"`
 }
 
 type PayApplyDetail struct {
