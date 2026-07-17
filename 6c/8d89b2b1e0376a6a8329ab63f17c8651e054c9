@@ -1,0 +1,33 @@
+services/deduct/partner/api_partnerdeduct.go
+  s_69f44467061e56::t_5bd09d61568c65 43,83
+services/partnercontract/api_contract.go
+  s_69f44467061e56::t_a83cb9f000bb3f 45,87
+services/partnerpay/app/api_app.go
+  s_69f44467061e56::t_b7c55c58b01cd9 26,57,93,134
+services/partnerpay/contract/api_contract.go
+  s_69f44467061e56::t_e78d47074258b7 27,75
+services/partnerpay/h5/api_h5.go
+  s_69f44467061e56::t_01e1251965b49b 26,57,93,134
+services/partnerpay/jsapi/api_jsapi.go
+  s_69f44467061e56::t_b1a166cf875ce9 28,61,97,138
+services/partnerpay/native/api_native.go
+  s_69f44467061e56::t_d87fce09f1ea66 28,61,97,138
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "6c8d89b2b1e0376a6a8329ab63f17c8651e054c9",
+  "prompts": {},
+  "sessions": {
+    "s_69f44467061e56": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "019f6ee6-8672-7be3-a847-ce89e4af47be",
+        "model": "unknown"
+      },
+      "human_author": "Lizhonglv <lizhonglv.1102@bytedance.com>"
+    }
+  },
+  "attestation_metadata": {},
+  "remote_transcripts": {}
+}
