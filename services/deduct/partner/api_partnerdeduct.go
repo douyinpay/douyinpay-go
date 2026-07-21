@@ -40,7 +40,7 @@ func (a *ApiPartnerDeductService) PartnerContractSchedule(ctx context.Context, r
 		Header:      nethttp.Header{},
 	}
 	//获取请求路径
-	rawURL := contractorder.GetServerAddress() + consts.PartnerContractSchedulePath
+	rawURL := consts.DouyinPayServer + consts.PartnerContractSchedulePath
 	r.RequestPath = strings.Replace(rawURL, "{contract_id}", netUrl.PathEscape(req.ContractId), -1)
 
 	result, err = a.Client.Request(ctx, r)
@@ -80,7 +80,7 @@ func (a *ApiPartnerDeductService) PartnerContractScheduleQuery(ctx context.Conte
 		Header:      nethttp.Header{},
 	}
 	//获取请求路径
-	rawURL := contractorder.GetServerAddress() + consts.PartnerContractScheduleQueryPath
+	rawURL := consts.DouyinPayServer + consts.PartnerContractScheduleQueryPath
 	r.RequestPath = strings.Replace(rawURL, "{contract_id}", netUrl.PathEscape(req.ContractId), -1)
 
 	result, err = a.Client.Request(ctx, r)

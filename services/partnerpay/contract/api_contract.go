@@ -7,15 +7,13 @@ import (
 
 	"github.com/douyinpay/douyinpay-go/client"
 	"github.com/douyinpay/douyinpay-go/services"
-	contractorder "github.com/douyinpay/douyinpay-go/services/deduct"
-	"github.com/douyinpay/douyinpay-go/services/partnerpay"
 	"github.com/douyinpay/douyinpay-go/tools/consts"
 )
 
 type ApiPartnerContractService services.Service
 
 // PartnerContractOrder 支付中签约下单
-func (a *ApiPartnerContractService) PartnerContractOrder(ctx context.Context, req partnerpay.PartnerContractOrderRequest) (resp *partnerpay.PartnerContractOrderResponse, result *client.APIResult, err error) {
+func (a *ApiPartnerContractService) PartnerContractOrder(ctx context.Context, req PartnerContractOrderRequest) (resp *PartnerContractOrderResponse, result *client.APIResult, err error) {
 	err = ValidParam(req)
 	if err != nil {
 		return nil, nil, err
@@ -26,12 +24,12 @@ func (a *ApiPartnerContractService) PartnerContractOrder(ctx context.Context, re
 		PostBody:    req,
 		Header:      nethttp.Header{},
 	}
-	r.RequestPath = contractorder.GetServerAddress() + consts.PartnerContractOrderPath
+	r.RequestPath = consts.DouyinPayServer + consts.PartnerContractOrderPath
 	result, err = a.Client.Request(ctx, r)
 	if err != nil {
 		return nil, result, err
 	}
-	resp = new(partnerpay.PartnerContractOrderResponse)
+	resp = new(PartnerContractOrderResponse)
 	err = client.UnMarshalResponse(result.Response, resp)
 	if err != nil {
 		return nil, result, err
@@ -40,7 +38,7 @@ func (a *ApiPartnerContractService) PartnerContractOrder(ctx context.Context, re
 }
 
 // PartnerPayApply 申请扣款
-func (a *ApiPartnerContractService) PartnerPayApply(ctx context.Context, req partnerpay.PartnerPayApplyRequest) (resp *partnerpay.PartnerPayApplyResponse, result *client.APIResult, err error) {
+func (a *ApiPartnerContractService) PartnerPayApply(ctx context.Context, req PartnerPayApplyRequest) (resp *PartnerPayApplyResponse, result *client.APIResult, err error) {
 	if req.SpAppid == "" {
 		return nil, nil, fmt.Errorf("field `SpAppid` is required and must be specified in PartnerPayApplyRequest")
 	}
@@ -74,12 +72,12 @@ func (a *ApiPartnerContractService) PartnerPayApply(ctx context.Context, req par
 		PostBody:    req,
 		Header:      nethttp.Header{},
 	}
-	r.RequestPath = contractorder.GetServerAddress() + consts.PartnerPayApplyPath
+	r.RequestPath = consts.DouyinPayServer + consts.PartnerPayApplyPath
 	result, err = a.Client.Request(ctx, r)
 	if err != nil {
 		return nil, result, err
 	}
-	resp = new(partnerpay.PartnerPayApplyResponse)
+	resp = new(PartnerPayApplyResponse)
 	err = client.UnMarshalResponse(result.Response, resp)
 	if err != nil {
 		return nil, result, err
@@ -87,7 +85,7 @@ func (a *ApiPartnerContractService) PartnerPayApply(ctx context.Context, req par
 	return resp, result, nil
 }
 
-func ValidParam(req partnerpay.PartnerContractOrderRequest) error {
+func ValidParam(req PartnerContractOrderRequest) error {
 	if req.SpMchid == "" {
 		return fmt.Errorf("field `SpMchid` is required and must be specified in PartnerContractOrderRequest")
 	}

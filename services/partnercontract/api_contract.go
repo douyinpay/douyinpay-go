@@ -10,7 +10,6 @@ import (
 
 	"github.com/douyinpay/douyinpay-go/client"
 	"github.com/douyinpay/douyinpay-go/services"
-	contractorder "github.com/douyinpay/douyinpay-go/services/deduct"
 	"github.com/douyinpay/douyinpay-go/tools/consts"
 )
 
@@ -43,7 +42,7 @@ func (a *ApiPartnerContractOrderService) PartnerQueryContract(ctx context.Contex
 		Header:      nethttp.Header{},
 	}
 	//获取请求路径
-	rawURL := contractorder.GetServerAddress() + consts.PartnerQueryContractPath
+	rawURL := consts.DouyinPayServer + consts.PartnerQueryContractPath
 	currURL := strings.Replace(rawURL, "{plan_id}", neturl.PathEscape(strconv.Itoa(req.PlanId)), -1)
 	r.RequestPath = strings.Replace(currURL, "{out_contract_code}", neturl.PathEscape(req.OutContractCode), -1)
 
@@ -85,7 +84,7 @@ func (a *ApiPartnerContractOrderService) PartnerTerminateContract(ctx context.Co
 		Header:      nethttp.Header{},
 	}
 	//获取请求路径
-	rawURL := contractorder.GetServerAddress() + consts.PartnerTerminateContractPath
+	rawURL := consts.DouyinPayServer + consts.PartnerTerminateContractPath
 	currURL := strings.Replace(rawURL, "{plan_id}", neturl.PathEscape(strconv.Itoa(req.PlanId)), -1)
 	r.RequestPath = strings.Replace(currURL, "{out_contract_code}", neturl.PathEscape(req.OutContractCode), -1)
 
