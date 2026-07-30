@@ -55,6 +55,12 @@ type Transaction struct {
 	TradeType       string                `json:"trade_type,omitempty"`
 	TransactionId   string                `json:"transaction_id,omitempty"`
 	SceneInfo       *TransactionSceneInfo `json:"scene_info,omitempty"`
+	// 委托代扣协议号，扣款失败通知中返回。
+	ContractId string `json:"contract_id,omitempty"`
+	// 错误代码，申请扣款失败且交易状态为 CLOSED 时返回。
+	ErrCode string `json:"err_code,omitempty"`
+	// 错误代码描述，扣款失败原因描述。
+	ErrCodeDes string `json:"err_code_des,omitempty"`
 }
 
 // TransactionAmount
