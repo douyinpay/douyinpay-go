@@ -1,5 +1,10 @@
 package partnerh5
 
+// 官方文档：
+// - H5下单：https://partner.douyinpay.com/wiki/682c7a8e82b07604fd4deccb/6911f7c7f09d4f04f443b5e4
+// - 查询订单：https://partner.douyinpay.com/wiki/682c7a8e82b07604fd4deccb/6852bb22fe022d05166966c5
+// - 关闭订单：https://partner.douyinpay.com/wiki/682c7a8e82b07604fd4deccb/6852bb25d479e6051ac20fb4
+
 import (
 	"context"
 	"fmt"

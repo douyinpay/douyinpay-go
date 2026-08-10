@@ -1,5 +1,10 @@
 package native
 
+// 官方文档：
+// - Native下单：https://pay.douyinpay.com/wiki/639fd48f17c2f3021d237f61/65bf88e4fcc2570315fd1457
+// - 查询订单：https://pay.douyinpay.com/wiki/639fd48f17c2f3021d237f61/65bf8a15ea861802f27235b3
+// - 关闭订单：https://pay.douyinpay.com/wiki/639fd48f17c2f3021d237f61/65bf8b844d4516030eec0e12
+
 import (
 	"context"
 	"fmt"

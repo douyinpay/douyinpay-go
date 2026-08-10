@@ -1,5 +1,12 @@
 package refund
 
+// 官方文档：
+// - 申请退款（App支付）：https://pay.douyinpay.com/wiki/639fd48f17c2f3021d237f61/639fd61817c2f3021d238235
+// - 查询单笔退款（App支付）：https://pay.douyinpay.com/wiki/639fd48f17c2f3021d237f61/639fd62c17c2f3021d23826f
+// - 申请退款（JSAPI支付）：https://pay.douyinpay.com/wiki/639fd48f17c2f3021d237f61/64413ff8ef6db1021d438dcf
+// - 申请退款（Native支付）：https://pay.douyinpay.com/wiki/639fd48f17c2f3021d237f61/65bf8d013ba7e102fb44d69e
+// - 查询单笔退款（H5支付）：https://pay.douyinpay.com/wiki/639fd48f17c2f3021d237f61/63f4451e88f4740227f6e36c
+
 import (
 	"context"
 	"fmt"

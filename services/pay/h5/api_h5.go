@@ -1,5 +1,10 @@
 package h5
 
+// 官方文档：
+// - H5下单：https://pay.douyinpay.com/wiki/639fd48f17c2f3021d237f61/63f444f0b7d2f20202eaa928
+// - 查询订单：https://pay.douyinpay.com/wiki/639fd48f17c2f3021d237f61/63f445410b970c0209070167
+// - 关闭订单：https://pay.douyinpay.com/wiki/639fd48f17c2f3021d237f61/63f4450f0b970c02090700df
+
 import (
 	"context"
 	"fmt"
@@ -15,7 +20,7 @@ import (
 
 type H5ApiService services.Service
 
-// Prepay APP支付下单
+// Prepay H5支付下单
 func (a *H5ApiService) Prepay(ctx context.Context, req PrepayRequest) (resp *PrepayResponse, result *client.APIResult, err error) {
 	r := &client.RequestEntity{
 		Method:      nethttp.MethodPost,

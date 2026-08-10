@@ -1,5 +1,11 @@
 package app
 
+// 官方文档：
+// - App下单：https://pay.douyinpay.com/wiki/639fd48f17c2f3021d237f61/639fd4d3e0c64802240b4075
+// - 查询订单：https://pay.douyinpay.com/wiki/639fd48f17c2f3021d237f61/639fd5cd70f838021f2961c1
+// - 关闭订单：https://pay.douyinpay.com/wiki/639fd48f17c2f3021d237f61/639fd5d617c2f3021d2381b2
+// - 支付结果通知：https://pay.douyinpay.com/wiki/639fd48f17c2f3021d237f61/639fd60cf4a57b0226bb1ef8
+
 import (
 	"context"
 	"fmt"

@@ -1,5 +1,9 @@
 package contract
 
+// 官方文档：
+// - 签约并支付下单：https://partner.douyinpay.com/wiki/682c7a8e82b07604fd4deccb/685b4b7975a00b04c8aa2fb4
+// - 申请扣款：https://partner.douyinpay.com/wiki/682c7a8e82b07604fd4deccb/685b4b7e75a00b04c8aa2fd1
+
 import (
 	"context"
 	"fmt"

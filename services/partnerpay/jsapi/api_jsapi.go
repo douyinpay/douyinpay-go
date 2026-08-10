@@ -1,5 +1,10 @@
 package jsapi
 
+// 官方文档：
+// - JSAPI下单：https://partner.douyinpay.com/wiki/682c7a8e82b07604fd4deccb/682c7ac472716004fec827a0
+// - 查询订单：https://partner.douyinpay.com/wiki/682c7a8e82b07604fd4deccb/6852bb22fe022d05166966c5
+// - 关闭订单：https://partner.douyinpay.com/wiki/682c7a8e82b07604fd4deccb/6852bb25d479e6051ac20fb4
+
 import (
 	"context"
 	"fmt"

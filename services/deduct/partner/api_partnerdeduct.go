@@ -1,5 +1,9 @@
 package partner
 
+// 官方文档：
+// - 预约扣费：https://partner.douyinpay.com/wiki/682c7a8e82b07604fd4deccb/685b4b9077f5de0546f6af87
+// - 预约扣费结果查询：https://partner.douyinpay.com/wiki/682c7a8e82b07604fd4deccb/685b4b97a2b24a063d54b442
+
 import (
 	"context"
 	"fmt"

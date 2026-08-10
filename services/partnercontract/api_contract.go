@@ -1,5 +1,8 @@
 package partnercontract
 
+// 官方文档：
+// - 查询签约关系：https://partner.douyinpay.com/wiki/682c7a8e82b07604fd4deccb/685b4b8777f5de0546f6af5d
+// - 协议解约：https://partner.douyinpay.com/wiki/682c7a8e82b07604fd4deccb/685b4b8af6235c04f84bdea6
 import (
 	"context"
 	"fmt"

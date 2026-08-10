@@ -227,11 +227,6 @@ func PrepayTestH5(ctx context.Context, signType string, t *testing.T) {
 			SceneInfo: &SceneInfo{
 				DeviceId:      "013467007045764",
 				PayerClientIp: "14.23.150.211",
-				H5Info: &H5Info{
-					Type:    "Wap",
-					AppName: "测试应用",
-					AppUrl:  "https://www.mock.douyinpay.com",
-				},
 			},
 			SettleInfo: &SettleInfo{
 				ProfitSharing: false,
