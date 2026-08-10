@@ -217,16 +217,21 @@ type StoreInfo struct {
 
 // Detail 优惠信息（预留字段）
 type Detail struct {
-	CostPrice   int64         `json:"cost_price"`
+	CostPrice   int64         `json:"cost_price,omitempty"`
 	InvoiceId   string        `json:"invoice_id,omitempty"`
-	GoodsDetail []GoodsDetail `json:"goods_detail"`
+	GoodsDetail []GoodsDetail `json:"goods_detail,omitempty"`
 }
 
 // GoodsDetail 单品信息（预留字段）
 type GoodsDetail struct {
-	MerchantGoodsId  string `json:"merchant_goods_id"`
+	// 由半角的大小写字母、数字、中划线、下划线中的一种或几种组成。
+	MerchantGoodsId string `json:"merchant_goods_id"`
+	// 抖音支付定义的统一商品编号（没有可不传）。
 	DouyinpayGoodsId string `json:"douyinpay_goods_id,omitempty"`
-	GoodsName        string `json:"goods_name,omitempty"`
-	Quantity         int64  `json:"quantity,omitempty"`
-	UnitPrice        int64  `json:"unit_price,omitempty"`
+	// 商品的实际名称。
+	GoodsName string `json:"goods_name,omitempty"`
+	// 用户购买的数量。
+	Quantity int64 `json:"quantity"`
+	// 商品单价，单位为分。
+	UnitPrice int64 `json:"unit_price"`
 }

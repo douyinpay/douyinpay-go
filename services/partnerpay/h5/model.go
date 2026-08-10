@@ -238,16 +238,16 @@ type QueryOrderByOutTradeNoRequest struct {
 
 // Detail 优惠信息（预留字段）
 type Detail struct {
-	CostPrice   int64         `json:"cost_price"`
-	InvoiceId   string        `json:"invoice_id,omitempty"`
-	GoodsDetail []GoodsDetail `json:"goods_detail"`
+	CostPrice   int64          `json:"cost_price,omitempty"`   // 订单原价
+	InvoiceId   string         `json:"invoice_id,omitempty"`   // 发票ID
+	GoodsDetail []*GoodsDetail `json:"goods_detail,omitempty"` // 单品列表
 }
 
 // GoodsDetail 单品信息（预留字段）
 type GoodsDetail struct {
-	MerchantGoodsId  string `json:"merchant_goods_id"`
-	DouyinpayGoodsId string `json:"douyinpay_goods_id,omitempty"`
-	GoodsName        string `json:"goods_name,omitempty"`
-	Quantity         int64  `json:"quantity,omitempty"`
-	UnitPrice        int64  `json:"unit_price,omitempty"`
+	MerchantGoodsId  string `json:"merchant_goods_id,omitempty"`  // 商户侧商品编码
+	DouyinpayGoodsId string `json:"douyinpay_goods_id,omitempty"` // 抖音侧商品编码
+	GoodsName        string `json:"goods_name,omitempty"`         // 商品名称
+	Quantity         int64  `json:"quantity,omitempty"`           // 商品数量
+	UnitPrice        int64  `json:"unit_price,omitempty"`         // 商品单价
 }
