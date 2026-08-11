@@ -1,5 +1,10 @@
 package partnerbill
 
+// 官方文档：
+// - 申请交易账单：https://partner.douyinpay.com/wiki/682c7a8e82b07604fd4deccb/69e2ee7acad2c105c439a809
+// - 申请资金账单：https://partner.douyinpay.com/wiki/682c7a8e82b07604fd4deccb/684a53064037d5050b11863d
+// - 申请分账账单：https://partner.douyinpay.com/wiki/682c7a8e82b07604fd4deccb/684a53090efadf054e0489f0
+
 import (
 	"context"
 	nethttp "net/http"

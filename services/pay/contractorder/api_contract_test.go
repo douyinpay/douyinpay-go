@@ -142,12 +142,6 @@ func PrepayTestApp(ctx context.Context, signType string, t *testing.T) {
 			SceneInfo: &SceneInfo{
 				DeviceId:      "013467007045764",
 				PayerClientIp: "14.23.150.211",
-				StoreInfo: &StoreInfo{
-					Address:  "北京市海淀区中关村大街",
-					AreaCode: "100191",
-					Id:       "0001",
-					Name:     "测试店铺",
-				},
 			},
 			SettleInfo: &SettleInfo{
 				ProfitSharing: false,
@@ -217,12 +211,6 @@ func PrepayTestJsApi(ctx context.Context, signType string, t *testing.T) {
 			SceneInfo: &SceneInfo{
 				DeviceId:      "",
 				PayerClientIp: "14.23.150.211",
-				StoreInfo: &StoreInfo{
-					Address:  "北京市海淀区中关村大街",
-					AreaCode: "100191",
-					Id:       "0001",
-					Name:     "测试店铺",
-				},
 			},
 			SettleInfo: &SettleInfo{
 				ProfitSharing: false,
@@ -291,17 +279,6 @@ func PrepayTestH5(ctx context.Context, signType string, t *testing.T) {
 			SceneInfo: &SceneInfo{
 				DeviceId:      "",
 				PayerClientIp: "",
-				StoreInfo: &StoreInfo{
-					Address:  "北京市海淀区中关村大街",
-					AreaCode: "100191",
-					Id:       "0001",
-					Name:     "测试店铺",
-				},
-				H5Info: &H5Info{
-					Type:    "Wap",
-					AppName: "测试应用",
-					AppUrl:  "https://www.mock.douyinpay.com",
-				},
 			},
 			SettleInfo: &SettleInfo{
 				ProfitSharing: false,

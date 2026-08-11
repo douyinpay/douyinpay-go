@@ -9,7 +9,6 @@ import (
 
 	"github.com/douyinpay/douyinpay-go/client"
 	"github.com/douyinpay/douyinpay-go/services"
-	"github.com/douyinpay/douyinpay-go/services/partnerpay"
 	"github.com/douyinpay/douyinpay-go/services/secret"
 	"github.com/douyinpay/douyinpay-go/tools/consts"
 	"github.com/douyinpay/douyinpay-go/utils"
@@ -38,7 +37,7 @@ func PartnerContractOrderTest(ctx context.Context, signType string, t *testing.T
 	}
 	outTradeNo := fmt.Sprintf("%s_%d", "OUT", time.Now().Unix())
 	// info
-	contractInfo := &partnerpay.ContractInfo{
+	contractInfo := &ContractInfo{
 		ContractMchId:          secret.MchID,
 		ContractAppId:          secret.LocalAppID,
 		PlanId:                 secret.LocalPlanIdStr,
@@ -47,7 +46,7 @@ func PartnerContractOrderTest(ctx context.Context, signType string, t *testing.T
 		ContractDisplayAccount: "测试账号",
 		ContractNotifyUrl:      "",
 	}
-	contractInfo2 := &partnerpay.ContractInfo{
+	contractInfo2 := &ContractInfo{
 		ContractMchId:          secret.MchID,
 		ContractAppId:          secret.LocalAppID,
 		PlanId:                 secret.LocalPlanIdStr,
@@ -57,7 +56,7 @@ func PartnerContractOrderTest(ctx context.Context, signType string, t *testing.T
 		ContractNotifyUrl:      "",
 	}
 	//jsonToObj
-	req := partnerpay.PartnerContractOrderRequest{
+	req := PartnerContractOrderRequest{
 		SpAppid:     secret.LocalAppID,
 		SpMchid:     secret.MchID,
 		SubAppid:    secret.LocalAppID,
@@ -68,12 +67,12 @@ func PartnerContractOrderTest(ctx context.Context, signType string, t *testing.T
 		NotifyUrl:   "https://www.mock.com",
 		OutTradeNo:  outTradeNo,
 		//TradeType:   "JSAPI",
-		Amount: &partnerpay.Amount{
+		Amount: &Amount{
 			Currency: "CNY",
 			Total:    100,
 		},
 		ContractInfo: contractInfo2,
-		Payer: &partnerpay.Payer{
+		Payer: &Payer{
 			SpOpenid:  secret.LocalOpenID,
 			SubOpenid: secret.LocalSubOpenID,
 		},
@@ -174,7 +173,7 @@ func PartnerPayApplyTest(ctx context.Context, signType string, t *testing.T) {
 		c = services.InitClientSM2(ctx, secret.MchID, secret.MerchantSerialNo, secret.MerchantPrivateKey, secret.PlatformCertificate)
 	}
 	//jsonToObj
-	goodsArr := []partnerpay.GoodsDetail{
+	goodsArr := []GoodsDetail{
 		{
 			DouyinpayGoodsId: "",
 			GoodsName:        "测试商品",
@@ -185,7 +184,7 @@ func PartnerPayApplyTest(ctx context.Context, signType string, t *testing.T) {
 	}
 	outTradeNo := fmt.Sprintf("%s_%d", "OUT", time.Now().Unix())
 
-	req := partnerpay.PartnerPayApplyRequest{
+	req := PartnerPayApplyRequest{
 		SpAppid:    secret.LocalAppID,
 		SpMchid:    secret.MchID,
 		SubAppid:   secret.LocalAppID,
@@ -199,21 +198,21 @@ func PartnerPayApplyTest(ctx context.Context, signType string, t *testing.T) {
 		Description: "测试商品",
 		NotifyUrl:   "",
 		Attach:      "",
-		Detail: &partnerpay.PayApplyDetail{
+		Detail: &PayApplyDetail{
 			CostPrice:   608800,
 			GoodsDetail: goodsArr,
 			InvoiceId:   "dy123",
 		},
-		Amount: &partnerpay.Amount{
+		Amount: &Amount{
 			Currency: "CNY",
 			Total:    10,
 		},
-		SceneInfo: &partnerpay.SceneInfo{
+		SceneInfo: &SceneInfo{
 			DeviceId:      "013467007045764",
 			PayerClientIp: "14.23.150.211",
 			PayerDeviceId: "",
 		},
-		SettleInfo: &partnerpay.SettleInfo{
+		SettleInfo: &SettleInfo{
 			ProfitSharing: false,
 		},
 	}

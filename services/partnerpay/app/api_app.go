@@ -1,5 +1,10 @@
 package partnerapp
 
+// 官方文档：
+// - APP下单：https://partner.douyinpay.com/wiki/682c7a8e82b07604fd4deccb/6852bb1377f5de0546d4cdfe
+// - 查询订单：https://partner.douyinpay.com/wiki/682c7a8e82b07604fd4deccb/6852bb22fe022d05166966c5
+// - 关闭订单：https://partner.douyinpay.com/wiki/682c7a8e82b07604fd4deccb/6852bb25d479e6051ac20fb4
+
 import (
 	"context"
 	"fmt"

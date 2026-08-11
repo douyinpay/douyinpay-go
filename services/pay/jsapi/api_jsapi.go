@@ -1,5 +1,10 @@
 package jsapi
 
+// 官方文档：
+// - JSAPI下单：https://pay.douyinpay.com/wiki/639fd48f17c2f3021d237f61/64413f8f1e7fe102220fc677
+// - 查询订单：https://pay.douyinpay.com/wiki/639fd48f17c2f3021d237f61/64413fa1f800210229dd81a8
+// - 关闭订单：https://pay.douyinpay.com/wiki/639fd48f17c2f3021d237f61/64413fd596176a021edc1836
+
 import (
 	"context"
 	"fmt"
@@ -15,7 +20,7 @@ import (
 
 type JsapiApiService services.Service
 
-// Prepay APP支付下单
+// Prepay JSAPI支付下单
 func (a *JsapiApiService) Prepay(ctx context.Context, req PrepayRequest) (resp *PrepayResponse, result *client.APIResult, err error) {
 	r := &client.RequestEntity{
 		Method:      nethttp.MethodPost,
