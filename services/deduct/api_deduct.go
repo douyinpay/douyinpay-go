@@ -138,7 +138,7 @@ func (a *ApiDeductService) QueryOrderByOutTradeNo(ctx context.Context, req Query
 	return resp, result, nil
 }
 
-// DeductNotify 预扣费通知
+// DeductNotify 预约扣费通知
 func (a *ApiDeductService) DeductNotify(ctx context.Context, req DeductNotifyRequest) (result *client.APIResult, err error) {
 	if req.ContractId == "" {
 		return nil, fmt.Errorf("DeductNotifyRequest required field `ContractId` is empty")

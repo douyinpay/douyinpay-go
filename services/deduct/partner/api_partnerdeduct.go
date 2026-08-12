@@ -19,7 +19,7 @@ import (
 
 type ApiPartnerDeductService services.Service
 
-// PartnerContractSchedule  预约扣费
+// PartnerContractSchedule 预约扣费
 func (a *ApiPartnerDeductService) PartnerContractSchedule(ctx context.Context, req contractorder.PartnerContractScheduleRequest) (resp *contractorder.PartnerContractScheduleResponse, result *client.APIResult, err error) {
 	// 参数校验
 	if req.ContractId == "" {
@@ -60,7 +60,7 @@ func (a *ApiPartnerDeductService) PartnerContractSchedule(ctx context.Context, r
 	return resp, result, nil
 }
 
-// PartnerContractScheduleQuery  预约扣费结果查询
+// PartnerContractScheduleQuery 预约扣费结果查询
 func (a *ApiPartnerDeductService) PartnerContractScheduleQuery(ctx context.Context, req contractorder.PartnerContractScheduleQueryRequest) (resp *contractorder.PartnerContractScheduleQueryResponse, result *client.APIResult, err error) {
 	// 参数校验
 	if req.ContractId == "" {
