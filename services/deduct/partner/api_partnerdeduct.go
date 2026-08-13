@@ -17,9 +17,14 @@ import (
 	"github.com/douyinpay/douyinpay-go/tools/consts"
 )
 
+// ApiPartnerDeductService 服务商预约扣费服务。
+//
+// 接口路径：
+// - 预约扣费：POST /v1/agreementauth/partner/schedules/contract-id/{contract_id}/schedule
+// - 预约扣费结果查询：GET /v1/agreementauth/partner/schedules/contract-id/{contract_id}
 type ApiPartnerDeductService services.Service
 
-// PartnerContractSchedule 预约扣费
+// PartnerContractSchedule 预约扣费。
 func (a *ApiPartnerDeductService) PartnerContractSchedule(ctx context.Context, req contractorder.PartnerContractScheduleRequest) (resp *contractorder.PartnerContractScheduleResponse, result *client.APIResult, err error) {
 	// 参数校验
 	if req.ContractId == "" {
@@ -60,7 +65,8 @@ func (a *ApiPartnerDeductService) PartnerContractSchedule(ctx context.Context, r
 	return resp, result, nil
 }
 
-// PartnerContractScheduleQuery 预约扣费结果查询
+// PartnerContractScheduleQuery 预约扣费结果查询。
+// 接口路径：GET /v1/agreementauth/partner/schedules/contract-id/{contract_id}。
 func (a *ApiPartnerDeductService) PartnerContractScheduleQuery(ctx context.Context, req contractorder.PartnerContractScheduleQueryRequest) (resp *contractorder.PartnerContractScheduleQueryResponse, result *client.APIResult, err error) {
 	// 参数校验
 	if req.ContractId == "" {

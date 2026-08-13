@@ -1,5 +1,6 @@
 package contract
 
+// QueryContractRequest 查询代扣签约协议请求参数
 type QueryContractRequest struct {
 	Mchid        string `json:"mchid"`                       // 商户号
 	Appid        string `json:"appid"`                       // 商户appid
@@ -8,6 +9,7 @@ type QueryContractRequest struct {
 	ContractCode string `json:"out_contract_code,omitempty"` // 商户生成的代扣协议号
 }
 
+// QueryContractResponse 查询代扣签约协议响应参数
 type QueryContractResponse struct {
 	Mchid                     string `json:"mchid,omitempty"`                       // 三方商户号
 	Appid                     string `json:"appid,omitempty"`                       // 商户appid
@@ -25,16 +27,17 @@ type QueryContractResponse struct {
 	OpenId                    string `json:"openid,omitempty"`                      // 用户标识
 }
 
-// 申请解约
+// DeleteContractRequest 解除代扣签约协议请求参数
 type DeleteContractRequest struct {
 	Mchid                     string `json:"mchid"`                       // 三方商户号
 	Appid                     string `json:"appid"`                       // 三方商户appid
 	PlanId                    string `json:"plan_id,omitempty"`           // 签约模版ID
 	ContractCode              string `json:"out_contract_code,omitempty"` // 外部签约协议号
 	ContractId                string `json:"contract_id,omitempty"`       // 抖音支付代扣协议号
-	ContractTerminationRemark string `json:"contract_termination_remark"` // 委托代扣签约成功后由微信返回的委托代扣协议id，选择contract_id解约
+	ContractTerminationRemark string `json:"contract_termination_remark"` // 解约备注，传入解约原因。
 }
 
+// DeleteContractResponse 解除代扣签约协议响应参数
 type DeleteContractResponse struct {
 	Appid        string `json:"appid"`
 	ContractId   string `json:"contract_id,omitempty"`       // 抖音支付代扣协议号
@@ -44,7 +47,7 @@ type DeleteContractResponse struct {
 
 }
 
-// 签解约通知消息体
+// SignContractNotifyBody 签解约通知消息体
 type SignContractNotifyBody struct {
 	// 服务商户号
 	Mchid string `json:"mchid"`
@@ -66,6 +69,7 @@ type SignContractNotifyBody struct {
 	RequestSerial int64 `json:"request_serial,omitempty"`
 }
 
+// PreEntrustWebRequest APP 预签约下单请求参数
 type PreEntrustWebRequest struct {
 	Mchid                  string `json:"mchid"`                    // 商户号
 	Appid                  string `json:"appid"`                    // 商户appid
@@ -77,10 +81,12 @@ type PreEntrustWebRequest struct {
 	ContractExt            string `json:"contract_ext"`             // 签约拓展参数，json格式，注：仅与抖音支付线下约定后使用
 }
 
+// PreEntrustWebResponse APP 预签约下单响应参数
 type PreEntrustWebResponse struct {
 	PreEntrustWebId string `json:"pre_entrustweb_id"` // 预签约id，两个小时内有效
 }
 
+// H5EntrustwebRequest H5 预签约下单请求参数
 type H5EntrustwebRequest struct {
 	Mchid                  string `json:"mchid"`                    // 商户号
 	Appid                  string `json:"appid"`                    // 商户appid
@@ -94,6 +100,7 @@ type H5EntrustwebRequest struct {
 	ClientIp               string `json:"client_ip"`                // 用户客户端ip地址
 }
 
+// H5EntrustwebResponse H5 预签约下单响应参数
 type H5EntrustwebResponse struct {
 	RedirectUrl string `json:"redirect_url"` // 有效期十分钟，用户通过此路径跳转抖音签约支付页面
 }

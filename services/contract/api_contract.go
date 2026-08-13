@@ -10,9 +10,17 @@ import (
 	"github.com/douyinpay/douyinpay-go/tools/consts"
 )
 
+// ApiContractService 直连商户签约关系服务。
+//
+// 接口路径：
+// - 查询签约协议：POST /v1/member/querycontract
+// - 删除签约协议：POST /v1/member/deletecontract
+// - APP 预签约下单：POST /v1/agreementauth/preentrustweb
+// - H5 预签约下单：POST /v1/agreementauth/h5entrustweb
 type ApiContractService services.Service
 
-// QueryContract 查询代扣签约协议
+// QueryContract 查询代扣签约协议。
+// 接口路径：POST /v1/member/querycontract。
 func (a *ApiContractService) QueryContract(ctx context.Context, req QueryContractRequest) (resp *QueryContractResponse, result *client.APIResult, err error) {
 	// 参数校验
 	if req.Mchid == "" {
@@ -46,7 +54,8 @@ func (a *ApiContractService) QueryContract(ctx context.Context, req QueryContrac
 	return resp, result, nil
 }
 
-// DeleteContract 解除代扣签约协议
+// DeleteContract 解除代扣签约协议。
+// 接口路径：POST /v1/member/deletecontract。
 func (a *ApiContractService) DeleteContract(ctx context.Context, req DeleteContractRequest) (resp *DeleteContractResponse, result *client.APIResult, err error) {
 	// 参数校验
 	if req.Mchid == "" {
@@ -83,7 +92,8 @@ func (a *ApiContractService) DeleteContract(ctx context.Context, req DeleteContr
 	return resp, result, nil
 }
 
-// PreEntrustWeb 独立签约下单
+// PreEntrustWeb 独立签约下单。
+// 接口路径：POST /v1/agreementauth/preentrustweb。
 func (a *ApiContractService) PreEntrustWeb(ctx context.Context, req PreEntrustWebRequest) (resp *PreEntrustWebResponse, result *client.APIResult, err error) {
 	// 参数校验
 	if req.Mchid == "" {
@@ -129,7 +139,8 @@ func (a *ApiContractService) PreEntrustWeb(ctx context.Context, req PreEntrustWe
 	return resp, result, nil
 }
 
-// H5Entrustweb H5预签约
+// H5Entrustweb H5 预签约。
+// 接口路径：POST /v1/agreementauth/h5entrustweb。
 func (a *ApiContractService) H5Entrustweb(ctx context.Context, req H5EntrustwebRequest) (resp *H5EntrustwebResponse, result *client.APIResult, err error) {
 	// 参数校验
 	if req.Mchid == "" {

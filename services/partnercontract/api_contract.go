@@ -16,9 +16,14 @@ import (
 	"github.com/douyinpay/douyinpay-go/tools/consts"
 )
 
+// ApiPartnerContractOrderService 服务商签约关系服务。
+//
+// 接口路径：
+// - 查询签约关系：GET /v1/agreementauth/partner/contracts/plan-id/{plan_id}/out-contract-code/{out_contract_code}
+// - 协议解约：POST /v1/agreementauth/partner/contracts/plan-id/{plan_id}/out-contract-code/{out_contract_code}/terminate
 type ApiPartnerContractOrderService services.Service
 
-// PartnerQueryContract 查询签约关系
+// PartnerQueryContract 查询签约关系。
 func (a *ApiPartnerContractOrderService) PartnerQueryContract(ctx context.Context, req PartnerQueryContractRequest) (resp *PartnerQueryContractResponse, result *client.APIResult, err error) {
 	// 参数校验
 	if req.PlanId < 1 {
@@ -62,7 +67,8 @@ func (a *ApiPartnerContractOrderService) PartnerQueryContract(ctx context.Contex
 	return resp, result, nil
 }
 
-// PartnerTerminateContract 协议解约
+// PartnerTerminateContract 协议解约。
+// 接口路径：POST /v1/agreementauth/partner/contracts/plan-id/{plan_id}/out-contract-code/{out_contract_code}/terminate。
 func (a *ApiPartnerContractOrderService) PartnerTerminateContract(ctx context.Context, req PartnerTerminateContractRequest) (resp *PartnerTerminateContractResponse, result *client.APIResult, err error) {
 	// 参数校验
 	if req.PlanId < 1 {
