@@ -367,7 +367,12 @@ func (a *ApiPayScoreService) SynchronizeServiceOrderInfoForSP(ctx context.Contex
 	if err != nil {
 		return nil, result, err
 	}
-	return new(ApiPartnerSynchronizeServiceOrderInfoResponse), result, nil
+	resp = new(ApiPartnerSynchronizeServiceOrderInfoResponse)
+	err = client.UnMarshalResponse(result.Response, resp)
+	if err != nil {
+		return nil, result, err
+	}
+	return resp, result, err
 }
 
 // ModifyAmountForSP 服务商修改订单金额。
@@ -388,14 +393,8 @@ func (a *ApiPayScoreService) ModifyAmountForSP(ctx context.Context, req ApiPartn
 // CreditSrvSignApplyForSP 服务商申请服务授权。
 func (a *ApiPayScoreService) CreditSrvSignApplyForSP(ctx context.Context, req ApiPartnerCreditSrvSignApplyRequest) (
 	resp *ApiPartnerCreditSrvSignApplyResponse, result *client.APIResult, err error) {
-	r := &client.RequestEntity{
-		Method:      nethttp.MethodPost,
-		ContentType: consts.ApplicationJSON,
-		PostBody:    req,
-		Header:      nethttp.Header{},
-		RequestPath: reqUrl + consts.PartnerCreditSrvSignApplyPath,
-	}
-	result, err = a.Client.Request(ctx, r)
+	result, err = a.requestPartnerServiceOrder(ctx, consts.PartnerCreditSrvSignApplyPath,
+		nethttp.MethodPost, req, nil)
 	if err != nil {
 		return nil, result, err
 	}
@@ -410,21 +409,14 @@ func (a *ApiPayScoreService) CreditSrvSignApplyForSP(ctx context.Context, req Ap
 // CreditSrvSignQueryForSP 服务商查询用户授权记录。
 func (a *ApiPayScoreService) CreditSrvSignQueryForSP(ctx context.Context, req ApiPartnerCreditSrvSignQueryRequest) (
 	resp *ApiPartnerCreditSrvSignQueryResponse, result *client.APIResult, err error) {
-	query := neturl.Values{
-		"sp_mchid":   []string{req.SpMchid},
-		"sub_mchid":  []string{req.SubMchid},
-		"service_id": []string{req.ServiceId},
-	}
-	path := reqUrl + strings.Replace(consts.PartnerCreditSrvSignQueryPath,
+	path := strings.Replace(consts.PartnerCreditSrvSignQueryPath,
 		"{authorization_code}", req.AuthorizationCode, 1)
-	r := &client.RequestEntity{
-		Method:      nethttp.MethodGet,
-		ContentType: consts.ApplicationJSON,
-		QueryParams: query,
-		Header:      nethttp.Header{},
-		RequestPath: path,
-	}
-	result, err = a.Client.Request(ctx, r)
+	result, err = a.requestPartnerServiceOrder(ctx, path, nethttp.MethodGet, nil,
+		neturl.Values{
+			"sp_mchid":   []string{req.SpMchid},
+			"sub_mchid":  []string{req.SubMchid},
+			"service_id": []string{req.ServiceId},
+		})
 	if err != nil {
 		return nil, result, err
 	}
@@ -452,7 +444,12 @@ func (a *ApiPayScoreService) CloseCreditServiceForSP(ctx context.Context, req Ap
 	if err != nil {
 		return nil, result, err
 	}
-	return new(ApiPartnerCloseCreditServiceResponse), result, nil
+	resp = new(ApiPartnerCloseCreditServiceResponse)
+	err = client.UnMarshalResponse(result.Response, resp)
+	if err != nil {
+		return nil, result, err
+	}
+	return resp, result, err
 }
 
 func (a *ApiPayScoreService) requestPartnerServiceOrder(
