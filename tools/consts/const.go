@@ -32,16 +32,25 @@ const (
 	PartnerQueryByIdPath         = "/v1/trade/partner/transactions/id/{transaction_id}"
 	PartnerQueryByOutTradeNoPath = "/v1/trade/partner/transactions/out-trade-no/{out_trade_no}"
 
-	CreateServiceOrderPath   = "/v1/payscore/serviceorder/create"                                           // 创建服务订单
-	SyncServiceOrderPath     = "/v1/payscore/serviceorder/{out_order_no}/sync"                              // 同步服务订单信息
-	ServiceOrderPayPath      = "/v1/payscore/serviceorder/{out_order_no}/pay"                               // 商户发起催收扣款
-	QueryServiceOrderPath    = "/v1/payscore/serviceorder/query"                                            // 查询服务订单信息
-	CancelServiceOrderPath   = "/v1/payscore/serviceorder/cancel"                                           // 取消服务订单
-	ModifyServiceOrderPath   = "/v1/payscore/serviceorder/modify"                                           // 服务订单改价
-	CompleteServiceOrderPath = "/v1/payscore/serviceorder/complete"                                         // 完结服务订单
-	CreditSrvSignApplyPath   = "/v1/payscore/permissions"                                                   // 申请服务授权
-	CreditSrvSignQueryPath   = "/v1/payscore/permissions/authorization-code/{authorization_code}"           // 查询用户授权记录
-	CloseCreditServicePath   = "/v1/payscore/permissions/authorization-code/{authorization_code}/terminate" // 解除用户授权关系
+	CreateServiceOrderPath          = "/v1/payscore/serviceorder/create"                                                   // 创建服务订单
+	SyncServiceOrderPath            = "/v1/payscore/serviceorder/{out_order_no}/sync"                                      // 同步服务订单信息
+	ServiceOrderPayPath             = "/v1/payscore/serviceorder/{out_order_no}/pay"                                       // 商户发起催收扣款
+	QueryServiceOrderPath           = "/v1/payscore/serviceorder/query"                                                    // 查询服务订单信息
+	CancelServiceOrderPath          = "/v1/payscore/serviceorder/cancel"                                                   // 取消服务订单
+	ModifyServiceOrderPath          = "/v1/payscore/serviceorder/modify"                                                   // 服务订单改价
+	CompleteServiceOrderPath        = "/v1/payscore/serviceorder/complete"                                                 // 完结服务订单
+	CreditSrvSignApplyPath          = "/v1/payscore/permissions"                                                           // 申请服务授权
+	CreditSrvSignQueryPath          = "/v1/payscore/permissions/authorization-code/{authorization_code}"                   // 查询用户授权记录
+	CloseCreditServicePath          = "/v1/payscore/permissions/authorization-code/{authorization_code}/terminate"         // 解除用户授权关系
+	PartnerCreateServiceOrderPath   = "/v1/payscore/partner/serviceorder/create"                                           // 服务商创建服务订单
+	PartnerCompleteServiceOrderPath = "/v1/payscore/partner/serviceorder/complete"                                         // 服务商完结服务订单
+	PartnerQueryServiceOrderPath    = "/v1/payscore/partner/serviceorder/query"                                            // 服务商查询服务订单
+	PartnerCancelServiceOrderPath   = "/v1/payscore/partner/serviceorder/cancel"                                           // 服务商取消服务订单
+	PartnerSyncServiceOrderPath     = "/v1/payscore/partner/serviceorder/{out_order_no}/sync"                              // 服务商同步服务订单
+	PartnerModifyServiceOrderPath   = "/v1/payscore/partner/serviceorder/modify"                                           // 服务商修改订单金额
+	PartnerCreditSrvSignApplyPath   = "/v1/payscore/partner/permissions"                                                   // 服务商申请服务授权
+	PartnerCreditSrvSignQueryPath   = "/v1/payscore/partner/permissions/authorization-code/{authorization_code}"           // 服务商查询用户授权记录
+	PartnerCloseCreditServicePath   = "/v1/payscore/partner/permissions/authorization-code/{authorization_code}/terminate" // 服务商解除用户授权关系
 	// 直联商户
 	PreentrustWebPath = "/v1/agreementauth/preentrustweb" // App纯签约下单
 	H5EntrustwebPath  = "/v1/agreementauth/h5entrustweb"  // H5独立签约

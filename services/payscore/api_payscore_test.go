@@ -21,6 +21,10 @@ var (
 	merchantSerialNo    = "" // 商户证书序列号
 	merchantPrivateKey  = "" // 商户私钥
 	platformCertificate = "" // 平台证书
+	spAppId             = "" // 服务商应用ID
+	spMchId             = "" // 服务商商户号
+	subAppId            = "" // 子商户应用ID
+	subMchId            = "" // 子商户商户号
 )
 
 func TestCreateAndCompleteServiceOrder(t *testing.T) {
@@ -59,6 +63,33 @@ func TestCreateAndCompleteServiceOrder(t *testing.T) {
 
 	t.Run("解除用户授权关系", func(t *testing.T) {
 		CloseCreditServiceTest(ctx, consts.CRYPTO_TYPE_RSA, t)
+	})
+	t.Run("服务商创建服务订单", func(t *testing.T) {
+		PartnerCreateServiceOrderTest(ctx, consts.CRYPTO_TYPE_RSA, t)
+	})
+	t.Run("服务商完结服务订单", func(t *testing.T) {
+		PartnerCompleteServiceOrderTest(ctx, consts.CRYPTO_TYPE_RSA, t)
+	})
+	t.Run("服务商查询服务订单", func(t *testing.T) {
+		PartnerQueryServiceOrderTest(ctx, consts.CRYPTO_TYPE_RSA, t)
+	})
+	t.Run("服务商取消服务订单", func(t *testing.T) {
+		PartnerCancelServiceOrderTest(ctx, consts.CRYPTO_TYPE_RSA, t)
+	})
+	t.Run("服务商同步服务订单信息", func(t *testing.T) {
+		PartnerSynchronizeServiceOrderInfoTest(ctx, consts.CRYPTO_TYPE_RSA, t)
+	})
+	t.Run("服务商修改订单金额", func(t *testing.T) {
+		PartnerModifyAmountTest(ctx, consts.CRYPTO_TYPE_RSA, t)
+	})
+	t.Run("服务商申请服务授权", func(t *testing.T) {
+		PartnerCreditSrvSignApplyTest(ctx, consts.CRYPTO_TYPE_RSA, t)
+	})
+	t.Run("服务商查询用户授权记录", func(t *testing.T) {
+		PartnerCreditSrvSignQueryTest(ctx, consts.CRYPTO_TYPE_RSA, t)
+	})
+	t.Run("服务商解除用户授权关系", func(t *testing.T) {
+		PartnerCloseCreditServiceTest(ctx, consts.CRYPTO_TYPE_RSA, t)
 	})
 }
 
@@ -441,5 +472,249 @@ func CloseCreditServiceTest(ctx context.Context, signType string, t *testing.T) 
 		log.Printf("status=%d resp=%+v", result.Response.StatusCode, utils.Json2Str(resp))
 	}
 
+	assert.Equal(t, true, resp != nil)
+}
+
+func PartnerCreateServiceOrderTest(ctx context.Context, signType string, t *testing.T) {
+	var c *client.Client
+	if signType == "RSA" {
+		c = services.InitClientRSA(ctx, mchID, merchantSerialNo, merchantPrivateKey, platformCertificate)
+	} else {
+		c = services.InitClientSM2(ctx, mchID, merchantSerialNo, merchantPrivateKey, platformCertificate)
+	}
+	svc := ApiPayScoreService{Client: c}
+	resp, result, err := svc.CreateServiceOrderForSP(ctx, ApiPartnerCreateServiceOrderRequest{
+		SpAppid:             spAppId,
+		SpMchid:             spMchId,
+		SubAppid:            subAppId,
+		SubMchid:            subMchId,
+		OutOrderNo:          "OUT_1666688488",
+		ServiceId:           "101",
+		ServiceIntroduction: "某某酒店",
+		AuthorizationCode:   "AUTH_1666688488",
+		NotifyUrl:           "https://callback.example.com/payscore",
+		RiskFund:            &RiskFund{Name: "ESTIMATE_ORDER_COST", Amount: 10000},
+	})
+	log.Printf("outOrderNo: OUT_1666688488\nRequest-Id: %s", result.Response.Header.Get(consts.RequestID))
+	if err != nil {
+		log.Printf("call CreateServiceOrderForSP err: %v", err)
+	} else {
+		log.Printf("status=%d resp=%+v", result.Response.StatusCode, utils.Json2Str(resp))
+	}
+	assert.Equal(t, true, resp != nil)
+}
+
+func PartnerCompleteServiceOrderTest(ctx context.Context, signType string, t *testing.T) {
+	var c *client.Client
+	if signType == "RSA" {
+		c = services.InitClientRSA(ctx, mchID, merchantSerialNo, merchantPrivateKey, platformCertificate)
+	} else {
+		c = services.InitClientSM2(ctx, mchID, merchantSerialNo, merchantPrivateKey, platformCertificate)
+	}
+	svc := ApiPayScoreService{Client: c}
+	resp, result, err := svc.CompleteServiceOrderForSP(ctx, ApiPartnerCompleteServiceOrderRequest{
+		SpAppid:     spAppId,
+		SpMchid:     spMchId,
+		SubMchid:    subMchId,
+		OutOrderNo:  "OUT_1666688488",
+		ServiceId:   "101",
+		TotalAmount: 10000,
+		ChannelInfo: &ChannelInfo{
+			PresetChannel: []*PresetChannel{
+				{
+					ChannelCode:   "OUTSIDE_MC",
+					ChannelId:     "M2025042914432001250054700",
+					ChannelAmount: 100,
+				},
+			},
+		},
+	})
+	log.Printf("outOrderNo: OUT_1666688488\nRequest-Id: %s", result.Response.Header.Get(consts.RequestID))
+	if err != nil {
+		log.Printf("call CompleteServiceOrderForSP err: %v", err)
+	} else {
+		log.Printf("status=%d resp=%+v", result.Response.StatusCode, utils.Json2Str(resp))
+	}
+	assert.Equal(t, true, resp != nil)
+}
+
+func PartnerQueryServiceOrderTest(ctx context.Context, signType string, t *testing.T) {
+	var c *client.Client
+	if signType == "RSA" {
+		c = services.InitClientRSA(ctx, mchID, merchantSerialNo, merchantPrivateKey, platformCertificate)
+	} else {
+		c = services.InitClientSM2(ctx, mchID, merchantSerialNo, merchantPrivateKey, platformCertificate)
+	}
+	svc := ApiPayScoreService{Client: c}
+	resp, result, err := svc.QueryServiceOrderForSP(ctx, ApiPartnerQueryServiceOrderRequest{
+		SpAppid:    spAppId,
+		SpMchid:    spMchId,
+		SubAppid:   subAppId,
+		SubMchid:   subMchId,
+		OutOrderNo: "OUT_1",
+		ServiceId:  "101",
+	})
+	log.Printf("outOrderNo: OUT_1\nRequest-Id: %s", result.Response.Header.Get(consts.RequestID))
+	if err != nil {
+		log.Printf("call QueryServiceOrderForSP err: %v", err)
+	} else {
+		log.Printf("status=%d resp=%+v", result.Response.StatusCode, utils.Json2Str(resp))
+	}
+	assert.Equal(t, true, resp != nil)
+}
+
+func PartnerCancelServiceOrderTest(ctx context.Context, signType string, t *testing.T) {
+	var c *client.Client
+	if signType == "RSA" {
+		c = services.InitClientRSA(ctx, mchID, merchantSerialNo, merchantPrivateKey, platformCertificate)
+	} else {
+		c = services.InitClientSM2(ctx, mchID, merchantSerialNo, merchantPrivateKey, platformCertificate)
+	}
+	svc := ApiPayScoreService{Client: c}
+	resp, result, err := svc.CancelServiceOrderForSP(ctx, ApiPartnerCancelServiceOrderRequest{
+		SpAppid:    spAppId,
+		SpMchid:    spMchId,
+		SubMchid:   subMchId,
+		OutOrderNo: "OUT_1666688488",
+		ServiceId:  "101",
+		Reason:     "用户取消",
+	})
+	log.Printf("outOrderNo: OUT_1666688488\nRequest-Id: %s", result.Response.Header.Get(consts.RequestID))
+	if err != nil {
+		log.Printf("call CancelServiceOrderForSP err: %v", err)
+	} else {
+		log.Printf("status=%d resp=%+v", result.Response.StatusCode, utils.Json2Str(resp))
+	}
+	assert.Equal(t, true, resp != nil)
+}
+
+func PartnerSynchronizeServiceOrderInfoTest(ctx context.Context, signType string, t *testing.T) {
+	var c *client.Client
+	if signType == "RSA" {
+		c = services.InitClientRSA(ctx, mchID, merchantSerialNo, merchantPrivateKey, platformCertificate)
+	} else {
+		c = services.InitClientSM2(ctx, mchID, merchantSerialNo, merchantPrivateKey, platformCertificate)
+	}
+	svc := ApiPayScoreService{Client: c}
+	resp, result, err := svc.SynchronizeServiceOrderInfoForSP(ctx, ApiPartnerSynchronizeServiceOrderInfoRequest{
+		SpAppid:    spAppId,
+		SpMchid:    spMchId,
+		SubMchid:   subMchId,
+		OutOrderNo: "OUT_1666688488",
+		ServiceId:  "101",
+		Type:       "ORDER_PAID",
+		Detail: struct {
+			PaidTime string `json:"paid_time"`
+		}{
+			PaidTime: "20220806091010",
+		},
+	})
+	log.Printf("outOrderNo: OUT_1666688488\nRequest-Id: %s", result.Response.Header.Get(consts.RequestID))
+	if err != nil {
+		log.Printf("call SynchronizeServiceOrderInfoForSP err: %v", err)
+	} else {
+		log.Printf("status=%d resp=%+v", result.Response.StatusCode, utils.Json2Str(resp))
+	}
+	assert.Equal(t, true, resp != nil)
+}
+
+func PartnerModifyAmountTest(ctx context.Context, signType string, t *testing.T) {
+	var c *client.Client
+	if signType == "RSA" {
+		c = services.InitClientRSA(ctx, mchID, merchantSerialNo, merchantPrivateKey, platformCertificate)
+	} else {
+		c = services.InitClientSM2(ctx, mchID, merchantSerialNo, merchantPrivateKey, platformCertificate)
+	}
+	svc := ApiPayScoreService{Client: c}
+	resp, result, err := svc.ModifyAmountForSP(ctx, ApiPartnerModifyAmountRequest{
+		SpAppid:     spAppId,
+		SpMchid:     spMchId,
+		SubMchid:    subMchId,
+		OutOrderNo:  "OUT_1666688488",
+		ServiceId:   "101",
+		TotalAmount: 9000,
+		Reason:      "修改原因",
+	})
+	log.Printf("outOrderNo: OUT_1666688488\nRequest-Id: %s", result.Response.Header.Get(consts.RequestID))
+	if err != nil {
+		log.Printf("call ModifyAmountForSP err: %v", err)
+	} else {
+		log.Printf("status=%d resp=%+v", result.Response.StatusCode, utils.Json2Str(resp))
+	}
+	assert.Equal(t, true, resp != nil)
+}
+
+func PartnerCreditSrvSignApplyTest(ctx context.Context, signType string, t *testing.T) {
+	var c *client.Client
+	if signType == "RSA" {
+		c = services.InitClientRSA(ctx, mchID, merchantSerialNo, merchantPrivateKey, platformCertificate)
+	} else {
+		c = services.InitClientSM2(ctx, mchID, merchantSerialNo, merchantPrivateKey, platformCertificate)
+	}
+	svc := ApiPayScoreService{Client: c}
+	resp, result, err := svc.CreditSrvSignApplyForSP(ctx, ApiPartnerCreditSrvSignApplyRequest{
+		SpAppid:           spAppId,
+		SpMchid:           spMchId,
+		SubAppid:          subAppId,
+		SubMchid:          subMchId,
+		ServiceId:         "101",
+		AuthorizationCode: "AUTH_1",
+		NotifyUrl:         "https://callback.example.com/payscore",
+	})
+	log.Printf("authorizationCode: AUTH_1\nRequest-Id: %s", result.Response.Header.Get(consts.RequestID))
+	if err != nil {
+		log.Printf("call CreditSrvSignApplyForSP err: %v", err)
+	} else {
+		log.Printf("status=%d resp=%+v", result.Response.StatusCode, utils.Json2Str(resp))
+	}
+	assert.Equal(t, true, resp != nil)
+}
+
+func PartnerCreditSrvSignQueryTest(ctx context.Context, signType string, t *testing.T) {
+	var c *client.Client
+	if signType == "RSA" {
+		c = services.InitClientRSA(ctx, mchID, merchantSerialNo, merchantPrivateKey, platformCertificate)
+	} else {
+		c = services.InitClientSM2(ctx, mchID, merchantSerialNo, merchantPrivateKey, platformCertificate)
+	}
+	svc := ApiPayScoreService{Client: c}
+	resp, result, err := svc.CreditSrvSignQueryForSP(ctx, ApiPartnerCreditSrvSignQueryRequest{
+		SpMchid:           spMchId,
+		SubMchid:          subMchId,
+		ServiceId:         "101",
+		AuthorizationCode: "AUTH_1",
+	})
+	log.Printf("authorizationCode: AUTH_1\nRequest-Id: %s", result.Response.Header.Get(consts.RequestID))
+	if err != nil {
+		log.Printf("call CreditSrvSignQueryForSP err: %v", err)
+	} else {
+		log.Printf("status=%d resp=%+v", result.Response.StatusCode, utils.Json2Str(resp))
+	}
+	assert.Equal(t, true, resp != nil)
+}
+
+func PartnerCloseCreditServiceTest(ctx context.Context, signType string, t *testing.T) {
+	var c *client.Client
+	if signType == "RSA" {
+		c = services.InitClientRSA(ctx, mchID, merchantSerialNo, merchantPrivateKey, platformCertificate)
+	} else {
+		c = services.InitClientSM2(ctx, mchID, merchantSerialNo, merchantPrivateKey, platformCertificate)
+	}
+	svc := ApiPayScoreService{Client: c}
+	resp, result, err := svc.CloseCreditServiceForSP(ctx, ApiPartnerCloseCreditServiceRequest{
+		SpAppid:           spAppId,
+		SpMchid:           spMchId,
+		SubAppid:          subAppId,
+		SubMchid:          subMchId,
+		ServiceId:         "101",
+		AuthorizationCode: "AUTH_1",
+		Reason:            "用户取消授权",
+	})
+	log.Printf("authorizationCode: AUTH_1\nRequest-Id: %s", result.Response.Header.Get(consts.RequestID))
+	if err != nil {
+		log.Printf("call CloseCreditServiceForSP err: %v", err)
+	} else {
+		log.Printf("status=%d resp=%+v", result.Response.StatusCode, utils.Json2Str(resp))
+	}
 	assert.Equal(t, true, resp != nil)
 }
