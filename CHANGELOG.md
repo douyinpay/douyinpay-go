@@ -4,6 +4,11 @@
 
 ClientVersion 每次sdk升级，需要更新版本号
 
+v1.0.6 - 2026-08-17
+--------------------
+* 新增前置咨询接口（services.cashier.ApiCashierService.PrePayConsult），支持咨询抖音支付渠道、先享后付渠道的可用性与营销信息
+* 补充前置咨询接口的字段注释和文档说明
+
 v1.0.5 - 2026-08-04
 --------------------
 * 直连/服务商交易模型（Transaction）新增扣款失败通知字段：ContractId、ErrCode、ErrCodeDes
