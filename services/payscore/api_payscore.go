@@ -362,7 +362,7 @@ func (a *ApiPayScoreService) CancelServiceOrderForSP(ctx context.Context, req Ap
 // SynchronizeServiceOrderInfoForSP 服务商同步服务订单信息。
 func (a *ApiPayScoreService) SynchronizeServiceOrderInfoForSP(ctx context.Context, req ApiPartnerSynchronizeServiceOrderInfoRequest) (
 	resp *ApiPartnerSynchronizeServiceOrderInfoResponse, result *client.APIResult, err error) {
-	path := strings.Replace(consts.PartnerSyncServiceOrderPath, "{out_order_no}", req.OutOrderNo, 1)
+	path := strings.Replace(consts.PartnerSyncServiceOrderPath, "{out_order_no}", neturl.PathEscape(req.OutOrderNo), -1)
 	result, err = a.requestPartnerServiceOrder(ctx, path, nethttp.MethodPost, req, nil)
 	if err != nil {
 		return nil, result, err
@@ -410,7 +410,7 @@ func (a *ApiPayScoreService) CreditSrvSignApplyForSP(ctx context.Context, req Ap
 func (a *ApiPayScoreService) CreditSrvSignQueryForSP(ctx context.Context, req ApiPartnerCreditSrvSignQueryRequest) (
 	resp *ApiPartnerCreditSrvSignQueryResponse, result *client.APIResult, err error) {
 	path := strings.Replace(consts.PartnerCreditSrvSignQueryPath,
-		"{authorization_code}", req.AuthorizationCode, 1)
+		"{authorization_code}", neturl.PathEscape(req.AuthorizationCode), -1)
 	result, err = a.requestPartnerServiceOrder(ctx, path, nethttp.MethodGet, nil,
 		neturl.Values{
 			"sp_mchid":   []string{req.SpMchid},
@@ -432,7 +432,7 @@ func (a *ApiPayScoreService) CreditSrvSignQueryForSP(ctx context.Context, req Ap
 func (a *ApiPayScoreService) CloseCreditServiceForSP(ctx context.Context, req ApiPartnerCloseCreditServiceRequest) (
 	resp *ApiPartnerCloseCreditServiceResponse, result *client.APIResult, err error) {
 	path := reqUrl + strings.Replace(consts.PartnerCloseCreditServicePath,
-		"{authorization_code}", req.AuthorizationCode, 1)
+		"{authorization_code}", neturl.PathEscape(req.AuthorizationCode), -1)
 	r := &client.RequestEntity{
 		Method:      nethttp.MethodPost,
 		ContentType: consts.ApplicationJSON,
