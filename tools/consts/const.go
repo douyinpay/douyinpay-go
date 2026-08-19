@@ -62,6 +62,9 @@ const (
 
 	// 下载平台证书列表
 	DownloadCertificatesPath = "/v1/merchant/certificates/getPlatformCertificates"
+
+	// 收银
+	PrePayConsultPath = "/v1/cashier/prepay/consult" // 前置咨询
 )
 
 // HTTP 请求报文 Header 相关常量
