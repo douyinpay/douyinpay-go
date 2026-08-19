@@ -25,6 +25,7 @@ import (
 type ApiPartnerDeductService services.Service
 
 // PartnerContractSchedule 预约扣费。
+// 接口路径：POST /v1/agreementauth/partner/schedules/contract-id/{contract_id}/schedule。
 func (a *ApiPartnerDeductService) PartnerContractSchedule(ctx context.Context, req contractorder.PartnerContractScheduleRequest) (resp *contractorder.PartnerContractScheduleResponse, result *client.APIResult, err error) {
 	// 参数校验
 	if req.ContractId == "" {

@@ -320,7 +320,7 @@ type DeductAmount struct {
 	Currency string `json:"currency,omitempty"`
 }
 
-// 申请扣款
+// PayApplyRequest 扣款申请请求参数。
 type PayApplyRequest struct {
 	// 字段含义：应用ID。
 	// 格式规则：string[1,32]。

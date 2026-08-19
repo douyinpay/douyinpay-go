@@ -236,6 +236,7 @@ func (a *ApiDeductService) PayApply(ctx context.Context, req PayApplyRequest) (r
 	return resp, result, nil
 }
 
+// GetServerAddress 返回抖音支付服务地址。
 func GetServerAddress() string {
 	return consts.DouyinPayServer
 }

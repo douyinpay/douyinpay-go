@@ -24,6 +24,7 @@ import (
 type ApiPartnerContractOrderService services.Service
 
 // PartnerQueryContract 查询签约关系。
+// 接口路径：GET /v1/agreementauth/partner/contracts/plan-id/{plan_id}/out-contract-code/{out_contract_code}。
 func (a *ApiPartnerContractOrderService) PartnerQueryContract(ctx context.Context, req PartnerQueryContractRequest) (resp *PartnerQueryContractResponse, result *client.APIResult, err error) {
 	// 参数校验
 	if req.PlanId < 1 {
