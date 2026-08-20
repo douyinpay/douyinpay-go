@@ -12,9 +12,19 @@ import (
 	"github.com/douyinpay/douyinpay-go/tools/consts"
 )
 
+// ApiDeductService 直连商户代扣服务。
+//
+// 接口路径：
+// - 申请扣款：POST /v1/deduct/payapply
+// - 关闭订单：POST /v1/trade/transactions/out-trade-no/{out_trade_no}/close
+// - 按抖音支付订单号查询订单：GET /v1/trade/transactions/id/{transaction_id}
+// - 按商户订单号查询订单：GET /v1/trade/transactions/out-trade-no/{out_trade_no}
+// - 预约扣费通知：POST /v1/agreementauth/deductNotify
 type ApiDeductService services.Service
 
-// @Deprecated: 请改用 PayApply 申请扣款
+// Deduct 已废弃，请改用 PayApply 申请扣款。
+//
+// Deprecated: 请改用 PayApply 申请扣款。
 func (a *ApiDeductService) Deduct(ctx context.Context, req ApiDeductRequest) (
 	resp *ApiDeductResponse, result *client.APIResult, err error) {
 	r := &client.RequestEntity{
@@ -138,7 +148,8 @@ func (a *ApiDeductService) QueryOrderByOutTradeNo(ctx context.Context, req Query
 	return resp, result, nil
 }
 
-// DeductNotify 预扣费通知
+// DeductNotify 预约扣费通知。
+// 接口路径：POST /v1/agreementauth/deductNotify
 func (a *ApiDeductService) DeductNotify(ctx context.Context, req DeductNotifyRequest) (result *client.APIResult, err error) {
 	if req.ContractId == "" {
 		return nil, fmt.Errorf("DeductNotifyRequest required field `ContractId` is empty")
@@ -173,7 +184,8 @@ func (a *ApiDeductService) DeductNotify(ctx context.Context, req DeductNotifyReq
 	return result, nil
 }
 
-// PayApply 申请扣款
+// PayApply 申请扣款。
+// 接口路径：POST /v1/deduct/payapply
 func (a *ApiDeductService) PayApply(ctx context.Context, req PayApplyRequest) (resp *PayApplyResponse, result *client.APIResult, err error) {
 	// Make sure Path Params are properly set
 	if req.ContractId == "" {
@@ -224,6 +236,7 @@ func (a *ApiDeductService) PayApply(ctx context.Context, req PayApplyRequest) (r
 	return resp, result, nil
 }
 
+// GetServerAddress 返回抖音支付服务地址。
 func GetServerAddress() string {
 	return consts.DouyinPayServer
 }

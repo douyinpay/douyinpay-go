@@ -302,24 +302,25 @@ type PromotionGoodsDetail struct {
 
 // DeductNotifyRequest 预约扣费通知请求参数
 type DeductNotifyRequest struct {
-	// 委托代扣协议id
+	// 字段含义：委托代扣协议 ID。
 	ContractId string `json:"contract_id,omitempty"`
-	// 直连商户号
+	// 字段含义：直连商户号。
 	Mchid string `json:"mchid,omitempty"`
-	// 应用id
+	// 字段含义：应用 ID。
 	Appid string `json:"appid,omitempty"`
-	// 预约扣费金额信息
+	// 字段含义：预约扣费金额信息。
 	EstimatedAmount DeductAmount `json:"estimated_amount,omitempty"`
 }
 
+// DeductAmount 预约扣费金额信息
 type DeductAmount struct {
-	// 预约扣费金额
+	// 字段含义：预约扣费金额，单位为分。
 	Amount int64 `json:"amount,omitempty"`
-	// 预约扣费币种
+	// 字段含义：预约扣费币种。
 	Currency string `json:"currency,omitempty"`
 }
 
-// 申请扣款
+// PayApplyRequest 扣款申请请求参数。
 type PayApplyRequest struct {
 	// 字段含义：应用ID。
 	// 格式规则：string[1,32]。
@@ -393,7 +394,7 @@ type PayApplyRequest struct {
 	SettleInfo SettleInfo `json:"settle_info,omitempty"`
 }
 
-// 申请扣款 响应体
+// PayApplyResponse 申请扣款响应参数
 type PayApplyResponse struct {
 	// 字段含义：业务结果，以回调或查单返回的扣款结果为准。
 	ResultCode string `json:"result_code,omitempty"`
@@ -401,7 +402,7 @@ type PayApplyResponse struct {
 	PrepayId string `json:"prepay_id,omitempty"`
 }
 
-// 预约扣费
+// PartnerContractScheduleRequest 服务商预约扣费请求参数
 type PartnerContractScheduleRequest struct {
 	// 代扣协议id
 	ContractId string `json:"contract_id,omitempty"`
@@ -413,7 +414,7 @@ type PartnerContractScheduleRequest struct {
 	ScheduleAmount Amount `json:"schedule_amount,omitempty"`
 }
 
-// 预约扣费
+// PartnerContractScheduleResponse 服务商预约扣费响应参数
 type PartnerContractScheduleResponse struct {
 	// 可扣费开始日期
 	DeductStartDate string `json:"deduct_start_date,omitempty"`
@@ -423,7 +424,7 @@ type PartnerContractScheduleResponse struct {
 	ScheduleAmount Amount `json:"schedule_amount,omitempty"`
 }
 
-// 预约扣费结果查询
+// PartnerContractScheduleQueryRequest 服务商预约扣费结果查询请求参数
 type PartnerContractScheduleQueryRequest struct {
 	// 代扣协议id
 	ContractId string `json:"contract_id,omitempty"`
@@ -433,6 +434,7 @@ type PartnerContractScheduleQueryRequest struct {
 	SubMchid string `json:"sub_mchid"`
 }
 
+// PartnerContractScheduleQueryResponse 服务商预约扣费结果查询响应参数
 type PartnerContractScheduleQueryResponse struct {
 	// 可扣费开始日期
 	DeductStartDate string `json:"deduct_start_date"`
