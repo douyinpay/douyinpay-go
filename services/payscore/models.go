@@ -257,15 +257,24 @@ type ApiSynchronizeServiceOrderInfoResponse struct {
 	// 服务订单状态描述
 	StateDescription string `json:"state_description"`
 
-	OpenId            string      `json:"openid"`
-	AuthorizationCode string      `json:"authorization_code"`
-	Collection        *Collection `json:"collection"`
-	RiskFund          *RiskFund   `json:"risk_fund,omitempty"`
-	PostPayments      []*PostItem `json:"post_payments,omitempty"`
-	PostDiscounts     []*PostItem `json:"post_discounts,omitempty"`
-	TimeRange         *TimeRange  `json:"time_range,omitempty"`
-	Location          *Location   `json:"location,omitempty"`
-	SceneInfo         *SceneInfo  `json:"scene_info,omitempty"`
+	// 用户标识
+	OpenId string `json:"openid"`
+	// 商户协议号
+	AuthorizationCode string `json:"authorization_code"`
+	// 收款信息
+	Collection *Collection `json:"collection"`
+	// 服务风险金
+	RiskFund *RiskFund `json:"risk_fund,omitempty"`
+	// 后付费项目
+	PostPayments []*PostItem `json:"post_payments,omitempty"`
+	// 后付费商户优惠
+	PostDiscounts []*PostItem `json:"post_discounts,omitempty"`
+	// 服务时间段
+	TimeRange *TimeRange `json:"time_range,omitempty"`
+	// 服务位置
+	Location *Location `json:"location,omitempty"`
+	// 场景信息
+	SceneInfo *SceneInfo `json:"scene_info,omitempty"`
 }
 
 // ApiQueryServiceOrderRequest 查询服务订单信息请求参数
@@ -290,7 +299,8 @@ type ApiQueryServiceOrderResponse struct {
 	OutOrderNo string `json:"out_order_no"`
 	// 商户协议号
 	AuthorizationCode string `json:"authorization_code"`
-	OpenId            string `json:"openid"`
+	// 用户标识
+	OpenId string `json:"openid"`
 	// 服务ID
 	ServiceId string `json:"service_id"`
 	// 服务描述
@@ -306,14 +316,21 @@ type ApiQueryServiceOrderResponse struct {
 	// 服务订单状态
 	State string `json:"state"`
 	// 服务订单状态描述
-	StateDescription string      `json:"state_description"`
-	RiskFund         *RiskFund   `json:"risk_fund"`
-	Collection       *Collection `json:"collection"`
-	PostPayments     []*PostItem `json:"post_payments,omitempty"`
-	PostDiscounts    []*PostItem `json:"post_discounts,omitempty"`
-	TimeRange        *TimeRange  `json:"time_range,omitempty"`
-	Location         *Location   `json:"location,omitempty"`
-	SceneInfo        *SceneInfo  `json:"scene_info,omitempty"`
+	StateDescription string `json:"state_description"`
+	// 服务风险金
+	RiskFund *RiskFund `json:"risk_fund"`
+	// 收款信息
+	Collection *Collection `json:"collection"`
+	// 后付费项目
+	PostPayments []*PostItem `json:"post_payments,omitempty"`
+	// 后付费商户优惠
+	PostDiscounts []*PostItem `json:"post_discounts,omitempty"`
+	// 服务时间段
+	TimeRange *TimeRange `json:"time_range,omitempty"`
+	// 服务位置
+	Location *Location `json:"location,omitempty"`
+	// 场景信息
+	SceneInfo *SceneInfo `json:"scene_info,omitempty"`
 }
 
 // ApiCancelServiceOrderRequest 查询服务订单信息请求参数
@@ -355,10 +372,13 @@ type ApiModifyAmountRequest struct {
 	// 服务ID
 	ServiceId string `json:"service_id"`
 	// 交易金额
-	TotalAmount   int64       `json:"total_amount"`
-	PostPayments  []*PostItem `json:"post_payments,omitempty"`
+	TotalAmount int64 `json:"total_amount"`
+	// 后付费项目
+	PostPayments []*PostItem `json:"post_payments,omitempty"`
+	// 后付费商户优惠
 	PostDiscounts []*PostItem `json:"post_discounts,omitempty"`
-	Reason        string      `json:"reason,omitempty"`
+	// 改价原因
+	Reason string `json:"reason,omitempty"`
 }
 
 // ApiModifyAmountResponse 服务订单改价响应参数
@@ -384,13 +404,19 @@ type ApiModifyAmountResponse struct {
 	// 服务订单状态
 	State string `json:"state"`
 	// 服务订单状态描述
-	StateDescription string      `json:"state_description"`
-	RiskFund         *RiskFund   `json:"risk_fund"`
-	Collection       *Collection `json:"collection"`
-	PostPayments     []*PostItem `json:"post_payments,omitempty"`
-	PostDiscounts    []*PostItem `json:"post_discounts,omitempty"`
-	TimeRange        *TimeRange  `json:"time_range,omitempty"`
-	Location         *Location   `json:"location,omitempty"`
+	StateDescription string `json:"state_description"`
+	// 服务风险金
+	RiskFund *RiskFund `json:"risk_fund"`
+	// 收款信息
+	Collection *Collection `json:"collection"`
+	// 后付费项目
+	PostPayments []*PostItem `json:"post_payments,omitempty"`
+	// 后付费商户优惠
+	PostDiscounts []*PostItem `json:"post_discounts,omitempty"`
+	// 服务时间段
+	TimeRange *TimeRange `json:"time_range,omitempty"`
+	// 服务位置
+	Location *Location `json:"location,omitempty"`
 }
 
 // ApiCompleteServiceOrderRequest 完结服务订单请求参数
@@ -410,11 +436,16 @@ type ApiCompleteServiceOrderRequest struct {
 	// 优惠标记
 	GoodsTag string `json:"goods_tag"`
 
-	PostPayments  []*PostItem `json:"post_payments,omitempty"`
+	// 后付费项目
+	PostPayments []*PostItem `json:"post_payments,omitempty"`
+	// 后付费商户优惠
 	PostDiscounts []*PostItem `json:"post_discounts,omitempty"`
-	TimeRange     *TimeRange  `json:"time_range,omitempty"`
-	Location      *Location   `json:"location,omitempty"`
-	SceneInfo     *SceneInfo  `json:"scene_info,omitempty"`
+	// 服务时间段
+	TimeRange *TimeRange `json:"time_range,omitempty"`
+	// 服务位置
+	Location *Location `json:"location,omitempty"`
+	// 场景信息
+	SceneInfo *SceneInfo `json:"scene_info,omitempty"`
 }
 
 // ApiCompleteServiceOrderResponse 完结服务订单响应参数
@@ -440,13 +471,19 @@ type ApiCompleteServiceOrderResponse struct {
 	// 优惠标记
 	GoodsTag string `json:"goods_tag"`
 	// 服务订单状态描述
-	StateDescription string      `json:"state_description"`
-	RiskFund         *RiskFund   `json:"risk_fund"`
-	PostPayments     []*PostItem `json:"post_payments,omitempty"`
-	PostDiscounts    []*PostItem `json:"post_discounts,omitempty"`
-	TimeRange        *TimeRange  `json:"time_range,omitempty"`
-	Location         *Location   `json:"location,omitempty"`
-	SceneInfo        *SceneInfo  `json:"scene_info,omitempty"`
+	StateDescription string `json:"state_description"`
+	// 服务风险金
+	RiskFund *RiskFund `json:"risk_fund"`
+	// 后付费项目
+	PostPayments []*PostItem `json:"post_payments,omitempty"`
+	// 后付费商户优惠
+	PostDiscounts []*PostItem `json:"post_discounts,omitempty"`
+	// 服务时间段
+	TimeRange *TimeRange `json:"time_range,omitempty"`
+	// 服务位置
+	Location *Location `json:"location,omitempty"`
+	// 场景信息
+	SceneInfo *SceneInfo `json:"scene_info,omitempty"`
 }
 
 // ApiCloseCreditServiceRequest 解除用户授权关系请求参数
@@ -509,6 +546,7 @@ type ApiCreditSrvSignApplyRequest struct {
 }
 
 type ApiCreditSrvSignApplyResponse struct {
+	// 先享后付申请token
 	PayscoreApplyToken string `json:"payscore_apply_token"`
 }
 
