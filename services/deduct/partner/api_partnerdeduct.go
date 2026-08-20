@@ -67,7 +67,7 @@ func (a *ApiPartnerDeductService) PartnerContractSchedule(ctx context.Context, r
 }
 
 // PartnerContractScheduleQuery 预约扣费结果查询。
-// 接口路径：GET /v1/agreementauth/partner/schedules/contract-id/{contract_id}。
+// 接口路径：GET /v1/agreementauth/partner/schedules/contract-id/{contract_id}
 func (a *ApiPartnerDeductService) PartnerContractScheduleQuery(ctx context.Context, req contractorder.PartnerContractScheduleQueryRequest) (resp *contractorder.PartnerContractScheduleQueryResponse, result *client.APIResult, err error) {
 	// 参数校验
 	if req.ContractId == "" {

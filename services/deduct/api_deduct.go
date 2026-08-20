@@ -149,7 +149,7 @@ func (a *ApiDeductService) QueryOrderByOutTradeNo(ctx context.Context, req Query
 }
 
 // DeductNotify 预约扣费通知。
-// 接口路径：POST /v1/agreementauth/deductNotify。
+// 接口路径：POST /v1/agreementauth/deductNotify
 func (a *ApiDeductService) DeductNotify(ctx context.Context, req DeductNotifyRequest) (result *client.APIResult, err error) {
 	if req.ContractId == "" {
 		return nil, fmt.Errorf("DeductNotifyRequest required field `ContractId` is empty")
@@ -185,7 +185,7 @@ func (a *ApiDeductService) DeductNotify(ctx context.Context, req DeductNotifyReq
 }
 
 // PayApply 申请扣款。
-// 接口路径：POST /v1/deduct/payapply。
+// 接口路径：POST /v1/deduct/payapply
 func (a *ApiDeductService) PayApply(ctx context.Context, req PayApplyRequest) (resp *PayApplyResponse, result *client.APIResult, err error) {
 	// Make sure Path Params are properly set
 	if req.ContractId == "" {

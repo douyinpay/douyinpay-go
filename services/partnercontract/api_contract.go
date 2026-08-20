@@ -69,7 +69,7 @@ func (a *ApiPartnerContractOrderService) PartnerQueryContract(ctx context.Contex
 }
 
 // PartnerTerminateContract 协议解约。
-// 接口路径：POST /v1/agreementauth/partner/contracts/plan-id/{plan_id}/out-contract-code/{out_contract_code}/terminate。
+// 接口路径：POST /v1/agreementauth/partner/contracts/plan-id/{plan_id}/out-contract-code/{out_contract_code}/terminate
 func (a *ApiPartnerContractOrderService) PartnerTerminateContract(ctx context.Context, req PartnerTerminateContractRequest) (resp *PartnerTerminateContractResponse, result *client.APIResult, err error) {
 	// 参数校验
 	if req.PlanId < 1 {
