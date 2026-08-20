@@ -431,16 +431,9 @@ func (a *ApiPayScoreService) CreditSrvSignQueryForSP(ctx context.Context, req Ap
 // CloseCreditServiceForSP 服务商解除用户授权关系。
 func (a *ApiPayScoreService) CloseCreditServiceForSP(ctx context.Context, req ApiPartnerCloseCreditServiceRequest) (
 	resp *ApiPartnerCloseCreditServiceResponse, result *client.APIResult, err error) {
-	path := reqUrl + strings.Replace(consts.PartnerCloseCreditServicePath,
+	path := strings.Replace(consts.PartnerCloseCreditServicePath,
 		"{authorization_code}", neturl.PathEscape(req.AuthorizationCode), -1)
-	r := &client.RequestEntity{
-		Method:      nethttp.MethodPost,
-		ContentType: consts.ApplicationJSON,
-		PostBody:    req,
-		Header:      nethttp.Header{},
-		RequestPath: path,
-	}
-	result, err = a.Client.Request(ctx, r)
+	result, err = a.requestPartnerServiceOrder(ctx, path, nethttp.MethodPost, req, nil)
 	if err != nil {
 		return nil, result, err
 	}

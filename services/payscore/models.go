@@ -80,72 +80,113 @@ type ApiCreateServiceOrderResponse struct {
 	NotifyUrl string `json:"notify_url"`
 }
 
+// 收款信息
 type Collection struct {
-	State        string              `json:"state"`
-	TotalAmount  int64               `json:"total_amount"`
-	PayingAmount int64               `json:"paying_amount"`
-	PaidAmount   int64               `json:"paid_amount"`
-	Details      []*CollectionDetail `json:"details"`
+	// 收款状态
+	State string `json:"state"`
+	// 总收款金额
+	TotalAmount int64 `json:"total_amount"`
+	// 待收金额
+	PayingAmount int64 `json:"paying_amount"`
+	// 已收金额
+	PaidAmount int64 `json:"paid_amount"`
+	// 收款明细列表
+	Details []*CollectionDetail `json:"details"`
 }
 
 type CollectionDetail struct {
-	TransactionId   string             `json:"transaction_id"`
-	Amount          int64              `json:"amount"`
-	PaidType        string             `json:"paid_type"`
-	PaidTime        string             `json:"paid_time"`
-	BankType        string             `json:"bank_type"`
+	// 抖音支付交易单号
+	TransactionId string `json:"transaction_id"`
+	// 单笔收款金额
+	Amount int64 `json:"amount"`
+	// 收款成功渠道
+	PaidType string `json:"paid_type"`
+	// 收款成功时间
+	PaidTime string `json:"paid_time"`
+	// 收款银行
+	BankType string `json:"bank_type"`
+	// 优惠信息
 	PromotionDetail []*PromotionDetail `json:"promotion_detail"`
 }
 
 type PromotionDetail struct {
-	CouponId            string         `json:"coupon_id"`
-	Name                string         `json:"name"`
-	Scope               string         `json:"scope"`
-	Type                string         `json:"type"`
-	Amount              int64          `json:"amount"`
-	StockId             string         `json:"stock_id"`
-	DouyinpayContribute int64          `json:"douyinpay_contribute"`
-	MerchantContribute  int64          `json:"merchant_contribute"`
-	OtherContribute     int64          `json:"other_contribute"`
-	Currency            string         `json:"currency"`
-	GoodsDetail         []*GoodsDetail `json:"goods_detail"`
+	// 券ID
+	CouponId string `json:"coupon_id"`
+	// 优惠名称
+	Name string `json:"name"`
+	// 优惠范围
+	Scope string `json:"scope"`
+	// 优惠类型
+	Type string `json:"type"`
+	// 优惠券面额
+	Amount int64 `json:"amount"`
+	// 活动ID
+	StockId string `json:"stock_id"`
+	// 抖音支付出资
+	DouyinpayContribute int64 `json:"douyinpay_contribute"`
+	// 商户出资
+	MerchantContribute int64 `json:"merchant_contribute"`
+	// 其他出资
+	OtherContribute int64 `json:"other_contribute"`
+	// 优惠币种
+	Currency string `json:"currency"`
+	// 商品列表
+	GoodsDetail []*GoodsDetail `json:"goods_detail"`
 }
 
 type GoodsDetail struct {
-	GoodsId        string `json:"goods_id"`
-	Quantity       int32  `json:"quantity"`
-	UnitPrice      int64  `json:"unit_price"`
-	DiscountAmount int64  `json:"discount_amount"`
-	GoodsRemark    string `json:"goods_remark"`
+	// 商品编码
+	GoodsId string `json:"goods_id"`
+	// 商品数量
+	Quantity int32 `json:"quantity"`
+	// 商品价格
+	UnitPrice int64 `json:"unit_price"`
+	// 商品优惠金额
+	DiscountAmount int64 `json:"discount_amount"`
+	// 商品备注
+	GoodsRemark string `json:"goods_remark"`
 }
 
 // RiskFund 服务风险金
 type RiskFund struct {
-	Name        string `json:"name"`
-	Amount      int64  `json:"amount,omitempty"`
+	// 风险金名称
+	Name string `json:"name"`
+	// 风险金额
+	Amount int64 `json:"amount,omitempty"`
+	// 风险说明
 	Description string `json:"description,omitempty"`
 }
 
 // PostItem 后付费信息
 type PostItem struct {
-	Name        string `json:"name"`
-	Amount      int64  `json:"amount,omitempty"`
+	// 付费名称
+	Name string `json:"name"`
+	// 付费金额
+	Amount int64 `json:"amount,omitempty"`
+	// 付费说明
 	Description string `json:"description,omitempty"`
-	Count       int64  `json:"count,omitempty"`
+	// 付费数量
+	Count int64 `json:"count,omitempty"`
 }
 
 // TimeRange 服务时间范围
 type TimeRange struct {
-	StartTime       string `json:"start_time,omitempty"`
+	// 服务开始时间
+	StartTime string `json:"start_time,omitempty"`
+	// 服务开始时间备注
 	StartTimeRemark string `json:"start_time_remark,omitempty"`
-	EndTime         string `json:"end_time,omitempty"`
-	EndTimeRemark   string `json:"end_time_remark,omitempty"`
+	// 服务结束时间
+	EndTime string `json:"end_time,omitempty"`
+	// 服务结束时间备注
+	EndTimeRemark string `json:"end_time_remark,omitempty"`
 }
 
 // Location 位置信息
 type Location struct {
+	// 服务开始地点
 	StartLocation string `json:"start_location,omitempty"`
-	EndLocation   string `json:"end_location,omitempty"`
+	// 服务结束地点
+	EndLocation string `json:"end_location,omitempty"`
 }
 
 // SceneInfo 支付场景描述
