@@ -329,7 +329,9 @@ func (a *ApiPayScoreService) QueryServiceOrderForSP(ctx context.Context, req Api
 	result, err = a.requestPartnerServiceOrder(ctx, consts.PartnerQueryServiceOrderPath, nethttp.MethodGet, nil,
 		neturl.Values{
 			"sp_mchid":     []string{req.SpMchid},
+			"sp_appid":     []string{req.SpAppid},
 			"sub_mchid":    []string{req.SubMchid},
+			"sub_appid":    []string{req.SubAppid},
 			"out_order_no": []string{req.OutOrderNo},
 			"service_id":   []string{req.ServiceId},
 		})
