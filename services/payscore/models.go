@@ -840,6 +840,8 @@ type ApiPartnerCancelServiceOrderRequest struct {
 	SpMchid string `json:"sp_mchid,omitempty"`
 	// 子商户商户号
 	SubMchid string `json:"sub_mchid,omitempty"`
+	// 子商户应用ID
+	SubAppid string `json:"sub_appid,omitempty"`
 	// 商户服务单号
 	OutOrderNo string `json:"out_order_no,omitempty"`
 	// 服务ID
@@ -866,6 +868,8 @@ type ApiPartnerSynchronizeServiceOrderInfoRequest struct {
 	SpMchid string `json:"sp_mchid,omitempty"`
 	// 子商户商户号
 	SubMchid string `json:"sub_mchid,omitempty"`
+	// 子商户应用ID
+	SubAppid string `json:"sub_appid,omitempty"`
 	// 商户服务单号
 	OutOrderNo string `json:"out_order_no,omitempty"`
 	// 服务ID
