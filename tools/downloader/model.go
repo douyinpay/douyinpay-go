@@ -5,17 +5,30 @@ import (
 	"fmt"
 )
 
-// Certificate 微信支付平台证书信息
+// Certificate 平台证书信息
 type Certificate struct {
-	// 证书序列号
+	// 字段含义：证书序列号。
+	// 格式规则：string。
+	// 示例：763CC8F6EF3A8802。
 	CertNo *string `json:"cert_no"`
-	// 证书有效期开始时间
+	// 字段含义：证书生效时间。
+	// 格式规则：string，格式 YYMMDDHHMMSS。
+	// 业务规则：加密请求中的敏感信息时，应使用生效时间较晚（最新）的平台证书。
+	// 示例：20230322042245。
 	EffectiveTime *string `json:"effective_time"`
-	// 证书过期时间
+	// 字段含义：证书失效时间。
+	// 格式规则：string，格式 YYMMDDHHMMSS。
+	// 业务规则：证书过期后将失效；抖音支付会在过期前提前把新证书加入平台证书查询列表。
+	// 示例：20280320042245。
 	ExpireTime *string `json:"expire_time"`
-	// 证书类型
+	// 字段含义：证书类型。
+	// 格式规则：string。
+	// 业务规则：目前取值为 RSA。
+	// 示例：RSA。
 	CertType *string `json:"cert_type"`
-	// 为了保证安全性，微信支付在回调通知和平台证书下载接口中，对关键信息进行了AES-256-GCM加密
+	// 字段含义：证书加密后的内容。
+	// 格式规则：object。
+	// 业务规则：为保证安全，证书内容经加密返回；调用前需在“产品中心-密钥管理”完成“接口加密密钥”设置，以解密证书密文。
 	EncryptCertificate *EncryptCertificate `json:"encrypt_certificate"`
 }
 
@@ -126,9 +139,11 @@ func (o *Certificate) Clone() *Certificate {
 	return &ret
 }
 
-// DownloadCertificatesResponse
+// DownloadCertificatesResponse 平台证书查询接口响应
 type DownloadCertificatesResponse struct {
-	// 平台证书列表
+	// 字段含义：平台证书信息。
+	// 格式规则：array。
+	// 业务规则：调用方应定期（建议 6~12 小时）获取并更新平台证书，不要硬编码用于验签的平台证书；加密请求中的敏感信息时使用生效时间较晚（最新）的证书。
 	Certificates []Certificate `json:"certificates,omitempty"`
 }
 
@@ -161,13 +176,22 @@ func (o *DownloadCertificatesResponse) Clone() *DownloadCertificatesResponse {
 	return &ret
 }
 
-// EncryptCertificate 加密证书信息
+// EncryptCertificate 证书加密后的内容
 type EncryptCertificate struct {
-	// 证书内容密文，解密后会获得证书完整内容
+	// 字段含义：证书密文。
+	// 格式规则：string。
+	// 业务规则：使用接口加密密钥解密后可获得证书完整内容。
+	// 示例：lRatST1Wlxoxxxxxxxxxxxxxxxx。
 	Ciphertext *string `json:"cipher_text"`
-	// 加密所使用的算法，目前可能取值仅为 AEAD_AES_256_GCM
+	// 字段含义：加密算法。
+	// 格式规则：string。
+	// 业务规则：目前取值仅为 AEAD-AES-256-GCM。
+	// 示例：AEAD-AES-256-GCM。
 	Algorithm *string `json:"algorithm"`
-	// 加密所使用的随机字符串
+	// 字段含义：随机串。
+	// 格式规则：string。
+	// 业务规则：对应到加密算法中的 IV。
+	// 示例：6tKL7i5sEaO4。
 	Nonce *string `json:"nonce"`
 }
 
