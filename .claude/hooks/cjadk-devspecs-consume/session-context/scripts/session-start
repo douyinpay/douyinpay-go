@@ -1,0 +1,100 @@
+#!/usr/bin/env bash
+# cjadk-devspecs-consume · SessionStart hook：注入 devspecs-consume 路由提醒。
+#
+# 会话 startup / clear / compact 时，注入一段**简短描述**，提醒 Agent：在 PRD / 需求评审 /
+# 验收标准、需求设计 / 技术方案 / 架构评审、写代码 / 改代码 / 重构 / Code Review、
+# Agent 执行阶段安全约束等场景，应主动用 Skill 工具加载 `cjadk:devspecs-consume` skill，
+# 查阅并遵循团队研发规范。注入的只是「按需加载」提醒，不灌入 skill 全文，也不灌入
+# 实际规范——skill 内容由 Agent 在需要时按需加载，实际规范仍由 Agent 通过 cjadk devspecs CLI 拉取。
+#
+# 本插件只注入「消费」侧 skill 的提醒；拟写规范草稿（cjadk-devspecs-create 插件提供的
+# devspecs-create skill）是显式写操作，不在此主动提醒，由用户按需唤起。
+#
+# 注意：这里**不设 OPT-IN-GATE**。devspecs 的定位是规范应被主动遵循，因此注入后
+# 期望 Agent 在相关场景主动加载并使用，而不是等用户显式唤起。
+#
+# devspecs-consume skill 与本 hook 同属一个插件，由 cjadk 装配到各 Agent 目录。导出后的布局：
+#   <agentDir>/hooks/cjadk-devspecs-consume/session-context/scripts/session-start  ← 本脚本
+#   <agentDir>/skills/devspecs-consume/SKILL.md                                    ← 目标 skill
+# 因此优先按脚本自身安装路径（上溯到 <agentDir>）确认同一 Agent 目录下 skill 是否存在，
+# 覆盖 `--plugin-dir` / `cjadk plugin sync` / `cjadk cc` 自动装配场景；再回落到全局插件仓
+# （`cjadk plugin install <ref>` 从 market 装的位置）。skill 不可用时静默跳过，绝不让
+# 缺失令 SessionStart hook 报错。
+
+set -euo pipefail
+
+# scripts -> session-context -> cjadk-devspecs-consume -> hooks -> <agentDir>
+SCRIPT_PATH="${BASH_SOURCE[0]:-$0}"
+SCRIPTS_DIR="$(cd "$(dirname "$SCRIPT_PATH")" 2>/dev/null && pwd || true)"
+AGENT_DIR=""
+if [ -n "$SCRIPTS_DIR" ]; then
+    AGENT_DIR="$(cd "$SCRIPTS_DIR/../../../.." 2>/dev/null && pwd || true)"
+fi
+
+candidate_paths=()
+if [ -n "$AGENT_DIR" ]; then
+    candidate_paths+=("$AGENT_DIR/skills/devspecs-consume/SKILL.md")
+fi
+candidate_paths+=(
+    "${CJADK_HOME:-${HOME}/.cjadk}/plugins/public/common/cjadk-devspecs-consume/skills/devspecs-consume/SKILL.md"
+    "${XDG_DATA_HOME:-${HOME}/.local/share}/cjadk/skills/cjadk/devspecs-consume/SKILL.md"
+    "${LOCALAPPDATA:-${HOME}/AppData/Local}/cjadk/skills/cjadk/devspecs-consume/SKILL.md"
+)
+
+skill_path=""
+for candidate in "${candidate_paths[@]}"; do
+    if [ -f "$candidate" ]; then
+        skill_path="$candidate"
+        break
+    fi
+done
+
+if [ -z "$skill_path" ]; then
+    exit 0
+fi
+
+# 通用模板统一用空 matcher 覆盖 Claude/Codex/TRAE/Coco/Trae CN（TRAE 家族把 matcher
+# 当工具名选择器，非空 matcher 永不触发），生命周期过滤下沉到脚本。
+# resume 早退：anchored 到字段边界（行首 / '{' / ','），拒绝匹配嵌在别的字符串值
+# （如 transcript 路径）里的 "source":"resume"。
+PAYLOAD="$(cat 2>/dev/null || true)"
+if printf '%s' "$PAYLOAD" | grep -qE '(^|[{,])[[:space:]]*"source"[[:space:]]*:[[:space:]]*"resume"'; then
+    exit 0
+fi
+
+# 仅注入简短描述 + 按需加载提醒，不灌入 skill 全文。
+read -r -d '' INJECTION <<'EOF' || true
+<EXTREMELY_IMPORTANT>
+You have the cjadk:devspecs-consume skill — your router for consuming and following team development specs (PRD specs + design specs + coding specs + security guardrails), backed by the `cjadk devspecs` CLI.
+
+When the current task matches any scenario below, proactively load this skill with the 'Skill' tool BEFORE proceeding, then follow its rules (consume specs internally, output natural-language conclusions, never fabricate specs):
+- PRD / requirements / acceptance criteria / user-story review → consult and follow the team PRD specs via `cjadk devspecs prd --format md`.
+- Design / tech-plan / architecture-review / module-split / interface design → consult and follow the team DESIGN specs via list → details.
+- Writing, changing, refactoring code or doing Code Review → consult and apply the team CODING specs via list → details.
+- Agent execution safety / high-risk tool calls / context injection / execution interception → consult team security guardrails via `cjadk devspecs hooks`.
+
+Do not inline the spec content here; load the skill on demand only when relevant. (To author or modify specs, use the cjadk:devspecs-create skill instead.)
+</EXTREMELY_IMPORTANT>
+EOF
+
+escape_for_json() {
+    local s="$1"
+    s="${s//\\/\\\\}"
+    s="${s//\"/\\\"}"
+    s="${s//$'\n'/\\n}"
+    s="${s//$'\r'/\\r}"
+    s="${s//$'\t'/\\t}"
+    printf '%s' "$s"
+}
+
+ESCAPED=$(escape_for_json "$INJECTION")
+
+if [ -n "${CURSOR_PLUGIN_ROOT:-}" ]; then
+    printf '{\n  "additional_context": "%s"\n}\n' "$ESCAPED"
+elif [ -n "${COPILOT_CLI:-}" ]; then
+    printf '{\n  "additionalContext": "%s"\n}\n' "$ESCAPED"
+else
+    printf '{\n  "hookSpecificOutput": {\n    "hookEventName": "SessionStart",\n    "additionalContext": "%s"\n  }\n}\n' "$ESCAPED"
+fi
+
+exit 0
