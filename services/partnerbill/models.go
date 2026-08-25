@@ -47,7 +47,7 @@ type ApplyTradeBillRequest struct {
 	// 示例：2026-08-24
 	BillDate string `json:"bill_date,omitempty"`
 	// 字段含义：压缩类型。
-	// 必填规则：选填。
+	// 必填规则：必填。
 	// 格式规则：枚举字符串。
 	// 业务规则：常用值为 GZIP，返回 gzip 压缩包账单。
 	// 示例：GZIP
@@ -106,7 +106,7 @@ type ApplyFundFlowBillRequest struct {
 	// 示例：BaseAccount
 	AccountType string `json:"account_type,omitempty"`
 	// 字段含义：压缩类型。
-	// 必填规则：选填。
+	// 必填规则：必填。
 	// 格式规则：枚举字符串。
 	// 业务规则：常用值为 GZIP，返回 gzip 压缩包账单。
 	// 示例：GZIP
@@ -162,7 +162,7 @@ type ApplySplitBillRequest struct {
 	// 示例：2026-08-24
 	BillDate string `json:"bill_date,omitempty"`
 	// 字段含义：压缩类型。
-	// 必填规则：选填。
+	// 必填规则：必填。
 	// 格式规则：枚举字符串。
 	// 业务规则：常用值为 GZIP，返回 gzip 压缩包账单。
 	// 示例：GZIP
