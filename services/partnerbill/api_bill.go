@@ -15,18 +15,33 @@ import (
 	"github.com/douyinpay/douyinpay-go/tools/consts"
 )
 
+// BillApiService 提供服务商账单相关接口，包括交易账单、资金账单和分账账单下载申请。
 type BillApiService services.Service
 
+// ApplyTradeBill 申请服务商交易账单的下载地址。
+//
+// 服务商需传入服务商商户号和账单日期；账单日期格式为 yyyy-MM-dd，
+// 仅支持近三个月内且为昨日及以前的账单。sub_mchid 为选填，传入后用于过滤指定子商户账单；
+// tar_type 常用值为 GZIP。
 func (a *BillApiService) ApplyTradeBill(ctx context.Context, req ApplyTradeBillRequest) (
 	resp *Bill, result *client.APIResult, err error) {
 	return a.applyBill(ctx, req)
 }
 
+// ApplyFundFlowBill 申请服务商资金账单的下载地址。
+//
+// 服务商需传入服务商商户号和账单日期；账单日期格式为 yyyy-MM-dd，
+// 仅支持近三个月内且为昨日及以前的账单。sub_mchid 为选填，account_type 常见取值包括
+// BaseAccount（基本户）和 OperationAccount（运营户），tar_type 常用值为 GZIP。
 func (a *BillApiService) ApplyFundFlowBill(ctx context.Context, req ApplyFundFlowBillRequest) (
 	resp *Bill, result *client.APIResult, err error) {
 	return a.applyBill(ctx, req)
 }
 
+// ApplySplitBill 申请服务商分账账单的下载地址。
+//
+// 服务商需传入服务商商户号和账单日期；账单日期格式为 yyyy-MM-dd，
+// 仅支持近三个月内且为昨日及以前的账单。sub_mchid 为选填，tar_type 常用值为 GZIP。
 func (a *BillApiService) ApplySplitBill(ctx context.Context, req ApplySplitBillRequest) (
 	resp *Bill, result *client.APIResult, err error) {
 	return a.applyBill(ctx, req)
