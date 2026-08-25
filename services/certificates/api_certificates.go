@@ -1,5 +1,8 @@
 package certificates
 
+// 官方文档：
+// - 下载平台证书api：https://pay.douyinpay.com/wiki/63984677e9a722021c2c882e/6808a33e12c1e0050033514e
+
 import (
 	"context"
 	"fmt"
