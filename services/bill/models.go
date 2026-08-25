@@ -7,7 +7,7 @@ import (
 	"github.com/douyinpay/douyinpay-go/tools/consts"
 )
 
-// BillApplyRequest 表示直连商户申请交易账单或结算账单的请求参数。
+// BillApplyRequest 表示直连商户申请交易账单的请求参数。
 type BillApplyRequest struct {
 	// 字段含义：直连商户号。
 	// 必填规则：OpenAPI 文档标注为选填。
@@ -35,7 +35,7 @@ type BillApplyRequest struct {
 	TarType string `json:"tar_type,omitempty"`
 }
 
-// Validate 校验交易账单或结算账单请求的必填字段。
+// Validate 校验交易账单请求的必填字段。
 func (r BillApplyRequest) Validate() error {
 	if r.Mchid == "" {
 		return fmt.Errorf("field `Mchid` is required and must be specified in BillApplyRequest")
@@ -46,7 +46,7 @@ func (r BillApplyRequest) Validate() error {
 	return nil
 }
 
-// GetQueryParams 返回交易账单或结算账单请求对应的 query 参数。
+// GetQueryParams 返回交易账单请求对应的 query 参数。
 func (r BillApplyRequest) GetQueryParams() neturl.Values {
 	queryParams := neturl.Values{}
 	queryParams.Add("mchid", r.Mchid)
@@ -60,7 +60,7 @@ func (r BillApplyRequest) GetQueryParams() neturl.Values {
 	return queryParams
 }
 
-// GetPath 返回交易账单或结算账单接口路径。
+// GetPath 返回交易账单接口路径。
 func (r BillApplyRequest) GetPath() string {
 	return consts.BillApplyPath
 }
