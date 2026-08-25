@@ -10,19 +10,19 @@ import (
 // Bill 表示服务商账单申请接口的响应体。
 type Bill struct {
 	// 字段含义：哈希类型。
-	// 格式规则：字符串。
-	// 业务规则：用于描述账单文件校验值的摘要算法类型，当前常见返回值为 SHA1。
+	// 格式规则：string，[1,32]。
+	// 业务规则：SHA1 表示账单文件摘要使用 SHA1 算法。
 	// 示例：SHA1
 	HashType string `json:"hash_type,omitempty"`
 	// 字段含义：哈希值。
-	// 格式规则：字符串。
-	// 业务规则：用于校验下载后的账单文件完整性。
-	// 示例：3b7e4b5c0f9c7d4a8fbc1234567890abcdef1234
+	// 格式规则：string，[1,1024]。
+	// 业务规则：原始账单（gzip 需要解压缩）的摘要值，用于校验文件完整性。
+	// 示例：b3d51ec31534a5e027b49e78a61e20770973f70f
 	HashValue string `json:"hash_value,omitempty"`
 	// 字段含义：账单下载地址。
-	// 格式规则：URL。
-	// 业务规则：下载地址存在时效限制，建议获取后尽快下载并完成文件校验。
-	// 示例：https://download.example.com/bill.gz
+	// 格式规则：URL，[1,2048]。
+	// 业务规则：供下一步请求账单文件的下载地址，该地址 5 分钟内有效。
+	// 示例：https://download.douyinpay.com/v1/billdownload/file?token=shgvbeh1BWB84eXGz8rptvm5Po2uTKOnkqwc8W2DS721jY9rGL6ETWHEpARlSswz
 	DownloadUrl string `json:"download_url,omitempty"`
 }
 
@@ -44,7 +44,7 @@ type ApplyTradeBillRequest struct {
 	// 必填规则：必填。
 	// 格式规则：yyyy-MM-dd。
 	// 业务规则：仅支持申请近三个月内且为昨日及以前的账单。
-	// 示例：2026-08-24
+	// 示例：2023-02-25
 	BillDate string `json:"bill_date,omitempty"`
 	// 字段含义：压缩类型。
 	// 必填规则：必填。
@@ -97,7 +97,7 @@ type ApplyFundFlowBillRequest struct {
 	// 必填规则：必填。
 	// 格式规则：yyyy-MM-dd。
 	// 业务规则：仅支持申请近三个月内且为昨日及以前的账单。
-	// 示例：2026-08-24
+	// 示例：2023-02-25
 	BillDate string `json:"bill_date,omitempty"`
 	// 字段含义：账户类型。
 	// 必填规则：选填。
@@ -159,7 +159,7 @@ type ApplySplitBillRequest struct {
 	// 必填规则：必填。
 	// 格式规则：yyyy-MM-dd。
 	// 业务规则：仅支持申请近三个月内且为昨日及以前的账单。
-	// 示例：2026-08-24
+	// 示例：2023-02-25
 	BillDate string `json:"bill_date,omitempty"`
 	// 字段含义：压缩类型。
 	// 必填规则：必填。
