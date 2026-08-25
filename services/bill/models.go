@@ -10,25 +10,25 @@ import (
 // BillApplyRequest 表示直连商户申请交易账单的请求参数。
 type BillApplyRequest struct {
 	// 字段含义：直连商户号。
-	// 必填规则：OpenAPI 文档标注为选填。
+	// 必填规则：必填。
 	// 格式规则：string，[1,32]。
 	// 业务规则：直连商户的商户号，由抖音支付生成并下发。
 	// 示例：6020230307605084
 	Mchid string `json:"mchid,omitempty"`
 	// 字段含义：账单日期。
-	// 必填规则：OpenAPI 文档标注为选填。
+	// 必填规则：必填。
 	// 格式规则：yyyy-MM-dd，[1,10]。
 	// 业务规则：仅支持三个月内的账单下载申请。
 	// 示例：2023-02-25
 	BillDate string `json:"bill_date,omitempty"`
 	// 字段含义：账单类型。
-	// 必填规则：OpenAPI 文档标注为选填。
+	// 必填规则：必填。
 	// 格式规则：string，[1,32]。
 	// 业务规则：TRADE 表示返回当日所有交易订单信息；其他取值以开放平台最新文档为准。
 	// 示例：TRADE
 	BillType string `json:"bill_type,omitempty"`
 	// 字段含义：压缩类型。
-	// 必填规则：OpenAPI 文档标注为选填。
+	// 必填规则：必填。
 	// 格式规则：string，[1,32]。
 	// 业务规则：GZIP 表示返回 .gzip 格式的压缩包账单。
 	// 示例：GZIP
@@ -87,25 +87,25 @@ type Bill struct {
 // ApplyFundFlowBillRequest 表示直连商户申请资金账单的请求参数。
 type ApplyFundFlowBillRequest struct {
 	// 字段含义：直连商户号。
-	// 必填规则：OpenAPI 文档标注为选填。
+	// 必填规则：必填。
 	// 格式规则：string，[1,32]。
 	// 业务规则：直连商户的商户号，由抖音支付生成并下发。
 	// 示例：6020230307605084
 	Mchid string `json:"mchid,omitempty"`
 	// 字段含义：账单日期。
-	// 必填规则：OpenAPI 文档标注为选填。
+	// 必填规则：必填。
 	// 格式规则：yyyy-MM-dd，[1,10]。
 	// 业务规则：仅支持三个月内的账单下载申请。
 	// 示例：2023-02-25
 	BillDate string `json:"bill_date,omitempty"`
 	// 字段含义：账户类型。
-	// 必填规则：OpenAPI 文档标注为必填。
+	// 必填规则：必填。
 	// 格式规则：string，[1,32]。
 	// 业务规则：可选值包括 BaseAccount（基本账户）和 OperationAccount（运营账户），默认值为 BaseAccount。
 	// 示例：BaseAccount
 	AccountType string `json:"account_type,omitempty"`
 	// 字段含义：压缩类型。
-	// 必填规则：OpenAPI 文档标注为选填。
+	// 必填规则：必填。
 	// 格式规则：string，[1,32]。
 	// 业务规则：GZIP 表示返回 .gzip 格式的压缩包账单。
 	// 示例：GZIP
@@ -140,19 +140,19 @@ func (r ApplyFundFlowBillRequest) GetPath() string {
 // ApplySplitBillRequest 表示直连商户申请分账账单的请求参数。
 type ApplySplitBillRequest struct {
 	// 字段含义：直连商户号。
-	// 必填规则：OpenAPI 文档标注为选填。
+	// 必填规则：必填。
 	// 格式规则：string，[1,32]。
 	// 业务规则：直连商户的商户号，由抖音支付生成并下发。
 	// 示例：6020230307605084
 	Mchid string `json:"mchid,omitempty"`
 	// 字段含义：账单日期。
-	// 必填规则：OpenAPI 文档标注为选填。
+	// 必填规则：必填。
 	// 格式规则：yyyy-MM-dd，[1,10]。
 	// 业务规则：仅支持三个月内的账单下载申请。
 	// 示例：2023-02-25
 	BillDate string `json:"bill_date,omitempty"`
 	// 字段含义：压缩类型。
-	// 必填规则：OpenAPI 文档标注为选填。
+	// 必填规则：必填。
 	// 格式规则：string，[1,32]。
 	// 业务规则：GZIP 表示返回 .gzip 格式的压缩包账单。
 	// 示例：GZIP
