@@ -28,28 +28,28 @@ type Bill struct {
 
 // ApplyTradeBillRequest 表示服务商申请交易账单的请求参数。
 type ApplyTradeBillRequest struct {
-	// 字段含义：服务商商户号。
+	// 字段含义：商户号。
 	// 必填规则：必填。
-	// 格式规则：字符串。
-	// 业务规则：由抖音支付生成并下发，服务商模式必传。
-	// 示例：699000000000001
+	// 格式规则：string，[1,32]。
+	// 业务规则：由抖音支付生成并下发，支持服务商和平台商户传入。
+	// 示例：6020230301343998
 	SpMchid string `json:"sp_mchid,omitempty"`
 	// 字段含义：子商户号。
 	// 必填规则：选填。
-	// 格式规则：字符串。
-	// 业务规则：传入后仅返回指定子商户对应的账单数据。
-	// 示例：699000000000101
+	// 格式规则：string，[1,32]。
+	// 业务规则：不填则默认返回服务商下的交易或退款数据；如需下载某个子商户下的交易或退款数据，则传入该字段；平台商户不支持该字段。
+	// 示例：6020230307605084
 	SubMchid string `json:"sub_mchid,omitempty"`
 	// 字段含义：账单日期。
 	// 必填规则：必填。
-	// 格式规则：yyyy-MM-dd。
-	// 业务规则：仅支持申请近三个月内且为昨日及以前的账单。
-	// 示例：2023-02-25
+	// 格式规则：yyyy-MM-dd，[1,10]。
+	// 业务规则：仅支持三个月内的账单下载申请。
+	// 示例：2024-10-10
 	BillDate string `json:"bill_date,omitempty"`
 	// 字段含义：压缩类型。
 	// 必填规则：必填。
-	// 格式规则：枚举字符串。
-	// 业务规则：常用值为 GZIP，返回 gzip 压缩包账单。
+	// 格式规则：string，[1,32]。
+	// 业务规则：GZIP 表示返回 .gzip 格式的压缩包账单。
 	// 示例：GZIP
 	TarType string `json:"tar_type,omitempty"`
 }
@@ -81,34 +81,34 @@ func (r ApplyTradeBillRequest) GetPath() string {
 
 // ApplyFundFlowBillRequest 表示服务商申请资金账单的请求参数。
 type ApplyFundFlowBillRequest struct {
-	// 字段含义：服务商商户号。
+	// 字段含义：商户号。
 	// 必填规则：必填。
-	// 格式规则：字符串。
-	// 业务规则：由抖音支付生成并下发，服务商模式必传。
-	// 示例：699000000000001
+	// 格式规则：string，[1,32]。
+	// 业务规则：由抖音支付生成并下发，支持服务商和平台商户传入。
+	// 示例：6020230301343998
 	SpMchid string `json:"sp_mchid,omitempty"`
 	// 字段含义：子商户号。
 	// 必填规则：选填。
-	// 格式规则：字符串。
-	// 业务规则：传入后仅返回指定子商户对应的账单数据。
-	// 示例：699000000000101
+	// 格式规则：string，[1,32]。
+	// 业务规则：当前特约商户资金账单接口文档未定义该字段，通常无需传入；如平台能力扩展支持，以最新接口文档为准。
+	// 示例：6020230307605084
 	SubMchid string `json:"sub_mchid,omitempty"`
 	// 字段含义：账单日期。
 	// 必填规则：必填。
-	// 格式规则：yyyy-MM-dd。
-	// 业务规则：仅支持申请近三个月内且为昨日及以前的账单。
-	// 示例：2023-02-25
+	// 格式规则：yyyy-MM-dd，[1,10]。
+	// 业务规则：仅支持三个月内的账单下载申请。
+	// 示例：2024-10-10
 	BillDate string `json:"bill_date,omitempty"`
 	// 字段含义：账户类型。
 	// 必填规则：选填。
-	// 格式规则：枚举字符串。
-	// 业务规则：常见取值包括 BaseAccount（基本户）和 OperationAccount（运营户），其他取值以开放平台最新文档为准。
+	// 格式规则：string，[1,32]。
+	// 业务规则：可选值包括 BaseAccount（基本账户）、OperationAccount（运营账户）和 FeeAccount（手续费账户）；不填默认值为 BaseAccount。
 	// 示例：BaseAccount
 	AccountType string `json:"account_type,omitempty"`
 	// 字段含义：压缩类型。
 	// 必填规则：必填。
-	// 格式规则：枚举字符串。
-	// 业务规则：常用值为 GZIP，返回 gzip 压缩包账单。
+	// 格式规则：string，[1,32]。
+	// 业务规则：GZIP 表示返回 .gzip 格式的压缩包账单。
 	// 示例：GZIP
 	TarType string `json:"tar_type,omitempty"`
 }
@@ -143,28 +143,28 @@ func (r ApplyFundFlowBillRequest) GetPath() string {
 
 // ApplySplitBillRequest 表示服务商申请分账账单的请求参数。
 type ApplySplitBillRequest struct {
-	// 字段含义：服务商商户号。
+	// 字段含义：商户号。
 	// 必填规则：必填。
-	// 格式规则：字符串。
-	// 业务规则：由抖音支付生成并下发，服务商模式必传。
-	// 示例：699000000000001
+	// 格式规则：string，[1,32]。
+	// 业务规则：由抖音支付生成并下发，支持服务商和平台商户传入。
+	// 示例：6020230301343998
 	SpMchid string `json:"sp_mchid,omitempty"`
 	// 字段含义：子商户号。
 	// 必填规则：选填。
-	// 格式规则：字符串。
-	// 业务规则：传入后仅返回指定子商户对应的账单数据。
-	// 示例：699000000000101
+	// 格式规则：string，[1,32]。
+	// 业务规则：不填则默认返回服务商下的所有分账账单；如需下载某个子商户下的分账账单，则传入指定子商户号。
+	// 示例：6020230307605084
 	SubMchid string `json:"sub_mchid,omitempty"`
 	// 字段含义：账单日期。
 	// 必填规则：必填。
-	// 格式规则：yyyy-MM-dd。
-	// 业务规则：仅支持申请近三个月内且为昨日及以前的账单。
-	// 示例：2023-02-25
+	// 格式规则：yyyy-MM-dd，[1,10]。
+	// 业务规则：仅支持三个月内的账单下载申请。
+	// 示例：2024-10-10
 	BillDate string `json:"bill_date,omitempty"`
 	// 字段含义：压缩类型。
 	// 必填规则：必填。
-	// 格式规则：枚举字符串。
-	// 业务规则：常用值为 GZIP，返回 gzip 压缩包账单。
+	// 格式规则：string，[1,32]。
+	// 业务规则：GZIP 表示返回 .gzip 格式的压缩包账单。
 	// 示例：GZIP
 	TarType string `json:"tar_type,omitempty"`
 }
