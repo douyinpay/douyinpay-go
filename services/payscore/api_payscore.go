@@ -13,15 +13,15 @@ import (
 	"github.com/douyinpay/douyinpay-go/tools/consts"
 )
 
-// ApiPayScoreService 先享后付服务 API。
+// ApiPayScoreService 先享后付服务 API
 type ApiPayScoreService services.Service
 
 var (
-	// reqUrl 先享后付服务 API 的请求地址。
+	// reqUrl 先享后付服务 API 的请求地址
 	reqUrl = consts.DouyPayServer
 )
 
-// CreateServiceOrder 创建服务订单。
+// CreateServiceOrder 商户通过此接口发起先享后付下单
 func (a *ApiPayScoreService) CreateServiceOrder(ctx context.Context, req ApiCreateServiceOrderRequest) (resp *ApiCreateServiceOrderResponse, result *client.APIResult, err error) {
 	r := &client.RequestEntity{
 		Method:      nethttp.MethodPost,
@@ -44,7 +44,7 @@ func (a *ApiPayScoreService) CreateServiceOrder(ctx context.Context, req ApiCrea
 	return resp, result, nil
 }
 
-// CompleteServiceOrder 完结服务订单。
+// CompleteServiceOrder 调用此接口前，必须先调用 CreateServiceOrder 创建服务订单
 func (a *ApiPayScoreService) CompleteServiceOrder(
 	ctx context.Context, req ApiCompleteServiceOrderRequest) (
 	resp *ApiCompleteServiceOrderResponse, result *client.APIResult, err error) {
@@ -71,7 +71,7 @@ func (a *ApiPayScoreService) CompleteServiceOrder(
 	return resp, result, nil
 }
 
-// QueryServiceOrder 查询服务订单信息。
+// QueryServiceOrder 通过此接口查询订单状态
 func (a *ApiPayScoreService) QueryServiceOrder(
 	ctx context.Context, req ApiQueryServiceOrderRequest) (
 	resp *ApiQueryServiceOrderResponse, result *client.APIResult, err error) {
@@ -104,7 +104,7 @@ func (a *ApiPayScoreService) QueryServiceOrder(
 	return resp, result, nil
 }
 
-// CancelServiceOrder 取消服务订单。
+// CancelServiceOrder 通过此接口取消服务订单
 func (a *ApiPayScoreService) CancelServiceOrder(
 	ctx context.Context, req ApiCancelServiceOrderRequest) (
 	resp *ApiCancelServiceOrderResponse, result *client.APIResult, err error) {
@@ -131,7 +131,7 @@ func (a *ApiPayScoreService) CancelServiceOrder(
 	return resp, result, nil
 }
 
-// ModifyAmount 修改订单金额。
+// ModifyAmount 通过此接口修改订单金额
 func (a *ApiPayScoreService) ModifyAmount(
 	ctx context.Context, req ApiModifyAmountRequest) (
 	resp *ApiModifyAmountResponse, result *client.APIResult, err error) {
@@ -211,7 +211,7 @@ func (a *ApiPayScoreService) ServiceOrderPay(ctx context.Context, req ApiService
 	return resp, result, nil
 }
 
-// CreditSrvSignApply 申请服务授权。
+// CreditSrvSignApply 通过此接口申请服务授权
 func (a *ApiPayScoreService) CreditSrvSignApply(ctx context.Context, req ApiCreditSrvSignApplyRequest) (
 	resp *ApiCreditSrvSignApplyResponse, result *client.APIResult, err error) {
 	reqBytes, _ := json.Marshal(req)
@@ -236,7 +236,7 @@ func (a *ApiPayScoreService) CreditSrvSignApply(ctx context.Context, req ApiCred
 	return resp, result, nil
 }
 
-// CreditSrvSignQuery 查询用户授权记录。
+// CreditSrvSignQuery 通过此接口查询用户授权记录
 func (a *ApiPayScoreService) CreditSrvSignQuery(ctx context.Context, req ApiCreditSrvSignQueryRequest) (
 	resp *ApiCreditSrvSignQueryResponse, result *client.APIResult, err error) {
 	reqBytes, _ := json.Marshal(req)
@@ -265,7 +265,7 @@ func (a *ApiPayScoreService) CreditSrvSignQuery(ctx context.Context, req ApiCred
 	return resp, result, nil
 }
 
-// CloseCreditService 解除用户授权关系。
+// CloseCreditService 通过此接口解除用户授权关系
 func (a *ApiPayScoreService) CloseCreditService(
 	ctx context.Context, req ApiCloseCreditServiceRequest) (
 	resp *ApiCloseCreditServiceResponse, result *client.APIResult, err error) {
@@ -430,7 +430,7 @@ func (a *ApiPayScoreService) CreditSrvSignQueryForSP(ctx context.Context, req Ap
 	return resp, result, err
 }
 
-// CloseCreditServiceForSP 服务商解除用户授权关系。
+// CloseCreditServiceForSP 服务商通过此接口解除用户授权关系
 func (a *ApiPayScoreService) CloseCreditServiceForSP(ctx context.Context, req ApiPartnerCloseCreditServiceRequest) (
 	resp *ApiPartnerCloseCreditServiceResponse, result *client.APIResult, err error) {
 	path := strings.Replace(consts.PartnerCloseCreditServicePath,
