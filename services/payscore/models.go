@@ -1355,7 +1355,7 @@ type ApiPartnerCreateServiceOrderResponse struct {
 	StateDescription string `json:"state_description"`
 	// 字段含义：服务商商户下用户标识。
 	// 格式规则：string。
-	// 业务规则："用户在服务商户对应appid下的唯一标识。传入appid，未传入sub_appid时返回"。
+	// 业务规则："用户在服务商户对应appid下的唯一标识。传入sp_appid，未传入sub_appid时返回"。
 	// 示例：oUpF8uMuAJO_M2pxb1Q9zNjWeS6o 。
 	SpOpenid string `json:"sp_openid"`
 	// 字段含义：子商户下用户标识。
@@ -1704,7 +1704,7 @@ type ApiPartnerQueryServiceOrderResponse struct {
 	TotalAmount int64 `json:"total_amount"`
 	// 字段含义：服务商商户下用户标识。
 	// 格式规则：string。
-	// 业务规则：用户在服务商户对应appid下的唯一标识。传入appid，未传入sub_appid时返回。
+	// 业务规则：用户在服务商户对应appid下的唯一标识。传入sp_appid，未传入sub_appid时返回。
 	// 示例：。
 	SpOpenid string `json:"sp_openid"`
 	// 字段含义：子商户下用户标识。
@@ -2126,7 +2126,7 @@ type ApiPartnerCreditSrvSignQueryResponse struct {
 	ServiceId string `json:"service_id"`
 	// 字段含义：服务商商户下用户标识。
 	// 格式规则：string。
-	// 业务规则：用户在服务商户对应appid下的唯一标识。传入appid，未传入sub_appid时返回。
+	// 业务规则：用户在服务商户对应appid下的唯一标识。传入sp_appid，未传入sub_appid时返回。
 	// 示例：示例：oUpF8uMuAJO_M2pxb1Q9zNjWeS6o。。
 	SpOpenid string `json:"sp_openid"`
 	// 字段含义：子商户下用户标识。
