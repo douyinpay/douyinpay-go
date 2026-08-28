@@ -1212,42 +1212,42 @@ type ApiPartnerCreateServiceOrderRequest struct {
 	// 格式规则：string[1,32]。
 	// 业务规则：由抖音支付生成的应用ID，全局唯一。
 	// 示例：awofz9bncda6w2w4。
-	SpAppid string `json:"sp_appid,omitempty"`
+	SpAppid string `json:"sp_appid"`
 	// 字段含义：服务商商户号。
 	// 格式规则：string[1,32]。
 	// 业务规则：服务商的商户号，由抖音支付生成并下发。
 	// 示例：6020230307605084。
-	SpMchid string `json:"sp_mchid,omitempty"`
+	SpMchid string `json:"sp_mchid"`
 	// 字段含义：子商户应用ID。
 	// 格式规则：string[1,32]。
 	// 业务规则：由抖音支付生成的应用ID，全局唯一。
 	// 示例：awofz9bncda6w2w4。
-	SubAppid string `json:"sub_appid,omitempty"`
+	SubAppid string `json:"sub_appid"`
 	// 字段含义：子商户商户号。
 	// 格式规则：string[1,32]。
 	// 业务规则：子商户的商户号，由抖音支付生成并下发。
 	// 示例：6020230307605085。
-	SubMchid string `json:"sub_mchid,omitempty"`
+	SubMchid string `json:"sub_mchid"`
 	// 字段含义：商户服务单号。
 	// 格式规则：string[1,32]，只能是数字、大小写字母_-*。
 	// 业务规则：商户系统内部服务订单号，在同一个商户号下唯一。
 	// 示例：OUT_1666688488。
-	OutOrderNo string `json:"out_order_no,omitempty"`
+	OutOrderNo string `json:"out_order_no"`
 	// 字段含义：服务ID。
 	// 格式规则：string[1,32]。
 	// 业务规则：业务接入时分配，用于配置商户和场景维度信息。
 	// 示例：101。
-	ServiceId string `json:"service_id,omitempty"`
+	ServiceId string `json:"service_id"`
 	// 字段含义：服务信息。
 	// 格式规则：string[1,20]。
 	// 业务规则：服务信息，用于介绍本订单所提供的服务。
 	// 示例：某某酒店。
-	ServiceIntroduction string `json:"service_introduction,omitempty"`
+	ServiceIntroduction string `json:"service_introduction"`
 	// 字段含义：商户协议号。
 	// 格式规则：string[1,64]。
 	// 业务规则：商户侧生成的协议号，在同一个商户号下唯一，免确认模式下必传。
 	// 示例：1736173225954193889。
-	AuthorizationCode string `json:"authorization_code,omitempty"`
+	AuthorizationCode string `json:"authorization_code"`
 	// 字段含义：商户数据包。
 	// 格式规则：string[1,1024]。
 	// 示例：{"out_product_category":"BATTERY_CHANGE"}。
@@ -1255,7 +1255,7 @@ type ApiPartnerCreateServiceOrderRequest struct {
 	// 字段含义：通知地址。
 	// 格式规则：string[1,256]，必须为https地址。请确保回调URL是外部可正常访问的，且不能携带后缀参数。
 	// 示例：https://www.bytedance.com。
-	NotifyUrl string `json:"notify_url,omitempty"`
+	NotifyUrl string `json:"notify_url"`
 	// 字段含义：优惠标记。
 	// 格式规则：string[1,512]，json格式。
 	// 业务规则：和抖音支付协商后可用。
@@ -1264,7 +1264,7 @@ type ApiPartnerCreateServiceOrderRequest struct {
 	// 字段含义：服务风险金。
 	// 格式规则：object。
 	// 示例：{"name":"ESTIMATE_ORDER_COST","amount":10000,"description":"预估订单费用"}。
-	RiskFund *RiskFund `json:"risk_fund,omitempty"`
+	RiskFund *RiskFund `json:"risk_fund"`
 	// 字段含义：后付费项目。
 	// 格式规则：array。
 	// 示例：[{"name":"出行费用","amount":4000,"description":"美味餐厅","count":1}]。
@@ -1337,7 +1337,7 @@ type ApiPartnerCreateServiceOrderResponse struct {
 	// 字段含义：服务风险金。
 	// 格式规则：object。
 	// 示例：{"name":"ESTIMATE_ORDER_COST","amount":10000,"description":"预估订单费用"}。
-	RiskFund *RiskFund `json:"risk_fund,omitempty"`
+	RiskFund *RiskFund `json:"risk_fund"`
 	// 字段含义：抖音支付服务订单号。
 	// 格式规则：string。
 	// 业务规则：每个抖音支付服务订单号与商户号下对应的商户服务订单号一一对应。
@@ -1418,46 +1418,46 @@ type ApiPartnerCompleteServiceOrderRequest struct {
 	// 格式规则：string[1,32]。
 	// 业务规则：由抖音支付生成的应用ID，全局唯一。
 	// 示例：awofz9bncda6w2w4。
-	SpAppid string `json:"sp_appid,omitempty"`
+	SpAppid string `json:"sp_appid"`
 	// 字段含义：服务商商户号。
 	// 格式规则：string[1,32]。
 	// 业务规则：服务商的商户号，由抖音支付生成并下发。
 	// 示例：6020230307605084。
-	SpMchid string `json:"sp_mchid,omitempty"`
+	SpMchid string `json:"sp_mchid"`
 	// 字段含义：子商户应用ID。
 	// 格式规则：string[1,32]。
 	// 业务规则：由抖音支付生成的应用ID，全局唯一。
 	// 示例：awofz9bncda6w2w4。
-	SubAppid string `json:"sub_appid,omitempty"`
+	SubAppid string `json:"sub_appid"`
 	// 字段含义：子商户商户号。
 	// 格式规则：string[1,32]。
 	// 业务规则：子商户的商户号，由抖音支付生成并下发。
 	// 示例：6020230307605085。
-	SubMchid string `json:"sub_mchid,omitempty"`
+	SubMchid string `json:"sub_mchid"`
 	// 字段含义：商户服务单号。
 	// 格式规则：string[1,32]，只能是数字、大小写字母_-*。
 	// 业务规则：商户系统内部服务订单号，在同一个商户号下唯一。
 	// 示例：OUT_1666688488。
-	OutOrderNo string `json:"out_order_no,omitempty"`
+	OutOrderNo string `json:"out_order_no"`
 	// 字段含义：服务ID。
 	// 格式规则：string[1,32]。
 	// 业务规则：业务接入时分配，用于配置商户和场景维度信息。
 	// 示例：101。
-	ServiceId string `json:"service_id,omitempty"`
+	ServiceId string `json:"service_id"`
 	// 字段含义：总金额。
 	// 格式规则：int64。
 	// 业务规则：1. 金额：数字，必须≥0（单位：分） 2. 总金额 =（完结付费项目1…+完结付费项目n）-（完结商户优惠项目1…+完结商户优惠项目n）。
 	// 示例：100。
-	TotalAmount int64 `json:"total_amount,omitempty"`
+	TotalAmount int64 `json:"total_amount"`
 	// 字段含义：商户数据包。
 	// 格式规则：string[1,1024]。
 	// 示例：{"out_product_category":"BATTERY_CHANGE"}。
-	Attach string `json:"attach,omitempty"`
+	Attach string `json:"attach"`
 	// 字段含义：优惠标记。
 	// 格式规则：string[1,512]，json格式。
 	// 业务规则：和抖音支付协商后可用。
 	// 示例：{"product_tag":"xxxx","biz_scene":"aaaa"}。
-	GoodsTag string `json:"goods_tag,omitempty"`
+	GoodsTag string `json:"goods_tag"`
 	// 字段含义：支付渠道信息。
 	// 格式规则：object。
 	// 业务规则：渠道信息，可以指定优先、指定必用渠道类型。
@@ -1591,20 +1591,20 @@ type PresetChannel struct {
 	// 格式规则：string[1,128]。
 	// 业务规则：指定必用渠道名称，上传与抖音支付约定的值。
 	// 示例：OUTSIDE_MC。
-	ChannelCode string `json:"channel_code,omitempty"`
+	ChannelCode string `json:"channel_code"`
 	// 字段含义：指定渠道ID。
 	// 格式规则：string[1,64]。
 	// 业务规则：指定必用渠道ID，上传与抖音支付约定的渠道。
 	// 示例：HLQXK。
-	ChannelId string `json:"channel_id,omitempty"`
+	ChannelId string `json:"channel_id"`
 	// 字段含义：指定渠道金额。
 	// 格式规则：int64。
 	// 示例：100。
-	ChannelAmount int64 `json:"channel_amount,omitempty"`
+	ChannelAmount int64 `json:"channel_amount"`
 	// 字段含义：扩展信息。
 	// 格式规则：string。
 	// 示例：""。
-	ChannelExtInfo string `json:"channel_ext_info,omitempty"`
+	ChannelExtInfo string `json:"channel_ext_info"`
 }
 
 // ApiPartnerQueryServiceOrderRequest 服务商查询服务订单请求参数。
@@ -1613,32 +1613,32 @@ type ApiPartnerQueryServiceOrderRequest struct {
 	// 格式规则：string[1,32]。
 	// 业务规则：由抖音支付生成的应用ID，全局唯一。
 	// 示例：awofz9bncda6w2w4。
-	SpAppid string `json:"sp_appid,omitempty"`
+	SpAppid string `json:"sp_appid"`
 	// 字段含义：服务商商户号。
 	// 格式规则：string[1,32]。
 	// 业务规则：服务商的商户号，由抖音支付生成并下发。
 	// 示例：6020230307605084。
-	SpMchid string `json:"sp_mchid,omitempty"`
+	SpMchid string `json:"sp_mchid"`
 	// 字段含义：子商户应用ID。
 	// 格式规则：string[1,32]。
 	// 业务规则：由抖音支付生成的应用ID，全局唯一。
 	// 示例：awofz9bncda6w2w4。
-	SubAppid string `json:"sub_appid,omitempty"`
+	SubAppid string `json:"sub_appid"`
 	// 字段含义：子商户商户号。
 	// 格式规则：string[1,32]。
 	// 业务规则：子商户的商户号，由抖音支付生成并下发。
 	// 示例：6020230307605085。
-	SubMchid string `json:"sub_mchid,omitempty"`
+	SubMchid string `json:"sub_mchid"`
 	// 字段含义：商户服务单号。
 	// 格式规则：string[1,32]，只能是数字、大小写字母_-*。
 	// 业务规则：商户系统内部服务订单号，在同一个商户号下唯一。
 	// 示例：OUT_1666688488。
-	OutOrderNo string `json:"out_order_no,omitempty"`
+	OutOrderNo string `json:"out_order_no"`
 	// 字段含义：服务ID。
 	// 格式规则：string[1,32]。
 	// 业务规则：业务接入时分配，用于配置商户和场景维度信息。
 	// 示例：101。
-	ServiceId string `json:"service_id,omitempty"`
+	ServiceId string `json:"service_id"`
 }
 
 // ApiPartnerQueryServiceOrderResponse 服务商查询服务订单响应参数。
@@ -1757,36 +1757,36 @@ type ApiPartnerCancelServiceOrderRequest struct {
 	// 格式规则：string[1,32]。
 	// 业务规则：由抖音支付生成的应用ID，全局唯一。
 	// 示例：awofz9bncda6w2w4。
-	SpAppid string `json:"sp_appid,omitempty"`
+	SpAppid string `json:"sp_appid"`
 	// 字段含义：服务商商户号。
 	// 格式规则：string[1,32]。
 	// 业务规则：服务商的商户号，由抖音支付生成并下发。
 	// 示例：6020230307605084。
-	SpMchid string `json:"sp_mchid,omitempty"`
+	SpMchid string `json:"sp_mchid"`
 	// 字段含义：子商户商户号。
 	// 格式规则：string[1,32]。
 	// 业务规则：子商户的商户号，由抖音支付生成并下发。
 	// 示例：6020230307605085。
-	SubMchid string `json:"sub_mchid,omitempty"`
+	SubMchid string `json:"sub_mchid"`
 	// 字段含义：子商户应用ID。
 	// 格式规则：string[1,32]。
 	// 业务规则：由抖音支付生成的应用ID，全局唯一。
 	// 示例：awofz9bncda6w2w4。
-	SubAppid string `json:"sub_appid,omitempty"`
+	SubAppid string `json:"sub_appid"`
 	// 字段含义：商户服务单号。
 	// 格式规则：string[1,32]，只能是数字、大小写字母_-*。
 	// 业务规则：商户系统内部服务订单号，在同一个商户号下唯一。
 	// 示例：OUT_1666688488。
-	OutOrderNo string `json:"out_order_no,omitempty"`
+	OutOrderNo string `json:"out_order_no"`
 	// 字段含义：服务ID。
 	// 格式规则：string[1,32]。
 	// 业务规则：业务接入时分配，用于配置商户和场景维度信息。
 	// 示例：101。
-	ServiceId string `json:"service_id,omitempty"`
+	ServiceId string `json:"service_id"`
 	// 字段含义：取消原因。
 	// 格式规则：string[1,50]。
 	// 示例：用户取消。
-	Reason string `json:"reason,omitempty"`
+	Reason string `json:"reason"`
 }
 
 // ApiPartnerCancelServiceOrderResponse 服务商取消服务订单响应参数。
@@ -1814,37 +1814,37 @@ type ApiPartnerSynchronizeServiceOrderInfoRequest struct {
 	// 格式规则：string[1,32]。
 	// 业务规则：由抖音支付生成的应用ID，全局唯一。
 	// 示例：awofz9bncda6w2w4。
-	SpAppid string `json:"sp_appid,omitempty"`
+	SpAppid string `json:"sp_appid"`
 	// 字段含义：服务商商户号。
 	// 格式规则：string[1,32]。
 	// 业务规则：服务商的商户号，由抖音支付生成并下发。
 	// 示例：6020230307605084。
-	SpMchid string `json:"sp_mchid,omitempty"`
+	SpMchid string `json:"sp_mchid"`
 	// 字段含义：子商户商户号。
 	// 格式规则：string[1,32]。
 	// 业务规则：子商户的商户号，由抖音支付生成并下发。
 	// 示例：6020230307605085。
-	SubMchid string `json:"sub_mchid,omitempty"`
+	SubMchid string `json:"sub_mchid"`
 	// 字段含义：子商户应用ID。
 	// 格式规则：string[1,32]。
 	// 业务规则：由抖音支付生成的应用ID，全局唯一。
 	// 示例：awofz9bncda6w2w4。
-	SubAppid string `json:"sub_appid,omitempty"`
+	SubAppid string `json:"sub_appid"`
 	// 字段含义：商户服务单号。
 	// 格式规则：string[1,32]，只能是数字、大小写字母_-*。
 	// 业务规则：商户系统内部服务订单号，在同一个商户号下唯一。
 	// 示例：OUT_1666688488。
-	OutOrderNo string `json:"out_order_no,omitempty"`
+	OutOrderNo string `json:"out_order_no"`
 	// 字段含义：服务ID。
 	// 格式规则：string[1,32]。
 	// 业务规则：业务接入时分配，用于配置商户和场景维度信息。
 	// 示例：101。
-	ServiceId string `json:"service_id,omitempty"`
+	ServiceId string `json:"service_id"`
 	// 字段含义：同步类型。
 	// 格式规则：string[1,20]。
 	// 业务规则：枚举值：订单已支付-ORDER_PAID。
 	// 示例：ORDER_PAID。
-	Type string `json:"type,omitempty"`
+	Type string `json:"type"`
 	// 同步内容信息详情
 	Detail struct {
 		// 字段含义：收款完成时间。
@@ -1863,37 +1863,37 @@ type ApiPartnerModifyAmountRequest struct {
 	// 格式规则：string[1,32]。
 	// 业务规则：由抖音支付生成的应用ID，全局唯一。
 	// 示例：awofz9bncda6w2w4。
-	SpAppid string `json:"sp_appid,omitempty"`
+	SpAppid string `json:"sp_appid"`
 	// 字段含义：服务商商户号。
 	// 格式规则：string[1,32]。
 	// 业务规则：服务商的商户号，由抖音支付生成并下发。
 	// 示例：6020230307605084。
-	SpMchid string `json:"sp_mchid,omitempty"`
+	SpMchid string `json:"sp_mchid"`
 	// 字段含义：子商户应用ID。
 	// 格式规则：string[1,32]。
 	// 业务规则：由抖音支付生成的应用ID，全局唯一。
 	// 示例：awofz9bncda6w2w4。
-	SubAppid string `json:"sub_appid,omitempty"`
+	SubAppid string `json:"sub_appid"`
 	// 字段含义：子商户商户号。
 	// 格式规则：string[1,32]。
 	// 业务规则：子商户的商户号，由抖音支付生成并下发。
 	// 示例：6020230307605085。
-	SubMchid string `json:"sub_mchid,omitempty"`
+	SubMchid string `json:"sub_mchid"`
 	// 字段含义：商户服务单号。
 	// 格式规则：string[1,32]，只能是数字、大小写字母_-*。
 	// 业务规则：商户系统内部服务订单号，在同一个商户号下唯一。
 	// 示例：OUT_1666688488。
-	OutOrderNo string `json:"out_order_no,omitempty"`
+	OutOrderNo string `json:"out_order_no"`
 	// 字段含义：服务ID。
 	// 格式规则：string[1,32]。
 	// 业务规则：业务接入时分配，用于配置商户和场景维度信息。
 	// 示例：101。
-	ServiceId string `json:"service_id,omitempty"`
+	ServiceId string `json:"service_id"`
 	// 字段含义：总金额。
 	// 格式规则：int64。
 	// 业务规则：1. 金额：数字，必须≥0（单位：分） 2. 总金额 =（完结付费项目1…+完结付费项目n）-（完结商户优惠项目1…+完结商户优惠项目n）。
 	// 示例：10000。
-	TotalAmount int64 `json:"total_amount,omitempty"`
+	TotalAmount int64 `json:"total_amount"`
 	// 字段含义：后付费项目。
 	// 格式规则：array。
 	// 示例：[{"name":"出行费用","amount":4000,"description":"美味餐厅","count":1}]。
@@ -2020,7 +2020,7 @@ type ApiPartnerCreditSrvSignApplyRequest struct {
 	// 格式规则：string[1,32]。
 	// 业务规则：由抖音支付生成的应用ID，全局唯一。
 	// 示例：awofz9bncda6w2w4。
-	SubAppid string `json:"sub_appid,omitempty"`
+	SubAppid string `json:"sub_appid"`
 	// 字段含义：子商户商户号。
 	// 格式规则：string[1,32]。
 	// 业务规则：子商户的商户号，由抖音支付生成并下发。
@@ -2039,7 +2039,7 @@ type ApiPartnerCreditSrvSignApplyRequest struct {
 	// 字段含义：通知地址。
 	// 格式规则：string[1,255]，必须为https地址。请确保回调URL是外部可正常访问的，且不能携带后缀参数。
 	// 示例：https://www.bytedance.com。
-	NotifyUrl string `json:"notify_url,omitempty"`
+	NotifyUrl string `json:"notify_url"`
 	// 字段含义：商户数据包。
 	// 格式规则：string[1,1024]。
 	// 示例：{"out_product_category":"BATTERY_CHANGE"}。
@@ -2165,7 +2165,7 @@ type ApiPartnerCloseCreditServiceRequest struct {
 	// 格式规则：string[1,32]。
 	// 业务规则：由抖音支付生成的应用ID，全局唯一。
 	// 示例：awofz9bncda6w2w4。
-	SubAppid string `json:"sub_appid,omitempty"`
+	SubAppid string `json:"sub_appid"`
 	// 字段含义：子商户商户号。
 	// 格式规则：string[1,32]。
 	// 业务规则：子商户的商户号，由抖音支付生成并下发。
