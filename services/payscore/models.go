@@ -177,7 +177,7 @@ type ApiCreateServiceOrderResponse struct {
 	// 格式规则：string。
 	// 示例：自定义数据。
 	Attach *string `json:"attach,omitempty"`
-	// 字段含义：通知地址 有效性：1. HTTPS；2. 不允许携带查询串。
+	// 字段含义：通知地址
 	// 格式规则：string。
 	// 业务规则：商户接收回调通知的地址 有效性：1. HTTPS；2. 不允许携带查询串。
 	// 示例：https://www.bytedance.com。
@@ -1446,7 +1446,7 @@ type ApiPartnerCompleteServiceOrderRequest struct {
 	ServiceId string `json:"service_id,omitempty"`
 	// 字段含义：总金额。
 	// 格式规则：int64。
-	// 业务规则："1. 金额：数字，必须≥0（单位：分） 2. 总金额 =（完结付费项目1…+完结付费项目n）-（完结商户优惠项目1…+完结商户优惠项目n） "。
+	// 业务规则：1. 金额：数字，必须≥0（单位：分） 2. 总金额 =（完结付费项目1…+完结付费项目n）-（完结商户优惠项目1…+完结商户优惠项目n）。
 	// 示例：100。
 	TotalAmount int64 `json:"total_amount,omitempty"`
 	// 字段含义：商户数据包。
@@ -1543,7 +1543,7 @@ type ApiPartnerCompleteServiceOrderResponse struct {
 	RiskFund *RiskFund `json:"risk_fund,omitempty"`
 	// 字段含义：订单总金额。
 	// 格式规则：int64。
-	// 业务规则："1. 金额：数字，必须≥0（单位：分） 2. 总金额 =（完结付费项目1…+完结付费项目n）-（完结商户优惠项目1…+完结商户优惠项目n） "。
+	// 业务规则：1. 金额：数字，必须≥0（单位：分） 2. 总金额 =（完结付费项目1…+完结付费项目n）-（完结商户优惠项目1…+完结商户优惠项目n）。
 	// 示例：10000。
 	TotalAmount int64 `json:"total_amount"`
 	// 字段含义：后付费项目。
@@ -1699,7 +1699,7 @@ type ApiPartnerQueryServiceOrderResponse struct {
 	RiskFund *RiskFund `json:"risk_fund,omitempty"`
 	// 字段含义：订单总金额。
 	// 格式规则：int64。
-	// 业务规则："1. 金额：数字，必须≥0（单位：分） 2. 总金额 =（完结付费项目1…+完结付费项目n）-（完结商户优惠项目1…+完结商户优惠项目n） "。
+	// 业务规则：1. 金额：数字，必须≥0（单位：分） 2. 总金额 =（完结付费项目1…+完结付费项目n）-（完结商户优惠项目1…+完结商户优惠项目n）。
 	// 示例：10000。
 	TotalAmount int64 `json:"total_amount"`
 	// 字段含义：服务商商户下用户标识。
@@ -1891,7 +1891,7 @@ type ApiPartnerModifyAmountRequest struct {
 	ServiceId string `json:"service_id,omitempty"`
 	// 字段含义：总金额。
 	// 格式规则：int64。
-	// 业务规则："1. 金额：数字，必须≥0（单位：分） 2. 总金额 =（完结付费项目1…+完结付费项目n）-（完结商户优惠项目1…+完结商户优惠项目n） "。
+	// 业务规则：1. 金额：数字，必须≥0（单位：分） 2. 总金额 =（完结付费项目1…+完结付费项目n）-（完结商户优惠项目1…+完结商户优惠项目n）。
 	// 示例：10000。
 	TotalAmount int64 `json:"total_amount,omitempty"`
 	// 字段含义：后付费项目。
@@ -1967,7 +1967,7 @@ type ApiPartnerModifyAmountResponse struct {
 	RiskFund *RiskFund `json:"risk_fund,omitempty"`
 	// 字段含义：订单总金额。
 	// 格式规则：int64。
-	// 业务规则："1. 金额：数字，必须≥0（单位：分） 2. 总金额 =（完结付费项目1…+完结付费项目n）-（完结商户优惠项目1…+完结商户优惠项目n） "。
+	// 业务规则：1. 金额：数字，必须≥0（单位：分） 2. 总金额 =（完结付费项目1…+完结付费项目n）-（完结商户优惠项目1…+完结商户优惠项目n）。
 	// 示例：10000。
 	TotalAmount int64 `json:"total_amount"`
 	// 字段含义：实际服务时间段。
