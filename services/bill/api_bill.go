@@ -10,6 +10,17 @@ import (
 	"github.com/douyinpay/douyinpay-go/tools/consts"
 )
 
+/**
+ * 账单服务。
+ *
+ * 官方文档：
+ * - 申请交易账单：GET /v1/bill/billapply
+ * https://pay.douyinpay.com/wiki/639fd48f17c2f3021d237f61/667e6bc444a74902ead102ad
+ * - 申请资金账单：GET /v1/bill/fundflowbill
+ * https://pay.douyinpay.com/wiki/639fd48f17c2f3021d237f61/667e69daa998e00305dcec48
+ * - 申请分账账单：GET /v1/bill/splitbill
+ * https://pay.douyinpay.com/wiki/639fd48f17c2f3021d237f61/68355a92994b190515a2af86
+ */
 type BillApiService services.Service
 
 // BillApply 申请交易账单的下载地址。
