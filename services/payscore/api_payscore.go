@@ -158,7 +158,7 @@ func (a *ApiPayScoreService) ModifyAmount(
 	return resp, result, nil
 }
 
-// SynchronizeServiceOrderInfo 同步服务订单信息。
+// SynchronizeServiceOrderInfo 同步服务订单信息
 func (a *ApiPayScoreService) SynchronizeServiceOrderInfo(
 	ctx context.Context, req ApiSynchronizeServiceOrderInfoRequest) (
 	resp *ApiSynchronizeServiceOrderInfoResponse, result *client.APIResult, err error) {
@@ -185,7 +185,7 @@ func (a *ApiPayScoreService) SynchronizeServiceOrderInfo(
 	return resp, result, nil
 }
 
-// ServiceOrderPay 商户发起催收扣款。
+// ServiceOrderPay 商户发起催收扣款
 func (a *ApiPayScoreService) ServiceOrderPay(ctx context.Context, req ApiServiceOrderPayRequest) (
 	resp *ApiServiceOrderPayResponse, result *client.APIResult, err error) {
 	reqBytes, _ := json.Marshal(req)
