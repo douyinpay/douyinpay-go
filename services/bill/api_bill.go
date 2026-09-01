@@ -10,18 +10,43 @@ import (
 	"github.com/douyinpay/douyinpay-go/tools/consts"
 )
 
+/**
+ * 账单服务。
+ *
+ * 官方文档：
+ * - 申请交易账单：GET /v1/bill/billapply
+ * https://pay.douyinpay.com/wiki/639fd48f17c2f3021d237f61/667e6bc444a74902ead102ad
+ * - 申请资金账单：GET /v1/bill/fundflowbill
+ * https://pay.douyinpay.com/wiki/639fd48f17c2f3021d237f61/667e69daa998e00305dcec48
+ * - 申请分账账单：GET /v1/bill/splitbill
+ * https://pay.douyinpay.com/wiki/639fd48f17c2f3021d237f61/68355a92994b190515a2af86
+ */
 type BillApiService services.Service
 
+// BillApply 申请交易账单的下载地址。
+//
+// 交易账单按天生成，包含交易相关的金额、时间、营销等信息，供商户核对订单交易完成、退款、撤销等情况。
+// 抖音侧未成功下单的交易不会出现在对账单中，支付成功后撤销的交易会出现在对账单中且沿用原支付单订单号。
+// 账单涉及金额字段的单位为元，账单文件通常建议在 T+1 日 10 点后获取。
 func (a *BillApiService) BillApply(ctx context.Context, req BillApplyRequest) (
 	resp *Bill, result *client.APIResult, err error) {
 	return a.applyBill(ctx, req)
 }
 
+// ApplyFundFlowBill 申请资金账单的下载地址。
+//
+// 资金账单按天生成，用于反映抖音支付账户的资金变动情况，包含业务单号、收支金额和记账时间等信息。
+// 账单涉及金额字段的单位为元；account_type 可选值包括 BaseAccount（基本账户）和
+// OperationAccount（运营账户），OpenAPI 文档中默认值为 BaseAccount。
 func (a *BillApiService) ApplyFundFlowBill(ctx context.Context, req ApplyFundFlowBillRequest) (
 	resp *Bill, result *client.APIResult, err error) {
 	return a.applyBill(ctx, req)
 }
 
+// ApplySplitBill 申请分账账单的下载地址。
+//
+// 分账账单按天生成，包含分账相关的金额、时间和状态等信息，供商户核对到账和分账结果。
+// 账单涉及金额字段的单位为元，tar_type 常用值为 GZIP。
 func (a *BillApiService) ApplySplitBill(ctx context.Context, req ApplySplitBillRequest) (
 	resp *Bill, result *client.APIResult, err error) {
 	return a.applyBill(ctx, req)

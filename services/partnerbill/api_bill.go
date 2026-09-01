@@ -1,10 +1,5 @@
 package partnerbill
 
-// 官方文档：
-// - 申请交易账单：https://partner.douyinpay.com/wiki/682c7a8e82b07604fd4deccb/69e2ee7acad2c105c439a809
-// - 申请资金账单：https://partner.douyinpay.com/wiki/682c7a8e82b07604fd4deccb/684a53064037d5050b11863d
-// - 申请分账账单：https://partner.douyinpay.com/wiki/682c7a8e82b07604fd4deccb/684a53090efadf054e0489f0
-
 import (
 	"context"
 	nethttp "net/http"
@@ -17,16 +12,28 @@ import (
 
 type BillApiService services.Service
 
+// ApplyTradeBill 申请服务商交易账单的下载地址。
+//
+// 交易账单按天生成，包含交易相关的金额、时间、营销等信息，供商户核对订单交易完成、退款、撤销等情况。
+// 二级商户不单独提供对账单下载；如需下载某个子商户下的交易或退款数据，可传入 sub_mchid，平台商户不支持该字段。
 func (a *BillApiService) ApplyTradeBill(ctx context.Context, req ApplyTradeBillRequest) (
 	resp *Bill, result *client.APIResult, err error) {
 	return a.applyBill(ctx, req)
 }
 
+// ApplyFundFlowBill 申请服务商资金账单的下载地址。
+//
+// 资金账单按天生成，反映商户账户的资金变动情况，包含业务单号、收支金额和记账时间等信息。
+// account_type 选填，可选值包括 BaseAccount（基本账户）、OperationAccount（运营账户）和 FeeAccount（手续费账户），默认值为 BaseAccount。
 func (a *BillApiService) ApplyFundFlowBill(ctx context.Context, req ApplyFundFlowBillRequest) (
 	resp *Bill, result *client.APIResult, err error) {
 	return a.applyBill(ctx, req)
 }
 
+// ApplySplitBill 申请服务商分账账单的下载地址。
+//
+// 分账账单按天生成，包含分账相关的金额、时间等信息，供商户核对到账等情况。
+// 抖音侧未成功的分账单不会出现在对账单中；如需下载某个子商户下的分账账单，可传入 sub_mchid。
 func (a *BillApiService) ApplySplitBill(ctx context.Context, req ApplySplitBillRequest) (
 	resp *Bill, result *client.APIResult, err error) {
 	return a.applyBill(ctx, req)
