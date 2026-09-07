@@ -26,6 +26,7 @@ type EncryptedResource struct {
 	Nonce          string `json:"nonce"`
 	OriginalType   string `json:"original_type"`
 	Mchid          string `json:"mchid"`
+	SpMchid        string `json:"sp_mchid,omitempty"`
 
 	Plaintext string // Ciphertext 解密后内容
 }

@@ -90,8 +90,6 @@ type PrePayConsultRequest struct {
 	// 字段含义：拓展字段。
 	// 格式规则：string[1,1024]，键值对类型的 JSON 数据。
 	// 业务规则：用于传递拓展信息，需与抖音支付协商后传递。
-	// 示例：
-	// TODO: 官方文档未提供标准示例值，暂留空。
 	ExtInfo string `json:"ext_info,omitempty"`
 }
 
@@ -105,8 +103,6 @@ type GoodsDetail struct {
 	// 字段含义：抖音支付商品编码。
 	// 格式规则：string[1,32]。
 	// 业务规则：抖音支付侧的商品编码，选填。
-	// 示例：
-	// TODO: 官方文档未提供标准示例值，暂留空。
 	DouyinpayGoodsId string `json:"douyinpay_goods_id,omitempty"`
 	// 字段含义：商品名称。
 	// 格式规则：string[1,256]。

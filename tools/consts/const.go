@@ -24,6 +24,13 @@ const (
 	JsapiPrepayPath              = "/v1/trade/transactions/jsapi"
 	SplitFundPath                = "/v1/trade/profitsharing/orders"
 	QuerySplitFundPath           = "/v1/trade/profitsharing/orders/{out_order_no}"
+	ReturnSplitFundPath          = "/v1/trade/profitsharing/return-orders"
+	QueryReturnSplitFundPath     = "/v1/trade/profitsharing/return-orders/{out_return_no}"
+	FinishSplitFundPath          = "/v1/trade/profitsharing/finish-orders"
+	QueryUnsplitAmountPath       = "/v1/trade/profitsharing/order/{transaction_id}/amounts"
+	QueryMerchantConfigPath      = "/v1/trade/profitsharing/merchant-configs/{sub_mchid}"
+	AddSplitReceiverPath         = "/v1/trade/profitsharing/receivers/add"
+	DeleteSplitReceiverPath      = "/v1/trade/profitsharing/receivers/delete"
 	NativePrepayPath             = "/v1/trade/transactions/native"
 	CreditContractPrepayPath     = "/v1/trade/transactions/payscorecontractorder"
 	PartnerJsapiPrepayPath       = "/v1/trade/partner/transactions/jsapi"                             //服务商jsapi下单
