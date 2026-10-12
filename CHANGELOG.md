@@ -4,6 +4,14 @@
 
 ClientVersion 每次sdk升级，需要更新版本号
 
+v1.0.8 - 2026-10-12
+--------------------
+* 新增间连商户相关接口能力（services/indirectmerchant）：入驻申请、查询/撤销申请单、查询商户、修改商户、绑定/查询应用 APPID、图片上传
+* 新增间连商户申请状态通知解析（INDIRECT_MERCHANT_APPLYMENT_STATUS），复用通用回调验签与 AES-256-GCM 解密
+* 新增敏感字段加解密能力（client.Client.EncryptSensitive/DecryptSensitive）：入驻申请对证件持有人姓名、证件号码使用平台证书公钥加密，查询商户对下行密文使用服务商私钥解密
+* 新增图片上传 multipart 传输能力（client.Client.RequestMultipart），签名正文仅覆盖 meta
+* 补充间连商户接口与字段注释说明
+
 v1.0.7 - 2026-09-01
 --------------------
 * 新增直连商户与服务商分账相关接口能力

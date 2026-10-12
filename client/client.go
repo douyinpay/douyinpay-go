@@ -3,12 +3,17 @@ package client
 import (
 	"bytes"
 	"context"
+	"crypto/rand"
+	"crypto/rsa"
+	"encoding/base64"
 	"encoding/json"
 	"encoding/xml"
 	"fmt"
 	"io"
 	"io/ioutil"
+	"mime/multipart"
 	"net/http"
+	"net/textproto"
 	"net/url"
 	"os"
 	"regexp"
@@ -35,10 +40,12 @@ func (w ErrorOption) Apply(*DialSettings) error {
 }
 
 type DialSettings struct {
-	AgentName  string
-	HTTPClient *http.Client  // HTTPClient 实例
-	Signer     auth.Signer   // 加签
-	Verifier   auth.Verifier // 验签
+	AgentName          string
+	HTTPClient         *http.Client  // HTTPClient 实例
+	Signer             auth.Signer   // 加签
+	Verifier           auth.Verifier // 验签
+	PlatformPublicKey  *rsa.PublicKey
+	MerchantPrivateKey *rsa.PrivateKey
 }
 
 // Validate 校验请求配置是否有效
@@ -59,10 +66,12 @@ type APIResult struct {
 }
 
 type Client struct {
-	AgentName  string
-	httpClient *http.Client
-	signer     auth.Signer
-	verifier   auth.Verifier
+	AgentName          string
+	httpClient         *http.Client
+	signer             auth.Signer
+	verifier           auth.Verifier
+	platformPublicKey  *rsa.PublicKey
+	merchantPrivateKey *rsa.PrivateKey
 }
 
 func NewClient(ctx context.Context, opts ...ClientOption) (*Client, error) {
@@ -72,10 +81,12 @@ func NewClient(ctx context.Context, opts ...ClientOption) (*Client, error) {
 	}
 
 	client := &Client{
-		AgentName:  settings.AgentName,
-		signer:     settings.Signer,
-		httpClient: settings.HTTPClient,
-		verifier:   settings.Verifier,
+		AgentName:          settings.AgentName,
+		signer:             settings.Signer,
+		httpClient:         settings.HTTPClient,
+		verifier:           settings.Verifier,
+		platformPublicKey:  settings.PlatformPublicKey,
+		merchantPrivateKey: settings.MerchantPrivateKey,
 	}
 
 	if client.httpClient == nil {
@@ -105,10 +116,12 @@ func NewClientWithVerifier(client *Client, verifier auth.Verifier) *Client {
 
 func initClientWithSettings(_ context.Context, settings *DialSettings) *Client {
 	client := &Client{
-		AgentName:  settings.AgentName,
-		signer:     settings.Signer,
-		httpClient: settings.HTTPClient,
-		verifier:   settings.Verifier,
+		AgentName:          settings.AgentName,
+		signer:             settings.Signer,
+		httpClient:         settings.HTTPClient,
+		verifier:           settings.Verifier,
+		platformPublicKey:  settings.PlatformPublicKey,
+		merchantPrivateKey: settings.MerchantPrivateKey,
 	}
 	if client.httpClient == nil {
 		client.httpClient = &http.Client{
@@ -212,6 +225,121 @@ func (client *Client) Request(ctx context.Context, r *RequestEntity) (*APIResult
 		return result, err
 	}
 	return result, nil
+}
+
+// MultipartRequestEntity describes the media upload request. SignBody is the
+// JSON meta part; it is intentionally different from the transmitted body.
+type MultipartRequestEntity struct {
+	Method      string
+	RequestPath string
+	Header      http.Header
+	SignBody    string
+	Meta        string
+	FileName    string
+	FileType    string
+	File        []byte
+}
+
+// RequestMultipart sends a multipart request whose signature covers only meta.
+func (client *Client) RequestMultipart(ctx context.Context, r *MultipartRequestEntity) (*APIResult, error) {
+	var payload bytes.Buffer
+	writer := multipart.NewWriter(&payload)
+	metaHeader := make(textproto.MIMEHeader)
+	metaHeader.Set("Content-Disposition", `form-data; name="meta"`)
+	metaHeader.Set("Content-Type", consts.ApplicationJSON)
+	part, err := writer.CreatePart(metaHeader)
+	if err != nil {
+		return nil, err
+	}
+	if _, err = part.Write([]byte(r.Meta)); err != nil {
+		return nil, err
+	}
+	fileHeader := make(textproto.MIMEHeader)
+	fileHeader.Set("Content-Disposition", fmt.Sprintf(`form-data; name="file"; filename="%s"`, r.FileName))
+	fileHeader.Set("Content-Type", r.FileType)
+	part, err = writer.CreatePart(fileHeader)
+	if err != nil {
+		return nil, err
+	}
+	if _, err = part.Write(r.File); err != nil {
+		return nil, err
+	}
+	if err = writer.Close(); err != nil {
+		return nil, err
+	}
+
+	path, err := SetPathWithParams(r.RequestPath, nil)
+	if err != nil {
+		return nil, err
+	}
+	req, err := http.NewRequestWithContext(ctx, r.Method, path, &payload)
+	if err != nil {
+		return nil, err
+	}
+	for key, values := range r.Header {
+		for _, value := range values {
+			req.Header.Add(key, value)
+		}
+	}
+	req.Header.Set(consts.ContentType, writer.FormDataContentType())
+	req.Header.Set(consts.Accept, consts.ApplicationJSON)
+	authHeader, err := client.GenerateAuthorizationHeader(ctx, r.Method, req.URL.RequestURI(), r.SignBody)
+	if err != nil {
+		return nil, fmt.Errorf("generate authorization err:%s", err.Error())
+	}
+	req.Header.Set(consts.Authorization, authHeader)
+	if client.AgentName != "" {
+		req.Header.Set(consts.DouyinpaySdkAgent, client.AgentName)
+	}
+	result := &APIResult{Request: req}
+	result.Response, err = client.httpClient.Do(req)
+	if err != nil {
+		return result, err
+	}
+	if err = CheckResponse(result.Response); err != nil {
+		return result, err
+	}
+	if err = client.Validate(ctx, result.Response); err != nil {
+		return result, err
+	}
+	return result, nil
+}
+
+// EncryptSensitive 使用抖音支付平台证书公钥对敏感字段进行 RSA PKCS#1 v1.5 加密，
+// 返回 Base64 编码的密文。该能力用于上送证件持有人姓名、证件号码等敏感信息。
+// 当未配置平台公钥或加密失败时返回带上下文的错误。
+func (client *Client) EncryptSensitive(plain string) (string, error) {
+	if client.platformPublicKey == nil {
+		return "", fmt.Errorf("encrypt sensitive field: platform public key is not configured")
+	}
+	cipher, err := rsa.EncryptPKCS1v15(rand.Reader, client.platformPublicKey, []byte(plain))
+	if err != nil {
+		return "", fmt.Errorf("encrypt sensitive field: %s", err.Error())
+	}
+	return base64.StdEncoding.EncodeToString(cipher), nil
+}
+
+// DecryptSensitive 使用服务商私钥对抖音支付下行的敏感字段密文进行 RSA PKCS#1 v1.5 解密，
+// 入参为 Base64 编码的密文，返回解密后的明文。
+// 当未配置商户私钥、密文非法或解密失败时返回带上下文的错误。
+func (client *Client) DecryptSensitive(cipherText string) (string, error) {
+	if client.merchantPrivateKey == nil {
+		return "", fmt.Errorf("decrypt sensitive field: merchant private key is not configured")
+	}
+	raw, err := base64.StdEncoding.DecodeString(cipherText)
+	if err != nil {
+		return "", fmt.Errorf("decrypt sensitive field: invalid base64 cipher: %s", err.Error())
+	}
+	plain, err := rsa.DecryptPKCS1v15(rand.Reader, client.merchantPrivateKey, raw)
+	if err != nil {
+		return "", fmt.Errorf("decrypt sensitive field: %s", err.Error())
+	}
+	return string(plain), nil
+}
+
+// HasSensitiveKeys 返回是否已配置敏感字段加密所需的平台公钥。
+func (client *Client) HasSensitiveKeys() bool {
+	return client.platformPublicKey != nil
 }
 
 // CheckResponse 校验请求是否成功
