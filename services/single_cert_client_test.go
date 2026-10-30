@@ -20,10 +20,14 @@ func ExampleNewClient_default() {
 	ctx := context.Background()
 
 	var cli *client.Client
+	var err error
 	if signType == "RSA" {
-		cli = InitClientRSA(ctx, mchID, mchCertificateSerialNo, mchPrivateKeyString, plantformCertString)
+		cli, err = NewClientRSA(ctx, mchID, mchCertificateSerialNo, mchPrivateKeyString, plantformCertString)
 	} else {
-		cli = InitClientSM2(ctx, mchID, mchCertificateSerialNo, mchPrivateKeyString, plantformCertString)
+		cli, err = NewClientSM2(ctx, mchID, mchCertificateSerialNo, mchPrivateKeyString, plantformCertString)
+	}
+	if err != nil {
+		// err handle
 	}
 
 	// 接下来使用 cli 注册ApiService 进行请求发送

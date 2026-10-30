@@ -3,12 +3,13 @@ package downloader
 import (
 	"context"
 	"crypto/rsa"
+	"fmt"
+	"log"
 	"sync"
 	"time"
 
 	"github.com/douyinpay/douyinpay-go/client"
 	"github.com/douyinpay/douyinpay-go/tools/auth/signers"
-	"github.com/douyinpay/douyinpay-go/tools/auth/verifiers"
 	"github.com/douyinpay/douyinpay-go/tools/consts"
 	"github.com/douyinpay/douyinpay-go/utils"
 
@@ -25,10 +26,12 @@ const (
 //
 // CertificateDownloaderMgr 不会被 GoGC 自动回收，不再使用时应调用 Stop 方法，防止发生资源泄漏
 type CertificateDownloaderMgr struct {
-	ctx           context.Context
-	task          *utils.RepeatedTask
-	downloaderMap map[string]*CertificateDownloader
-	lock          sync.RWMutex
+	ctx             context.Context
+	task            *utils.RepeatedTask
+	downloaderMap   map[string]*CertificateDownloader
+	lastRefreshErr  error
+	lastRefreshTime time.Time
+	lock            sync.RWMutex
 }
 
 // GetCertificateVisitor 获取某个商户的平台证书访问器
@@ -51,12 +54,14 @@ func (mgr *CertificateDownloaderMgr) Stop() {
 
 func (mgr *CertificateDownloaderMgr) getTickHandler() func(time.Time) {
 	return func(time.Time) {
-		mgr.DownloadCertificates(mgr.ctx)
+		if err := mgr.DownloadCertificates(mgr.ctx); err != nil {
+			log.Printf("download platform certificates failed: %v", err)
+		}
 	}
 }
 
 // DownloadCertificates 让所有已注册下载器均进行一次下载
-func (mgr *CertificateDownloaderMgr) DownloadCertificates(ctx context.Context) {
+func (mgr *CertificateDownloaderMgr) DownloadCertificates(ctx context.Context) error {
 	tmpDownloaderMap := make(map[string]*CertificateDownloader)
 
 	mgr.lock.RLock()
@@ -65,9 +70,38 @@ func (mgr *CertificateDownloaderMgr) DownloadCertificates(ctx context.Context) {
 	}
 	mgr.lock.RUnlock()
 
+	var retErr error
 	for _, downloader := range tmpDownloaderMap {
-		_ = downloader.DownloadCertificates(ctx)
+		if err := downloader.DownloadCertificates(ctx); err != nil {
+			if retErr == nil {
+				retErr = err
+			} else {
+				retErr = fmt.Errorf("%v; %w", retErr, err)
+			}
+		}
 	}
+
+	mgr.lock.Lock()
+	defer mgr.lock.Unlock()
+	mgr.lastRefreshErr = retErr
+	if retErr == nil {
+		mgr.lastRefreshTime = time.Now()
+	}
+	return retErr
+}
+
+// LastRefreshErr 返回最近一次批量刷新平台证书的错误。
+func (mgr *CertificateDownloaderMgr) LastRefreshErr() error {
+	mgr.lock.RLock()
+	defer mgr.lock.RUnlock()
+	return mgr.lastRefreshErr
+}
+
+// LastRefreshTime 返回最近一次批量刷新平台证书全部成功的时间。
+func (mgr *CertificateDownloaderMgr) LastRefreshTime() time.Time {
+	mgr.lock.RLock()
+	defer mgr.lock.RUnlock()
+	return mgr.lastRefreshTime
 }
 
 // RemoveDownloader 移除商户的平台证书下载器
@@ -157,7 +191,7 @@ func NewRSACertificateDownloader(
 				CertificateSerialNo: mchCertificateSerialNo,
 				PrivateKey:          mchPrivateKey,
 			},
-			Verifier: &verifiers.NilVerifier{},
+			Verifier: nilVerifier{},
 		},
 	)
 	if err != nil {
@@ -178,7 +212,7 @@ func NewSM2CertificateDownloader(
 				CertificateSerialNo: mchCertificateSerialNo,
 				PrivateKey:          mchPrivateKey,
 			},
-			Verifier: &verifiers.NilVerifier{},
+			Verifier: nilVerifier{},
 		},
 	)
 	if err != nil {

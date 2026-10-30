@@ -6,7 +6,9 @@ import (
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
+	"math"
 	"net/http"
+	"time"
 
 	"github.com/douyinpay/douyinpay-go/client"
 	"github.com/douyinpay/douyinpay-go/tools/auth"
@@ -92,9 +94,9 @@ func (h *Handler) validateHTTPMessage(ctx context.Context, header *client.Respon
 		return fmt.Errorf("header is nil")
 	}
 
-	//if math.Abs(float64(time.Now().Unix()-header.Timestamp)) >= consts.TwentyFourHourAndFourMinute {
-	//	return fmt.Errorf("timestamp=[%d] expires, request-id=[%s]", header.Timestamp, header.RequestID)
-	//}
+	if math.Abs(float64(time.Now().Unix()-header.Timestamp)) > float64(consts.MaxCallbackClockOffset) {
+		return fmt.Errorf("timestamp=[%d] expires, request-id=[%s]", header.Timestamp, header.RequestID)
+	}
 
 	message := fmt.Sprintf(consts.VerifyMessageFormat, header.Timestamp, header.Nonce, string(body))
 

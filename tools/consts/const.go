@@ -120,8 +120,10 @@ const (
 
 // 时间相关常量
 const (
-	FiveMinute                  = 5 * 60           // 回包校验最长时间（秒）
-	DefaultTimeout              = 30 * time.Second // HTTP 请求默认超时时间
+	FiveMinute             = 5 * 60           // 回包校验最长时间（秒）
+	DefaultTimeout         = 30 * time.Second // HTTP 请求默认超时时间
+	MaxCallbackClockOffset = int64(300)       // 回调校验最长时间偏移（秒）
+	// Deprecated: use MaxCallbackClockOffset instead.
 	TwentyFourHourAndFourMinute = (24*60 + 4) * 60 // 回调校验最长时间（秒）
 )
 

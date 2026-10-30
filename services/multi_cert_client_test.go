@@ -10,7 +10,7 @@ import (
 	"github.com/douyinpay/douyinpay-go/utils"
 )
 
-func ExampleNewAutoClient_default() {
+func ExampleNewAutoClientRSA_default() {
 	// 示例参数，实际使用时请自行初始化
 	var (
 		mchID                  string
@@ -24,10 +24,14 @@ func ExampleNewAutoClient_default() {
 	ctx := context.Background()
 
 	var cli *client.Client
+	var err error
 	if signType == "RSA" {
-		cli = InitAutoClientRSA(ctx, mchID, mchCertificateSerialNo, mchPrivateKeyString, encryptKeyString)
+		cli, err = NewAutoClientRSA(ctx, mchID, mchCertificateSerialNo, mchPrivateKeyString, encryptKeyString)
 	} else {
-		cli = InitAutoClientSM2(ctx, mchID, mchCertificateSerialNo, mchPrivateKeyString, encryptKeyString)
+		cli, err = NewAutoClientSM2(ctx, mchID, mchCertificateSerialNo, mchPrivateKeyString, encryptKeyString)
+	}
+	if err != nil {
+		// err handle
 	}
 
 	// 接下来使用 cli 注册ApiService 进行请求发送
@@ -37,7 +41,7 @@ func ExampleNewAutoClient_default() {
 	_ = cli
 }
 
-func ExampleNewAutoClient_customMgr() {
+func ExampleNewAutoClientRSA_customMgr() {
 
 	// 示例参数，实际使用时请自行初始化
 	var (

@@ -42,7 +42,7 @@ func (c *Client) validateHTTPMessage(ctx context.Context, header http.Header, bo
 		return err
 	}
 
-	if math.Abs(float64(time.Now().Unix()-headerArgs.Timestamp)) >= consts.FiveMinute {
+	if math.Abs(float64(time.Now().Unix()-headerArgs.Timestamp)) > float64(consts.MaxCallbackClockOffset) {
 		return fmt.Errorf("timestamp=[%d] expires, request-id=[%s]", headerArgs.Timestamp, headerArgs.RequestID)
 	}
 
@@ -72,7 +72,7 @@ func GetHeader(header http.Header) (ResponseHeader, error) {
 	getHeaderInt64 := func(key string) (int64, error) {
 		val, err := getHeaderString(key)
 		if err != nil {
-			return 0, nil
+			return 0, err
 		}
 		ret, err := strconv.ParseInt(val, 10, 64)
 		if err != nil {
