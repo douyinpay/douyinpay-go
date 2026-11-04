@@ -7,15 +7,18 @@ import (
 
 	"github.com/bmizerany/assert"
 	"github.com/douyinpay/douyinpay-go/services/cashier"
+	"github.com/douyinpay/douyinpay-go/tools/consts"
 )
 
 func TestQueryInvokeInfoRequiredFields(t *testing.T) {
-	svc := cashier.ApiCashierService{}
+	ctx := context.Background()
+	// 与现有收银台接入样例保持一致；必填字段校验发生在 Client 发起请求前。
+	svc := cashier.ApiCashierService{Client: initClient(ctx, consts.CRYPTO_TYPE_RSA)}
 
-	_, _, err := svc.QueryInvokeInfo(context.Background(), cashier.QueryInvokeInfoRequest{})
+	_, _, err := svc.QueryInvokeInfo(ctx, cashier.QueryInvokeInfoRequest{})
 	assert.Equal(t, "QueryInvokeInfoRequest required field `Mchid` is empty", requiredFieldMessage(t, err))
 
-	_, _, err = svc.QueryInvokeInfo(context.Background(), cashier.QueryInvokeInfoRequest{Mchid: "1230000109"})
+	_, _, err = svc.QueryInvokeInfo(ctx, cashier.QueryInvokeInfoRequest{Mchid: "1230000109"})
 	assert.Equal(t, "QueryInvokeInfoRequest required field `Prepayid` is empty", requiredFieldMessage(t, err))
 }
 
