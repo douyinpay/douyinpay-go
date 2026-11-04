@@ -127,6 +127,32 @@ type PrePayConsultResponse struct {
 	ChannelInfoList []ChannelInfo `json:"channel_info_list"`
 }
 
+// QueryInvokeInfoRequest 唤起收银台信息查询请求
+type QueryInvokeInfoRequest struct {
+	// 字段含义：直连商户号。
+	// 格式规则：string[1,32]。
+	// 业务规则：商家入驻抖音支付商家平台分配的商户号。
+	// 示例：1230000109
+	Mchid string `json:"mchid"`
+	// 字段含义：预支付交易会话标识。
+	// 格式规则：string[1,64]，可包含字母、数字、下划线。
+	// 业务规则：下单接口返回的 prepay_id，需保证在商户端不重复。
+	// 示例：dy9pvo8xyxpyop7u7t735u5s41527t5t8uytv101rs5t477vy989q7q5
+	Prepayid string `json:"prepayid"`
+	// 字段含义：订单附加信息。
+	// 格式规则：string[1,1024]，JSON 格式。
+	// 业务规则：订单附加信息，需与抖音支付协商后传递。
+	ExtInfo string `json:"ext_info,omitempty"`
+}
+
+// QueryInvokeInfoResponse 唤起收银台信息查询响应
+type QueryInvokeInfoResponse struct {
+	// 字段含义：唤起抖音支付链接。
+	// 格式规则：string。
+	// 业务规则：通过该链接唤起抖音支付收银台。
+	InvokeURL string `json:"invoke_url"`
+}
+
 // ChannelInfo 渠道信息
 type ChannelInfo struct {
 	// 字段含义：加密手机号，即请求参数中传入的手机号。

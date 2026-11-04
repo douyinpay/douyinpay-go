@@ -4,6 +4,12 @@
 
 ClientVersion 每次sdk升级，需要更新版本号
 
+v1.0.9 - 2026-11-04
+--------------------
+* 新增唤起收银台信息查询接口（services.cashier.ApiCashierService.QueryInvokeInfo），支持根据 mchid、prepayid、ext_info 查询唤起抖音支付收银台链接
+* 新增 QueryInvokeInfo 请求与响应模型，签名、验签逻辑复用通用 client.Client
+* 升级 SDK ClientVersion 至 GO-v1.0.9
+
 v1.0.8 - 2026-10-12
 --------------------
 * 新增间连商户相关接口能力（services/indirectmerchant）：入驻申请、查询/撤销申请单、查询商户、修改商户、绑定/查询应用 APPID、图片上传
