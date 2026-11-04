@@ -31,6 +31,14 @@ func TestCashierRequest(t *testing.T) {
 	t.Run("前置咨询-查询用户标签和用户营销", func(t *testing.T) {
 		PrePayConsultPromotionTest(context.Background(), consts.CRYPTO_TYPE_RSA, t)
 	})
+
+	t.Run("唤起收银台信息查询-必填字段校验", func(t *testing.T) {
+		QueryInvokeInfoRequiredFieldsTest(context.Background(), consts.CRYPTO_TYPE_RSA, t)
+	})
+
+	t.Run("唤起收银台信息查询-响应解析", func(t *testing.T) {
+		QueryInvokeInfoResponseUnmarshalTest(t)
+	})
 }
 
 // PrePayConsultTagTest 仅查询用户标签（tag_code/tag_name）
@@ -85,6 +93,37 @@ func PrePayConsultPromotionTest(ctx context.Context, signType string, t *testing
 	}
 
 	assert.Equal(t, true, resp != nil)
+}
+
+// QueryInvokeInfoRequiredFieldsTest 校验唤起收银台信息查询的必填字段。
+func QueryInvokeInfoRequiredFieldsTest(ctx context.Context, signType string, t *testing.T) {
+	// 与现有收银台接入样例保持一致；必填字段校验发生在 Client 发起请求前。
+	svc := cashier.ApiCashierService{Client: initClient(ctx, signType)}
+
+	_, _, err := svc.QueryInvokeInfo(ctx, cashier.QueryInvokeInfoRequest{})
+	assert.Equal(t, "QueryInvokeInfoRequest required field `Mchid` is empty", requiredFieldMessage(t, err))
+
+	_, _, err = svc.QueryInvokeInfo(ctx, cashier.QueryInvokeInfoRequest{Mchid: "1230000109"})
+	assert.Equal(t, "QueryInvokeInfoRequest required field `Prepayid` is empty", requiredFieldMessage(t, err))
+}
+
+// QueryInvokeInfoResponseUnmarshalTest 校验唤起收银台信息查询的响应解析。
+func QueryInvokeInfoResponseUnmarshalTest(t *testing.T) {
+	var resp cashier.QueryInvokeInfoResponse
+	body := []byte(`{"invoke_url":"https://cashier.douyinpay.com/bytepay-cashdesk/bytepay-invoke"}`)
+
+	err := json.Unmarshal(body, &resp)
+
+	assert.Equal(t, nil, err)
+	assert.Equal(t, "https://cashier.douyinpay.com/bytepay-cashdesk/bytepay-invoke", resp.InvokeURL)
+}
+
+func requiredFieldMessage(t *testing.T, err error) string {
+	t.Helper()
+	if err == nil {
+		t.Fatal("expected an error")
+	}
+	return err.Error()
 }
 
 func initClient(ctx context.Context, signType string) *client.Client {
