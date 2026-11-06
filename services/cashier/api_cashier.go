@@ -45,3 +45,35 @@ func (a *ApiCashierService) PrePayConsult(ctx context.Context, req PrePayConsult
 	}
 	return resp, result, nil
 }
+
+// QueryInvokeInfo 查询唤起收银台信息
+//
+// 根据下单接口返回的 prepay_id 查询唤起抖音支付收银台链接。
+func (a *ApiCashierService) QueryInvokeInfo(ctx context.Context, req QueryInvokeInfoRequest) (resp *QueryInvokeInfoResponse, result *client.APIResult, err error) {
+	if req.Mchid == "" {
+		return nil, nil, fmt.Errorf("QueryInvokeInfoRequest required field `Mchid` is empty")
+	}
+	if req.Prepayid == "" {
+		return nil, nil, fmt.Errorf("QueryInvokeInfoRequest required field `Prepayid` is empty")
+	}
+
+	r := &client.RequestEntity{
+		Method:      nethttp.MethodPost,
+		ContentType: consts.ApplicationJSON,
+		PostBody:    req,
+		Header:      nethttp.Header{},
+	}
+	r.RequestPath = consts.DouyinPayServer + consts.QueryInvokeInfoPath
+
+	result, err = a.Client.Request(ctx, r)
+	if err != nil {
+		return nil, result, err
+	}
+
+	resp = new(QueryInvokeInfoResponse)
+	err = client.UnMarshalResponse(result.Response, resp)
+	if err != nil {
+		return nil, result, err
+	}
+	return resp, result, nil
+}

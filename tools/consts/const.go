@@ -80,7 +80,8 @@ const (
 	DownloadCertificatesPath = "/v1/merchant/certificates/getPlatformCertificates"
 
 	// 收银
-	PrePayConsultPath = "/v1/cashier/prepay/consult" // 前置咨询
+	PrePayConsultPath   = "/v1/cashier/prepay/consult"    // 前置咨询
+	QueryInvokeInfoPath = "/v1/cashier/query_invoke_info" // 唤起收银台信息查询
 )
 
 // HTTP 请求报文 Header 相关常量
